@@ -34,19 +34,19 @@
 		tb_adm (`account`,`aname`, `pwd`, `tel`, `headImg`, `role`, `status`)
 		values (#{acount},#{aname},#{pwd},#{tel},#{headImg},#{role},1);
 	</insert>
-	<update id="updateStatus" flushCache="true">
+	<update id="updateStatus" parameterType="Admin" flushCache="true">
 		update tb_adm set
 		`status`=#{status} where `aid` = #{aid};
 	</update>
-	<update id="updatePwd" flushCache="true">
+	<update id="updatePwd"  flushCache="true">
 		update tb_adm set
 		`pwd`=#{npwd} where `aid` = #{aid} and `pwd`=#{opwd};
 	</update>
-	<update id="updateRole" flushCache="true">
+	<update id="updateRole" parameterType="Admin" flushCache="true">
 		update tb_adm set
 		`role`=#{role} where `aid` = #{aid};
 	</update>
-	<update id="updateInfo" parameterType="Admin" flushCache="true">
+	<update id="updateInfo"  parameterType="Admin" flushCache="true">
 		update
 		tb_adm set `aname`=#{aname},`tel`=#{tel},`headImg`=#{headImg} where
 		`aid` = #{aid};

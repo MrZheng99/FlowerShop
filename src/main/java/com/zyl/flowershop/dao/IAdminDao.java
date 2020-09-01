@@ -38,7 +38,7 @@ public interface IAdminDao {
 	 * @param id
 	 * @return
 	 */
-	public Admin findById(String id);
+	public Admin findById(Integer id);
 
 	/**
 	 * 根据管理员类别查询
@@ -62,7 +62,7 @@ public interface IAdminDao {
 	 * @param admin
 	 * @return
 	 */
-	public Integer updateStatus(@Param("id") Integer id, @Param("status") String status);
+	public Integer updateStatus(Admin admin);
 
 	/**
 	 * 修改管理员的密码
@@ -80,7 +80,7 @@ public interface IAdminDao {
 	 * @param role
 	 * @return
 	 */
-	public Integer updateRole(@Param("id") Integer id, @Param("role") String role);
+	public Integer updateRole(Admin admin);
 
 	/**
 	 * 修改管理员的电话，姓名，头像
