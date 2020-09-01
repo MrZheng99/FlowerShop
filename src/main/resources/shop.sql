@@ -118,3 +118,8 @@ create table if not exists tb_advertisement(
 	position varchar(20) not null, #广告位置
 	status char(1) not null
 )auto_increment=101 engine=InnoDB default charset=utf8;
+
+
+
+INSERT INTO `tb_adm` (`aname`, `pwd`, `tel`, `headImg`, `role`, `status`) VALUES ('tom', '123456', '12345678998', 'img.jpg', '1', '1');
+INSERT INTO `tb_adm` (`aname`, `pwd`, `tel`, `headImg`, `role`, `status`) VALUES ('jack', '123456', '12345665462', 'head.jpg', '0', '1');

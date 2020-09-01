@@ -1,4 +1,4 @@
-package com.zyl.FlowerShop.entity;
+package com.zyl.flowershop.entity;
 
 /**
  * 花
