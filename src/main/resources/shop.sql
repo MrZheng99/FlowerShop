@@ -14,6 +14,7 @@ create table if not exists tb_user(
 
 create table if not exists tb_adm(
 	aid int(11) primary key auto_increment,
+	account varchar(200) not null unique,
 	aname varchar(100) not null,
 	pwd varchar(200) not null,
 	tel varchar(20) not null,
@@ -121,5 +122,5 @@ create table if not exists tb_advertisement(
 
 
 
-INSERT INTO `tb_adm` (`aname`, `pwd`, `tel`, `headImg`, `role`, `status`) VALUES ('tom', '123456', '12345678998', 'img.jpg', '1', '1');
-INSERT INTO `tb_adm` (`aname`, `pwd`, `tel`, `headImg`, `role`, `status`) VALUES ('jack', '123456', '12345665462', 'head.jpg', '0', '1');
+INSERT INTO `tb_adm` (`account`,`aname`, `pwd`, `tel`, `headImg`, `role`, `status`) VALUES ('tom_ac','tom', '123456', '12345678998', 'img.jpg', '1', '1');
+INSERT INTO `tb_adm` (`account`,`aname`, `pwd`, `tel`, `headImg`, `role`, `status`) VALUES ('jack_ac','jack', '123456', '12345665462', 'head.jpg', '0', '1');

@@ -1,9 +1,7 @@
 package com.zyl.flowershop.service;
 
-import java.util.List;
-
-import com.zyl.flowershop.entity.Admin;
+import com.zyl.flowershop.entity.ResponseJson;
 
 public interface IAdminService {
-	public List<Admin> findAll();
+	public ResponseJson findAll();
 }

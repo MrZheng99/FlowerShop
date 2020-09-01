@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.zyl.flowershop.dao.IAdminDao;
 import com.zyl.flowershop.entity.Admin;
+import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.service.IAdminService;
 
 @Service
@@ -15,8 +16,14 @@ public class AdminService implements IAdminService {
 	IAdminDao adminDao;
 
 	@Override
-	public List<Admin> findAll() {
-		return adminDao.findAll();
+	public ResponseJson findAll() {
+		List<Admin> listAdm;
+		try {
+			listAdm = adminDao.findAll();
+			return new ResponseJson(200, "获取成功", listAdm, true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseJson(500, "获取失败", null, false);
+		}
 	}
-
 }

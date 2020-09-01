@@ -3,8 +3,53 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zyl.flowershop.dao.IAdminDao">
-	<select id="findAll" resultType="Admin">
-		select *from tb_adm;
+	<select id="findAll" resultType="list">
+		select
+		aid,account,aname,pwd,tel,headImg,role,status from tb_adm;
 	</select>
+	<select id="findByName" parameterType="string" resultType="list">
+		select aid,account,aname,pwd,tel,headImg,role,status from tb_adm where
+		aname=#{name};
+	</select>
+	<select id="findByAccount" parameterType="string"
+		resultType="Admin">
+		select
+		aid,account,aname,pwd,tel,headImg,role,status from
+		tb_adm where
+		account=#{account};
+	</select>
+	<select id="findById" parameterType="int" resultType="Admin">
+		select
+		aid,account,aname,pwd,tel,headImg,role,status from tb_adm where
+		id=#{id};
+	</select>
+	<select id="findByRole" parameterType="string" resultType="list">
+		select
+		aid,account,aname,pwd,tel,headImg,role,status from tb_adm where
+		role=#{role};
+	</select>
+
+	<insert id="insert" parameterType="Admin" flushCache="true">
+		insert into
+		tb_adm (`account`,`aname`, `pwd`, `tel`, `headImg`, `role`, `status`)
+		values (#{acount},#{aname},#{pwd},#{tel},#{headImg},#{role},1);
+	</insert>
+	<update id="updateStatus" flushCache="true">
+		update tb_adm set
+		`status`=#{status} where `aid` = #{aid};
+	</update>
+	<update id="updatePwd" flushCache="true">
+		update tb_adm set
+		`pwd`=#{npwd} where `aid` = #{aid} and `pwd`=#{opwd};
+	</update>
+	<update id="updateRole" flushCache="true">
+		update tb_adm set
+		`role`=#{role} where `aid` = #{aid};
+	</update>
+	<update id="updateInfo" parameterType="Admin" flushCache="true">
+		update
+		tb_adm set `aname`=#{aname},`tel`=#{tel},`headImg`=#{headImg} where
+		`aid` = #{aid};
+	</update>
 
 </mapper>

@@ -7,9 +7,9 @@ spring:
   #数据库连接配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/flowershop?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
+    url: jdbc:mysql://120.26.184.107:3306/flowershop?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
     username: root
-    password: ZJ1125
+    password: Zheng1125
 
 #mybatis的相关配置
 mybatis:
