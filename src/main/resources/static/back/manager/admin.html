@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>源辰-添加管理员</title>
+<link rel="shortcut icon" href="../../images/copylogo.png" type="image/x-icon" />
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/main.css">
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+
+</head>
+<body>
+<div id="forms" class="mt10">
+	<div class="box">
+		<div class="box_border">
+			<div class="box_top">
+				<b class="pl15">管理员</b>
+			</div>
+			<div class="box_center">
+				<form action="" class="jqtransform" id="addNewsForm">
+					<table class="form_table pt15 pb15" width="100%" border="0" cellpadding="0" cellspacing="0">
+						<tr>
+							<td class="td_right">管理员名称：</td>
+							<td>
+								<input type="text" id="aname" name="aname" class="input-text lh30" size="40" onBlur="checkUsername()">
+								<label id="username"></label>
+							</td>
+						</tr>
+						<tr>
+							<td class="td_right">密码：</td>
+							<td>
+								<input type="password" id="pwd" name="pwd" class="input-text lh30" size="40"  onBlur="checkPwd()">
+								<label id="password"></label>
+							</td>
+						</tr>
+							<tr>
+							<td class="td_right">确认密码：</td>
+							<td>
+								<input type="password" id="ck" name="ck" class="input-text lh30" size="40"  onBlur="cPwd()">
+								<label id="ckpw"></label>
+							</td>
+						</tr>
+						<tr>
+							<td class="td_right">电话号码：</td>
+							<td>
+								<input type="text" id="tel" name="tel" class="input-text lh30" size="40" onBlur="checkTel()">
+								<label id="telephone"></label>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="4" align="center">
+								<input type="button" name="button" class="btn btn82 btn_save2" onclick="reg()" value="注册">
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+
+function checkUsername(){
+	var username; 
+	username= $.trim($("#aname").val());
+	if(username == ""){
+		document.getElementById("username").style="color:red";
+		document.getElementById("username").textContent="请输入管理员名字";
+	}else{
+	    document.getElementById("username").textContent="";
+	    return true;
+	}
+}
+
+function checkPwd(){
+	var pwd; 
+    let regPassword = new RegExp("^[0-9A-Za-z0-9_]{5,16}$");
+ 	pwd=document.getElementById("pwd").value;
+	if(regPassword.test(pwd)){
+		document.getElementById("password").textContent="";
+	    return true;
+	}else{
+		document.getElementById("password").style="color:red";
+		document.getElementById("password").textContent="密码必须由6-16位数字、字母、下划线组成";
+	}
+
+}
+
+function cPwd(){
+	var pwd; 
+ 	pwd=document.getElementById("pwd").value;
+	var cpwd;
+	cpwd=document.getElementById("ck").value;
+	if(cpwd==pwd || pwd== ""){
+		document.getElementById("ckpw").textContent="";
+	    return true;
+	}else{
+		document.getElementById("ckpw").style="color:red";
+		document.getElementById("ckpw").textContent="请输入相同的密码";
+	}
+
+}
+
+function checkTel(){
+	var Tel= document.getElementById("tel").value;
+	let regPhone = /^1[3456789]\d{9}$/; //移动电话
+    let regTelPhone = new RegExp("^((0\d{2,4})-)(\d{7,8})(-(\d{3,}))?$"); 
+	if(regPhone.test(Tel) || regTelPhone.test(Tel)){
+	    document.getElementById("telephone").textContent="";
+	    return true;
+	}else{
+		document.getElementById("telephone").style="color:red";
+		document.getElementById("telephone").textContent="请输入正确的手机号码或电话号码";
+	}
+}
+
+function reg(){	
+	checkTel()
+	cPwd();
+	checkPwd();
+	checkUsername();
+	if(checkTel()!=true || checkUsername()!=true || checkPwd()!=true || cPwd()!=true ){
+		return;
+	}
+	
+	var aname = $.trim($("#aname").val());
+	var pwd = $.trim($("#pwd").val());
+	var tel = $.trim($("#tel").val());
+	$.post("../../admin",{op:"reg",aname:aname,pwd:pwd,tel:tel},data => {
+		data = parseInt($.trim(data));
+		if(data != -1){
+			alert("注册成功！！！");
+		}else{
+			alert("账号或密码错误...");
+		}
+	},"text")
+}
+</script>
+</body>
+</html>
