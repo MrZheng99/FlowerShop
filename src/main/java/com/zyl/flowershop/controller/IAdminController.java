@@ -1,5 +1,7 @@
 package com.zyl.flowershop.controller;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.zyl.flowershop.entity.Admin;
 import com.zyl.flowershop.entity.ResponseJson;
 
@@ -25,7 +27,7 @@ public interface IAdminController {
 	 * @param admin
 	 * @return
 	 */
-	public ResponseJson insert(Admin admin);
+	public ResponseJson insert(MultipartFile file, Admin admin);
 
 	/**
 	 * 修改管理员
