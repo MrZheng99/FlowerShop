@@ -18,14 +18,14 @@ function checkLogin() {
 		alert("请输入密码...");
 		return;
 	}
-
 	location.href="manager/index.html";
+
 
 	/*
 	$.post("../admin",{op:"login",aname:account,pwd:pwd},data=>{
 		data = parseInt($.trim(data));
 		if(data == 200){
-			location.href="manager/index.html";
+			location.href="/back/home";
 		}else{
 			alert("账号或密码错误...");
 		}
