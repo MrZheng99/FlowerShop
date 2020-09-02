@@ -3,6 +3,92 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zyl.flowershop.dao.UserDao">
-	
+	<select id="totalNum" resultType="int">
+		select count(uid) from tb_user;
+	</select>
+	<select id="findAll" resultType="User">
+		select
+		uid,account,uname,sex,email,tel,headImg,status from tb_adm;
+	</select>
+	<select id="find" resultType="User">
+		select
+		uid,account,uname,sex,email,tel,headImg,status from tb_adm
+		<where>
+			<if test="account != null and account !='' ">
+				and account=#{account}
+			</if>
+			<if test="uname != null and uname !='' ">
+				and uname=#{uname}
+			</if>
+			<if test="email != null and email !='' ">
+				and email=#{email}
+			</if>
+			<if test="tel != null and tel !='' ">
+				and tel=#{tel}
+			</if>
+		</where>
+	</select>
+	<!-- 登录 -->
+	<select id="findByAccountPwd" parameterType="User"
+		resultType="User">
+		select
+		uid,account,uname,sex,email,tel,headImg,status from tb_adm and
+		status=1
+		<if test="account != null and account !='' ">
+			and account=#{account}
+		</if>
+		<if test="pwd != null and pwd !='' ">
+			and pwd=#{pwd}
+		</if>
 
+		<if test="email != null and email !='' ">
+			and email=#{email}
+		</if>
+		<if test="tel != null and tel !='' ">
+			and tel=#{tel}
+		</if>
+
+
+	</select>
+
+	<insert id="insert" parameterType="User" flushCache="true">
+		insert into
+		tb_user (`account`,`uname`,`tel`,`email`, `pwd`, `tel`, `headImg`,
+		`status`)
+		values
+		(#{acount},#{aname},#{email},#{pwd},#{tel},#{headImg},#{role},1);
+	</insert>
+
+	<update id="updatePwd" flushCache="true">
+		update tb_user set
+		`pwd`=#{npwd} where `uid` = #{uid} and `pwd`=#{opwd};
+	</update>
+
+	<update id="update" parameterType="User" flushCache="true">
+		update tb_user
+		<set>
+			<if test="pwd != null and pwd !='' ">
+				pwd=#{pwd},
+			</if>
+			<if test="email != null and email !='' ">
+				email=#{email},
+			</if>
+			<if test="tel != null and tel !='' ">
+				tel=#{tel},
+			</if>
+			<if test="headImg != null and headImg !='' ">
+				headImg=#{headImg},
+			</if>
+			<if test="sex != null and sex !='' ">
+				sex=#{sex},
+			</if>
+			<if test="uname != null and uname !='' ">
+				uname=#{uname},
+			</if>
+			<if test="status != null and status !='' ">
+				status=#{status},
+			</if>
+		</set>
+		where `uid` = #{uid};
+	</update>
 </mapper>

@@ -3,6 +3,7 @@ package com.zyl.flowershop.controller.impl;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ public class HomeController implements IHomeController {
 	@RequestMapping("/back/home")
 	public ModelAndView back() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("static/back/manager/index.html");
+		mav.setViewName("redirect:static/back/manager/index.html");
 		return mav;
 	}
 
@@ -34,7 +35,7 @@ public class HomeController implements IHomeController {
 	@RequestMapping("/front/home")
 	public ModelAndView front() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("static/front/index.html");
+		mav.setViewName("redirect:static/front/index.html");
 		return mav;
 	}
 
@@ -55,13 +56,13 @@ public class HomeController implements IHomeController {
 	}
 
 	@Override
-	@RequestMapping("/back/login")
+	@PostMapping("/back/login")
 	public ResponseJson loginBack(@RequestBody Admin admin, HttpSession session) {
 		return adminService.login(admin, session);
 	}
 
 	@Override
-	@RequestMapping("/front/login")
+	@PostMapping("/front/login")
 	public ResponseJson loginFront(@RequestBody User user, HttpSession session) {
 		return userService.login(user, session);
 	}

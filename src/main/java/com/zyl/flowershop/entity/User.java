@@ -10,6 +10,7 @@ public class User {
 	private Integer uid;
 	private String uname;// 账户名
 	private String pwd;
+	private String account;
 	private String sex;
 	private String tel;
 	private String email;
@@ -82,14 +83,15 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [uid=" + uid + ", uname=" + uname + ", pwd=" + pwd + ", sex=" + sex + ", tel=" + tel + ", email="
-				+ email + ", headImg=" + headImg + ", status=" + status + "]";
+		return "User [uid=" + uid + ", uname=" + uname + ", pwd=" + pwd + ", account=" + account + ", sex=" + sex
+				+ ", tel=" + tel + ", email=" + email + ", headImg=" + headImg + ", status=" + status + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((account == null) ? 0 : account.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((headImg == null) ? 0 : headImg.hashCode());
 		result = prime * result + ((pwd == null) ? 0 : pwd.hashCode());
@@ -110,6 +112,11 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
+		if (account == null) {
+			if (other.account != null)
+				return false;
+		} else if (!account.equals(other.account))
+			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -151,6 +158,14 @@ public class User {
 		} else if (!uname.equals(other.uname))
 			return false;
 		return true;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
 }

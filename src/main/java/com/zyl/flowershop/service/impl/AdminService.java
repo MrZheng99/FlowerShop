@@ -31,28 +31,15 @@ public class AdminService implements IAdminService {
 	}
 
 	@Override
-	public ResponseJson find(String op, String data) {
-		ResponseJson responseJson = new ResponseJson();
+	public ResponseJson find(Admin admin) {
+		List<Admin> listAdm;
 		try {
-			if ("role".equals(op)) {
-				responseJson.setData(adminDao.findByRole(data));
-			} else if ("name".equals(op)) {
-				responseJson.setData(adminDao.findByName(data));
-			} else if ("account".equals(op)) {
-				responseJson.setData(adminDao.findByAccount(data));
-			} else if ("id".equals(op)) {
-				responseJson.setData(adminDao.findById(Integer.valueOf(data)));
-			}
-			responseJson.setSuccess(true);
-			responseJson.setMsg("获取成功");
-			responseJson.setStatus(200);
+			listAdm = adminDao.find(admin);
+			return new ResponseJson(200, "查询成功", listAdm, true);
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-			responseJson.setSuccess(false);
-			responseJson.setMsg("获取失败");
-			responseJson.setStatus(500);
+			return new ResponseJson(500, "查询成功", null, false);
 		}
-		return responseJson;
 	}
 
 	@Override
@@ -63,16 +50,11 @@ public class AdminService implements IAdminService {
 		return new ResponseJson(200, "添加失败", null, false);
 	}
 
-	public ResponseJson update(Admin admin, String op) {
+	@Override
+	public ResponseJson update(Admin admin) {
 		Integer row = 0;
 		try {
-			if ("role".equals(op)) {
-				row = adminDao.updateRole(admin);
-			} else if ("status".equals(op)) {
-				row = adminDao.updateStatus(admin);
-			} else if ("info".equals(op)) {
-				row = adminDao.updateInfo(admin);
-			}
+			row = adminDao.update(admin);
 			if (row > 0)
 				return new ResponseJson(200, "修改成功", row, true);
 			return new ResponseJson(200, "修改失败", row, false);
@@ -80,7 +62,6 @@ public class AdminService implements IAdminService {
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			return new ResponseJson(500, "修改失败", row, false);
-
 		}
 	}
 
@@ -93,7 +74,7 @@ public class AdminService implements IAdminService {
 
 	public ResponseJson login(Admin admin, HttpSession session) {
 		Admin adm = adminDao.findByAccountPwdRole(admin);
-		if (adm.getAid() != null && adm.getAname() != null && adm.getHeadImg() != null) {
+		if (adm.getAid() != null && adm.getAname() != null && adm.getAccount() != null) {
 			session.setAttribute(SessionKey.CURRENT_ADMIN, adm);
 			return new ResponseJson(200, "login success", null, true);
 		} else

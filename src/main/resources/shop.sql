@@ -3,10 +3,11 @@ use flowershop;
 create table if not exists tb_user(
 	uid int(11) primary key auto_increment,
 	uname varchar(100) not null,
+	account varchar(200) not null unique,
 	pwd varchar(200) not null,
-	sex char(1) not null,
-	tel varchar(20) not null,
-	email varchar(100) not null,
+	sex char(1)  null,
+	tel varchar(20) null unique,
+	email varchar(100) null unique,
 	headImg varchar(200) not null,
 	status char(1) not null
 )auto_increment=101 engine=InnoDB default charset=utf8;
@@ -17,7 +18,7 @@ create table if not exists tb_adm(
 	account varchar(200) not null unique,
 	aname varchar(100) not null,
 	pwd varchar(200) not null,
-	tel varchar(20) not null,
+	tel varchar(20) not null unique,
 	headImg varchar(200) not null,
 	# role=1为超级管理员否则为普通管理员
 	role char(1) not null, 

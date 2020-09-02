@@ -3,61 +3,70 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zyl.flowershop.dao.IAdminDao">
+	<select id="totalNum" resultType="int">
+		select count(aid) from tb_adm;
+	</select>
 	<select id="findAll" resultType="Admin">
 		select
-		aid,account,aname,pwd,tel,headImg,role,status from tb_adm;
+		aid,account,aname,tel,headImg,role,status from tb_adm;
 	</select>
-	<select id="findByName" parameterType="string" resultType="Admin">
-		select aid,account,aname,pwd,tel,headImg,role,status from tb_adm where
-		aname=#{name};
-	</select>
-	<select id="findByAccount" parameterType="string"
-		resultType="Admin">
-		select
-		aid,account,aname,pwd,tel,headImg,role,status from
-		tb_adm where
-		account=#{account};
-	</select>
-	
+
 	<select id="findByAccountPwdRole" parameterType="Admin"
 		resultType="Admin">
 		select
 		aid,account,aname,role from
 		tb_adm where
-		account=#{account} and pwd=#{pwd} and role=#{role};
+		account=#{account} and pwd=#{pwd} and role=#{role} and status=1;
 	</select>
-	<select id="findById" parameterType="int" resultType="Admin">
+	<select id="find" parameterType="int" resultType="Admin">
 		select
-		aid,account,aname,pwd,tel,headImg,role,status from tb_adm where
-		id=#{id};
+		aid,account,aname,tel,headImg,role,status from tb_adm
+		<where>
+			<if test="account != null and account !='' ">
+				and account=#{account}
+			</if>
+			<if test="uname != null and uname !='' ">
+				and uname=#{uname}
+			</if>
+			<if test="tel != null and tel !='' ">
+				and tel=#{tel}
+			</if>
+			<if test="role != null and role !='' ">
+				and role=#{role}
+			</if>
+		</where>
 	</select>
-	<select id="findByRole" parameterType="string" resultType="Admin">
-		select
-		aid,account,aname,pwd,tel,headImg,role,status from tb_adm where
-		role=#{role};
-	</select>
+
 
 	<insert id="insert" parameterType="Admin" flushCache="true">
 		insert into
 		tb_adm (`account`,`aname`, `pwd`, `tel`, `headImg`, `role`, `status`)
 		values (#{acount},#{aname},#{pwd},#{tel},#{headImg},#{role},1);
 	</insert>
-	<update id="updateStatus" parameterType="Admin" flushCache="true">
-		update tb_adm set
-		`status`=#{status} where `aid` = #{aid};
-	</update>
-	<update id="updatePwd"  flushCache="true">
+
+	<update id="updatePwd" flushCache="true">
 		update tb_adm set
 		`pwd`=#{npwd} where `aid` = #{aid} and `pwd`=#{opwd};
 	</update>
-	<update id="updateRole" parameterType="Admin" flushCache="true">
-		update tb_adm set
-		`role`=#{role} where `aid` = #{aid};
-	</update>
-	<update id="updateInfo"  parameterType="Admin" flushCache="true">
+
+	<update id="update" parameterType="Admin" flushCache="true">
 		update
-		tb_adm set `aname`=#{aname},`tel`=#{tel},`headImg`=#{headImg} where
-		`aid` = #{aid};
+		tb_adm
+		<set>
+			<if test="tel != null and tel !='' ">
+				tel=#{tel},
+			</if>
+			<if test="headImg != null and headImg !='' ">
+				headImg=#{headImg},
+			</if>
+			<if test="aname != null and aname !='' ">
+				aname=#{aname},
+			</if>
+			<if test="status != null and status !='' ">
+				status=#{status},
+			</if>
+		</set>
+		where `aid` = #{aid};
 	</update>
 
 </mapper>

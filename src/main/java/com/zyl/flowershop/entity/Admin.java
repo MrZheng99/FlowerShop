@@ -9,6 +9,7 @@ package com.zyl.flowershop.entity;
 public class Admin {
 	private Integer aid;
 	private String aname;// 账户名
+	private String account;
 	private String pwd;
 	private String tel;
 	private String email;
@@ -82,14 +83,15 @@ public class Admin {
 
 	@Override
 	public String toString() {
-		return "Admin [aid=" + aid + ", aname=" + aname + ", pwd=" + pwd + ", tel=" + tel + ", email=" + email
-				+ ", headImg=" + headImg + ", role=" + role + ", status=" + status + "]";
+		return "Admin [aid=" + aid + ", aname=" + aname + ", account=" + account + ", pwd=" + pwd + ", tel=" + tel
+				+ ", email=" + email + ", headImg=" + headImg + ", role=" + role + ", status=" + status + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((account == null) ? 0 : account.hashCode());
 		result = prime * result + ((aid == null) ? 0 : aid.hashCode());
 		result = prime * result + ((aname == null) ? 0 : aname.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
@@ -110,6 +112,11 @@ public class Admin {
 		if (getClass() != obj.getClass())
 			return false;
 		Admin other = (Admin) obj;
+		if (account == null) {
+			if (other.account != null)
+				return false;
+		} else if (!account.equals(other.account))
+			return false;
 		if (aid == null) {
 			if (other.aid != null)
 				return false;
@@ -151,6 +158,14 @@ public class Admin {
 		} else if (!tel.equals(other.tel))
 			return false;
 		return true;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
 }
