@@ -1,39 +1,41 @@
 package com.zyl.flowershop.controller;
 
-import com.zyl.flowershop.entity.Admin;
 import com.zyl.flowershop.entity.ResponseJson;
+import com.zyl.flowershop.entity.User;
 
-public interface IAdminController {
+public interface IUserController {
 	/**
-	 * 查询所有管理员
+	 * 查询所有用户
 	 * 
 	 * @return
 	 */
 	public ResponseJson findAll();
 
 	/**
-	 * 条件查询管理员信息
+	 * 条件查询用户信息
 	 * 
-	 * @param admin
+	 * @param op   条件 eg role
+	 * @param data 条件的数据
 	 * @return
 	 */
-	public ResponseJson find(Admin admin);
+	public ResponseJson find(User user);
 
 	/**
-	 * 添加管理员
+	 * 添加用户
 	 * 
 	 * @param admin
 	 * @return
 	 */
-	public ResponseJson insert(Admin admin);
+	public ResponseJson insert(User user);
 
 	/**
 	 * 修改管理员
 	 * 
 	 * @param admin
+	 * @param op
 	 * @return
 	 */
-	ResponseJson update(Admin admin);
+	ResponseJson update(User user);
 
 	/**
 	 * 修改密码

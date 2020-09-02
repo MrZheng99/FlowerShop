@@ -14,4 +14,30 @@ public interface IUserService {
 	 * @return
 	 */
 	public ResponseJson login(User user, HttpSession session);
+
+	public ResponseJson findAll();
+
+	public ResponseJson find(User user);
+
+	public ResponseJson insert(User user);
+
+	/**
+	 * 用户修改信息
+	 * 
+	 * @param admin
+	 * @param op
+	 * @return
+	 */
+	public ResponseJson update(User user);
+
+	/**
+	 * 用户修改密码
+	 * 
+	 * @param id
+	 * @param opwd
+	 * @param npwd
+	 * @return
+	 */
+	public ResponseJson updatePwd(Integer id, String opwd, String npwd);
+
 }
