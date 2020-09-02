@@ -3,11 +3,11 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zyl.flowershop.dao.IAdminDao">
-	<select id="findAll" resultType="list">
+	<select id="findAll" resultType="Admin">
 		select
 		aid,account,aname,pwd,tel,headImg,role,status from tb_adm;
 	</select>
-	<select id="findByName" parameterType="string" resultType="list">
+	<select id="findByName" parameterType="string" resultType="Admin">
 		select aid,account,aname,pwd,tel,headImg,role,status from tb_adm where
 		aname=#{name};
 	</select>
@@ -18,12 +18,20 @@
 		tb_adm where
 		account=#{account};
 	</select>
+	
+	<select id="findByAccountPwdRole" parameterType="Admin"
+		resultType="Admin">
+		select
+		aid,account,aname,role from
+		tb_adm where
+		account=#{account} and pwd=#{pwd} and role=#{role};
+	</select>
 	<select id="findById" parameterType="int" resultType="Admin">
 		select
 		aid,account,aname,pwd,tel,headImg,role,status from tb_adm where
 		id=#{id};
 	</select>
-	<select id="findByRole" parameterType="string" resultType="list">
+	<select id="findByRole" parameterType="string" resultType="Admin">
 		select
 		aid,account,aname,pwd,tel,headImg,role,status from tb_adm where
 		role=#{role};

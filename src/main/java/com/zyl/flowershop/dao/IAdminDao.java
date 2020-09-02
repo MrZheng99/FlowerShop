@@ -33,6 +33,14 @@ public interface IAdminDao {
 	public Admin findByAccount(String account);
 
 	/**
+	 * 登录使用
+	 * 
+	 * @param account
+	 * @return
+	 */
+	public Admin findByAccountPwdRole(Admin admin);
+
+	/**
 	 * 根据管理员id查询
 	 * 
 	 * @param id

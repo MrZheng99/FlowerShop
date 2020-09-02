@@ -2,6 +2,8 @@ package com.zyl.flowershop.service.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,7 @@ import com.zyl.flowershop.dao.IAdminDao;
 import com.zyl.flowershop.entity.Admin;
 import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.service.IAdminService;
+import com.zyl.flowershop.util.SessionKey;
 
 @Service
 public class AdminService implements IAdminService {
@@ -86,6 +89,15 @@ public class AdminService implements IAdminService {
 		if (row > 0)
 			return new ResponseJson(200, "添加密码成功", null, true);
 		return new ResponseJson(200, "修改密码失败", null, false);
+	}
+
+	public ResponseJson login(Admin admin, HttpSession session) {
+		Admin adm = adminDao.findByAccountPwdRole(admin);
+		if (adm.getAid() != null && adm.getAname() != null && adm.getHeadImg() != null) {
+			session.setAttribute(SessionKey.CURRENT_ADMIN, adm);
+			return new ResponseJson(200, "login success", null, true);
+		} else
+			return new ResponseJson(200, "login fail", null, false);
 	}
 
 }
