@@ -8,6 +8,7 @@
 function checkLogin() {
 	var account = $.trim($("#account").val());
 	var pwd = $.trim($("#pwd").val());
+	var level=$.trim($("#level").val());
 	
 	if (account == "") {
 		alert("请输入账号...");
@@ -18,7 +19,12 @@ function checkLogin() {
 		alert("请输入密码...");
 		return;
 	}
-	location.href="manager/index.html";
+	
+	if(level == 1){
+		location.href="manager/supermanager.html";
+    }else{
+    	location.href="manager/normalmanager.html";
+    }
 
 
 	/*
@@ -51,6 +57,13 @@ function checkLogin() {
 				<form action="index.html" method="post" id="myform">
 					<div id="login_tip">
 						管理员登录&nbsp;&nbsp;UserLogin
+					</div>
+					<div>
+					    <label>登录选项：</label>
+					    <select id="level" value="0">
+					        <option value="0">普通管理员</option>
+					        <option value="1">超级管理员</option>					        
+					    </select>
 					</div>
 					<div><input type="text" class="username" id="account" placeholder="请输入账号..."></div>
 					<div><input type="password" class="pwd" id="pwd" placeholder="请输入密码..."></div>

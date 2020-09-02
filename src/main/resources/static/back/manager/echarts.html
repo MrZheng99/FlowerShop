@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>菜品报表</title>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+ <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例   
+var myChart = echarts.init(document.getElementById('main'));
+ 
+        // 指定图表的配置项和数据
+        var option = {
+            tooltip: {},
+            legend: {
+                data:['日销售额']
+            },
+            xAxis: {
+                name: '日期',
+                data: ['2020-08-04', '2020-08-12', '2020-08-13', '2020-08-14', '2020-8-15']
+            },
+            yAxis: {},
+            series: [{
+                name: '销售额',
+                type: 'bar',
+                data: [304.00, 2970.00, 100024.00, 5000.00, 4800.00]
+            }]
+        };
+ 
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+ 
+</body>
+
+<script type="text/javascript">
+$(function(){
+	post("../../order",{op:"week"},function(data){
+		
+	});
+})
+</script>
+</html>
