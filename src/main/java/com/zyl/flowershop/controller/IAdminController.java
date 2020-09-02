@@ -46,4 +46,5 @@ public interface IAdminController {
 	 * @return
 	 */
 	ResponseJson updatePwd(String opwd, String npwd, Integer id);
+
 }

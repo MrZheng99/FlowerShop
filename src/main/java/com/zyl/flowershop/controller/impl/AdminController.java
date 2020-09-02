@@ -49,4 +49,5 @@ public class AdminController implements IAdminController {
 	public ResponseJson updatePwd(@RequestParam String opwd, @RequestParam String npwd, @RequestParam Integer id) {
 		return adminService.updatePwd(opwd, npwd, id);
 	}
+
 }
