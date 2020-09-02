@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.zyl.flowershop.controller.IAdminController;
 import com.zyl.flowershop.entity.Admin;
@@ -33,8 +34,8 @@ public class AdminController implements IAdminController {
 
 	@Override
 	@PutMapping("/insert")
-	public ResponseJson insert(@RequestBody Admin admin) {
-		return adminService.insert(admin);
+	public ResponseJson insert(@RequestParam MultipartFile file, @RequestBody Admin admin) {
+		return adminService.insert(file, admin);
 	}
 
 	@Override

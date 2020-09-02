@@ -1,11 +1,17 @@
 package com.zyl.flowershop.service.impl;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.zyl.flowershop.dao.IAdminDao;
 import com.zyl.flowershop.entity.Admin;
@@ -43,11 +49,34 @@ public class AdminService implements IAdminService {
 	}
 
 	@Override
-	public ResponseJson insert(Admin admin) {
+	public ResponseJson insert(MultipartFile file, Admin admin) {
+		// 上传图片
+		if (file.isEmpty())
+			return new ResponseJson(200, "添加失败,头像不能为空", null, false);
+		if (!(file.getContentType().indexOf("image") >= 0))
+			return new ResponseJson(200, "添加失败,头像格式不正确", null, false);
+		String fileName;
+		Map<String, Object> rs = new HashMap<String, Object>();
+
+		try {
+			fileName = uploadHeadImage(file);
+			admin.setHeadImg("images\\goods\\" + fileName);
+			rs.put("fileName", fileName);
+			rs.put("upload", "images\\goods\\" + fileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		Integer row = adminDao.insert(admin);
 		if (row > 0)
-			return new ResponseJson(200, "添加成功", null, true);
+			return new ResponseJson(200, "添加成功", rs, true);
 		return new ResponseJson(200, "添加失败", null, false);
+	}
+
+	public String uploadHeadImage(MultipartFile file) throws IOException {
+		String fileName = "_" + System.currentTimeMillis() + "." + file.getOriginalFilename().split("\\.", 2)[1];
+		File dest = new File(ResourceUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX + "static/images/adm"), fileName);
+		file.transferTo(dest);
+		return fileName;
 	}
 
 	@Override
