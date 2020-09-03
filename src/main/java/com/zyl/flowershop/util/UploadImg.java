@@ -12,6 +12,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
@@ -49,7 +50,8 @@ public class UploadImg {
 
 	public String uploadImage(MultipartFile file, String path) throws IOException {
 		String fileName = "_" + System.currentTimeMillis() + "." + file.getOriginalFilename().split("\\.", 2)[1];
-		File dest = new File(path + fileName);
+		String basePath = ClassUtils.getDefaultClassLoader().getResource(path).getPath();
+		File dest = new File(basePath, fileName);
 		file.transferTo(dest);
 		return fileName;
 	}

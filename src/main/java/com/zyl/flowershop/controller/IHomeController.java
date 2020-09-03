@@ -9,8 +9,6 @@ import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.entity.User;
 
 public interface IHomeController {
-	public ModelAndView back();
-
 	public ModelAndView front();
 
 	public ModelAndView backIndex();
@@ -31,9 +29,14 @@ public interface IHomeController {
 	 * 前台登录
 	 * 
 	 * @param admin
+	 * @param code
 	 * @param session
 	 * @return
 	 */
-
 	ResponseJson loginFront(User user, String code, HttpSession session);
+
+	ModelAndView backSuper();
+
+	ModelAndView backNormal();
+
 }

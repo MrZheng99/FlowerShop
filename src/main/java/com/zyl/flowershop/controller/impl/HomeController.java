@@ -25,10 +25,18 @@ public class HomeController implements IHomeController {
 	UserService userService;
 
 	@Override
-	@RequestMapping("/back/home")
-	public ModelAndView back() {
+	@RequestMapping("/back/super")
+	public ModelAndView backSuper() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:static/back/manager/index.html");
+		mav.setViewName("/back/manager/supermanager.html");
+		return mav;
+	}
+
+	@Override
+	@RequestMapping("/back/normal")
+	public ModelAndView backNormal() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/static/back/manager/normalmanager.html");
 		return mav;
 	}
 
@@ -67,4 +75,6 @@ public class HomeController implements IHomeController {
 	public ResponseJson loginFront(@RequestBody User user, @PathVariable String code, HttpSession session) {
 		return userService.login(user, code, session);
 	}
+
+
 }

@@ -60,16 +60,20 @@ public class AdminService implements IAdminService {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		try {
 			fileName = uploadImg.uploadImage(file, "classpath:static/images/adm/");
-			admin.setHeadImg("images\\adm\\" + fileName);
+			admin.setHeadImg("static\\images\\adm\\" + fileName);
 			rs.put("fileName", fileName);
-			rs.put("upload", "images\\adm\\" + fileName);
+			rs.put("upload", "static\\images\\adm\\" + fileName);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 		Integer row = adminDao.insert(admin);
 		if (row > 0)
 			return new ResponseJson(200, "添加成功", rs, true);
+
 		return new ResponseJson(200, "添加失败", null, false);
+
 	}
 
 	@Override
@@ -96,7 +100,8 @@ public class AdminService implements IAdminService {
 
 	public ResponseJson login(Admin admin, HttpSession session) {
 		Admin adm = adminDao.findByAccountPwdRole(admin);
-		if (adm.getAid() != null && adm.getAname() != null && adm.getAccount() != null) {
+		System.out.println(adm);
+		if (adm != null) {
 			session.setAttribute(SessionKey.CURRENT_ADMIN, adm);
 			return new ResponseJson(200, "login success", null, true);
 		} else

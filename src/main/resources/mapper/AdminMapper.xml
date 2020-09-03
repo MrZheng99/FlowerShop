@@ -41,7 +41,7 @@
 	<insert id="insert" parameterType="Admin" flushCache="true">
 		insert into
 		tb_adm (`account`,`aname`, `pwd`, `tel`, `headImg`, `role`, `status`)
-		values (#{acount},#{aname},#{pwd},#{tel},#{headImg},#{role},1);
+		values (#{account},#{aname},#{pwd},#{tel},#{headImg},#{role},1);
 	</insert>
 
 	<update id="updatePwd" flushCache="true">

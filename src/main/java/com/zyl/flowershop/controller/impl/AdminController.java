@@ -2,7 +2,6 @@ package com.zyl.flowershop.controller.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,8 +32,17 @@ public class AdminController implements IAdminController {
 	}
 
 	@Override
-	@PutMapping("/insert")
-	public ResponseJson insert(@RequestParam("pic") MultipartFile file, @RequestBody Admin admin) {
+
+	@PostMapping("/insert")
+	public ResponseJson insert(@RequestParam("pic") MultipartFile file, @RequestParam String aname,
+			@RequestParam String account, @RequestParam String pwd, @RequestParam String role,
+			@RequestParam String tel) {
+		Admin admin = new Admin();
+		admin.setAccount(account);
+		admin.setAname(aname);
+		admin.setPwd(pwd);
+		admin.setTel(tel);
+		admin.setRole(role);
 		return adminService.insert(file, admin);
 	}
 
