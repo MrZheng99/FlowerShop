@@ -13,11 +13,67 @@ public class Flower {
 	private String flowerLan;
 	private String deliveryDesc;
 	private Double price;
+	private Double lprice; // 最低价
+	private Double hprice;// 最低价
+
 	private String flowerImg;
 	private String sale;
+	private Integer sid;
+	private Integer tid;
+
 	private FlowerType type;
 	private FlowerSeries series;
 	private String status;
+
+	public Flower(String fname, String description, String flowerLan, String deliveryDesc, Double price,
+			String flowerImg, String sale, Integer sid, Integer tid) {
+		super();
+		this.fname = fname;
+		this.description = description;
+		this.flowerLan = flowerLan;
+		this.deliveryDesc = deliveryDesc;
+		this.price = price;
+		this.flowerImg = flowerImg;
+		this.sale = sale;
+		this.sid = sid;
+		this.tid = tid;
+	}
+
+	public Flower() {
+
+	}
+
+	public Integer getSid() {
+		return sid;
+	}
+
+	public void setSid(Integer sid) {
+		this.sid = sid;
+	}
+
+	public Integer getTid() {
+		return tid;
+	}
+
+	public void setTid(Integer tid) {
+		this.tid = tid;
+	}
+
+	public Double getLprice() {
+		return lprice;
+	}
+
+	public void setLprice(Double lprice) {
+		this.lprice = lprice;
+	}
+
+	public Double getHprice() {
+		return hprice;
+	}
+
+	public void setHprice(Double hprice) {
+		this.hprice = hprice;
+	}
 
 	public String getStatus() {
 		return status;
@@ -110,8 +166,9 @@ public class Flower {
 	@Override
 	public String toString() {
 		return "Flower [fid=" + fid + ", fname=" + fname + ", description=" + description + ", flowerLan=" + flowerLan
-				+ ", deliveryDesc=" + deliveryDesc + ", price=" + price + ", flowerImg=" + flowerImg + ", sale=" + sale
-				+ ", type=" + type + ", series=" + series + ", status=" + status + "]";
+				+ ", deliveryDesc=" + deliveryDesc + ", price=" + price + ", lprice=" + lprice + ", hprice=" + hprice
+				+ ", flowerImg=" + flowerImg + ", sale=" + sale + ", sid=" + sid + ", tid=" + tid + ", type=" + type
+				+ ", series=" + series + ", status=" + status + "]";
 	}
 
 	@Override
@@ -124,10 +181,14 @@ public class Flower {
 		result = prime * result + ((flowerImg == null) ? 0 : flowerImg.hashCode());
 		result = prime * result + ((flowerLan == null) ? 0 : flowerLan.hashCode());
 		result = prime * result + ((fname == null) ? 0 : fname.hashCode());
+		result = prime * result + ((hprice == null) ? 0 : hprice.hashCode());
+		result = prime * result + ((lprice == null) ? 0 : lprice.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((sale == null) ? 0 : sale.hashCode());
 		result = prime * result + ((series == null) ? 0 : series.hashCode());
+		result = prime * result + ((sid == null) ? 0 : sid.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + ((tid == null) ? 0 : tid.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
@@ -171,6 +232,16 @@ public class Flower {
 				return false;
 		} else if (!fname.equals(other.fname))
 			return false;
+		if (hprice == null) {
+			if (other.hprice != null)
+				return false;
+		} else if (!hprice.equals(other.hprice))
+			return false;
+		if (lprice == null) {
+			if (other.lprice != null)
+				return false;
+		} else if (!lprice.equals(other.lprice))
+			return false;
 		if (price == null) {
 			if (other.price != null)
 				return false;
@@ -186,10 +257,20 @@ public class Flower {
 				return false;
 		} else if (!series.equals(other.series))
 			return false;
+		if (sid == null) {
+			if (other.sid != null)
+				return false;
+		} else if (!sid.equals(other.sid))
+			return false;
 		if (status == null) {
 			if (other.status != null)
 				return false;
 		} else if (!status.equals(other.status))
+			return false;
+		if (tid == null) {
+			if (other.tid != null)
+				return false;
+		} else if (!tid.equals(other.tid))
 			return false;
 		if (type == null) {
 			if (other.type != null)

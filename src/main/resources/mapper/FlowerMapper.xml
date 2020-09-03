@@ -3,6 +3,92 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zyl.flowershop.dao.FlowerDao">
-	
+	<select id="findAll" resultMap="flowerInfo">
+		select
+		fid,fname,description,flowerLan,deliveryDesc,price,flowerImg,sale,status,tid,sid
+		from tb_flower;
+	</select>
+	<resultMap type="Flower" id="flowerInfo" autoMapping="true">
+		<id column="fid" property="fid"></id>
+		<association property="type" javaType="FlowerType"
+			column="tid" autoMapping="true">
+			<id column="tid" property="tid"></id>
+		</association>
+		<association property="series" javaType="FlowerSeries"
+			column="sid" autoMapping="true">
+			<id column="sid" property="sid"></id>
+		</association>
+	</resultMap>
+
+	<select id="find" resultMap="flowerInfo">
+		select
+		fid,fname,description,flowerLan,deliveryDesc,price,flowerImg,sale,status,tid,sid
+		from tb_flower
+		<where>
+			<if test="fid != null and fid != ''">
+				and fid=#{fid}
+			</if>
+			<if test="fname != null and fname != ''">
+				and fname=#{fname}
+			</if>
+			<if test="description != null and description != ''">
+				and description=#{description}
+			</if>
+			<if test="flowerLan != null and flowerLan != ''">
+				and flowerLan=#{flowerLan}
+			</if>
+			<if test="deliveryDesc != null and deliveryDesc != ''">
+				and deliveryDesc=#{deliveryDesc}
+			</if>
+			<if test="price != null and price != ''">
+				and price&lt;=#{hprice} and price>=#{lprice}
+			</if>
+			<if test="flowerImg != null and flowerImg != ''">
+				and flowerImg=#{flowerImg}
+			</if>
+		</where>
+	</select>
+
+	<insert id="insert" parameterType="Flower">
+		insert into
+		tb_flower(`fname`,`description`,`flowerLan`,`deliveryDesc`,`price`,`flowerImg`,`sale`,`sid`,`tid`,`status`)
+		values(#{fname},#{description},#{flowerLan},#{deliveryDesc},#{price},#{flowerImg},#{sale},#{sid},#{tid},1);
+	</insert>
+	<update id="update" parameterType="FlowerSeries">
+		update tb_flower
+		<set>
+			<if test="fname !=null and fname !='' ">
+				fname=#{fname},
+			</if>
+			<if test="description !=null and description !='' ">
+				description=#{description},
+			</if>
+			<if test="flowerLan !=null and flowerLan !='' ">
+				flowerLan=#{flowerLan},
+			</if>
+			<if test="deliveryDesc !=null and deliveryDesc !='' ">
+				deliveryDesc=#{deliveryDesc},
+			</if>
+			<if test="price !=null and price !='' ">
+				price=#{price},
+			</if>
+			<if test="flowerImg !=null and flowerImg !='' ">
+				flowerImg=#{flowerImg},
+			</if>
+			<if test="sale !=null and sale !='' ">
+				sale=#{sale},
+			</if>
+			<if test="sid !=null and sid !='' ">
+				sid=#{sid},
+			</if>
+			<if test="tid !=null and tid !='' ">
+				tid=#{tid},
+			</if>
+			<if test="status !=null and status !='' ">
+				status=#{status},
+			</if>
+		</set>
+		where fid=#{fid};
+	</update>
 
 </mapper>

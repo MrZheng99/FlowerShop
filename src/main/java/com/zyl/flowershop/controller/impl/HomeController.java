@@ -3,6 +3,7 @@ package com.zyl.flowershop.controller.impl;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,8 +63,8 @@ public class HomeController implements IHomeController {
 	}
 
 	@Override
-	@PostMapping("/front/login")
-	public ResponseJson loginFront(@RequestBody User user, HttpSession session) {
-		return userService.login(user, session);
+	@PostMapping("/front/login/{code}")
+	public ResponseJson loginFront(@RequestBody User user, @PathVariable String code, HttpSession session) {
+		return userService.login(user, code, session);
 	}
 }

@@ -1,6 +1,5 @@
 package com.zyl.flowershop.service.impl;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.zyl.flowershop.dao.IAdminDao;
@@ -18,11 +16,14 @@ import com.zyl.flowershop.entity.Admin;
 import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.service.IAdminService;
 import com.zyl.flowershop.util.SessionKey;
+import com.zyl.flowershop.util.UploadImg;
 
 @Service
 public class AdminService implements IAdminService {
 	@Autowired
 	IAdminDao adminDao;
+	@Autowired
+	UploadImg uploadImg;
 
 	@Override
 	public ResponseJson findAll() {
@@ -57,12 +58,11 @@ public class AdminService implements IAdminService {
 			return new ResponseJson(200, "添加失败,头像格式不正确", null, false);
 		String fileName;
 		Map<String, Object> rs = new HashMap<String, Object>();
-
 		try {
-			fileName = uploadHeadImage(file);
-			admin.setHeadImg("images\\goods\\" + fileName);
+			fileName = uploadImg.uploadImage(file, "classpath:static/images/adm/");
+			admin.setHeadImg("images\\adm\\" + fileName);
 			rs.put("fileName", fileName);
-			rs.put("upload", "images\\goods\\" + fileName);
+			rs.put("upload", "images\\adm\\" + fileName);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -70,13 +70,6 @@ public class AdminService implements IAdminService {
 		if (row > 0)
 			return new ResponseJson(200, "添加成功", rs, true);
 		return new ResponseJson(200, "添加失败", null, false);
-	}
-
-	public String uploadHeadImage(MultipartFile file) throws IOException {
-		String fileName = "_" + System.currentTimeMillis() + "." + file.getOriginalFilename().split("\\.", 2)[1];
-		File dest = new File(ResourceUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX + "static/images/adm"), fileName);
-		file.transferTo(dest);
-		return fileName;
 	}
 
 	@Override

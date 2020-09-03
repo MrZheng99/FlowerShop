@@ -4,6 +4,7 @@ public class Store {
 	private Integer sid;
 	private String color;
 	private String size;
+	private String img;
 	private String num;
 	private Integer fid;
 	private String status;
@@ -58,8 +59,8 @@ public class Store {
 
 	@Override
 	public String toString() {
-		return "Store [sid=" + sid + ", color=" + color + ", size=" + size + ", num=" + num + ", fid=" + fid
-				+ ", status=" + status + "]";
+		return "Store [sid=" + sid + ", color=" + color + ", size=" + size + ", img=" + img + ", num=" + num + ", fid="
+				+ fid + ", status=" + status + "]";
 	}
 
 	@Override
@@ -68,6 +69,7 @@ public class Store {
 		int result = 1;
 		result = prime * result + ((color == null) ? 0 : color.hashCode());
 		result = prime * result + ((fid == null) ? 0 : fid.hashCode());
+		result = prime * result + ((img == null) ? 0 : img.hashCode());
 		result = prime * result + ((num == null) ? 0 : num.hashCode());
 		result = prime * result + ((sid == null) ? 0 : sid.hashCode());
 		result = prime * result + ((size == null) ? 0 : size.hashCode());
@@ -94,6 +96,11 @@ public class Store {
 				return false;
 		} else if (!fid.equals(other.fid))
 			return false;
+		if (img == null) {
+			if (other.img != null)
+				return false;
+		} else if (!img.equals(other.img))
+			return false;
 		if (num == null) {
 			if (other.num != null)
 				return false;
@@ -115,6 +122,14 @@ public class Store {
 		} else if (!status.equals(other.status))
 			return false;
 		return true;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 
 }

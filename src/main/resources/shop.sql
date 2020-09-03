@@ -8,7 +8,7 @@ create table if not exists tb_user(
 	sex char(1)  null,
 	tel varchar(20) null unique,
 	email varchar(100) null unique,
-	headImg varchar(200) not null,
+	headImg varchar(200) null,
 	status char(1) not null
 )auto_increment=101 engine=InnoDB default charset=utf8;
 
@@ -59,6 +59,7 @@ create table if not exists tb_store(
 	sid int(11) primary key auto_increment,
 	color varchar(30) not null,
 	size varchar(10) not null,
+	img varchar(200) not null,
 	num varchar(5) not null,
 	fid int(11) not null,
 	status char(1) not null,

@@ -31,7 +31,10 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public ResponseJson login(User user, HttpSession session) {
+	public ResponseJson login(User user, String code, HttpSession session) {
+		if (!code.equals(session.getAttribute(SessionKey.VALIDATE_LOGIN_CODE)))
+			return new ResponseJson(200, "验证码错误", null, false);
+		session.removeAttribute(SessionKey.VALIDATE_LOGIN_CODE);
 		User u = userDao.findByAccountPwd(user);
 		if (u.getUid() != null && u.getUname() != null && u.getAccount() != null) {
 			session.setAttribute(SessionKey.CURRENT_USER, user);
@@ -57,6 +60,7 @@ public class UserService implements IUserService {
 		Integer row = userDao.insert(user);
 		if (row > 0)
 			return new ResponseJson(200, "添加成功", null, true);
+
 		return new ResponseJson(200, "添加失败", null, false);
 	}
 

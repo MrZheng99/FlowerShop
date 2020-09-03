@@ -4,5 +4,23 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zyl.flowershop.dao.FlowerSeriesDao">
 	
-
+<select id="findAll" resultType="FlowerSeries">
+		select sid,sname,status from tb_series;
+	</select>
+	<insert id="insert" parameterType="FlowerSeries">
+		insert into tb_series(`sname`,`status`) values(#{sname},1);
+	</insert>
+	<update id="update" parameterType="FlowerSeries">
+		update tb_series
+		<set>
+			<if test="sname !=null and sname !='' ">
+				sname=#{sname},
+			</if>
+			
+			<if test="status !=null and status !='' ">
+				status=#{status},
+			</if>
+		</set>
+		where sid=#{sid};
+	</update>
 </mapper>

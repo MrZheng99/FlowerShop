@@ -34,7 +34,7 @@ public class AdminController implements IAdminController {
 
 	@Override
 	@PutMapping("/insert")
-	public ResponseJson insert(@RequestParam MultipartFile file, @RequestBody Admin admin) {
+	public ResponseJson insert(@RequestParam("pic") MultipartFile file, @RequestBody Admin admin) {
 		return adminService.insert(file, admin);
 	}
 

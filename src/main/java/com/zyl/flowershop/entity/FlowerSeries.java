@@ -11,6 +11,14 @@ public class FlowerSeries {
 	private String sname;
 	private String status;
 
+	public FlowerSeries() {
+		super();
+	}
+
+	public FlowerSeries(String sname) {
+		this.sname = sname;
+	}
+
 	public Integer getSid() {
 		return sid;
 	}

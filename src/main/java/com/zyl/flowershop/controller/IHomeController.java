@@ -35,5 +35,5 @@ public interface IHomeController {
 	 * @return
 	 */
 
-	ResponseJson loginFront(User user, HttpSession session);
+	ResponseJson loginFront(User user, String code, HttpSession session);
 }

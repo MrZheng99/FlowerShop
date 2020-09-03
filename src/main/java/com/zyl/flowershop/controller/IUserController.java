@@ -1,5 +1,7 @@
 package com.zyl.flowershop.controller;
 
+import javax.servlet.http.HttpSession;
+
 import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.entity.User;
 
@@ -21,14 +23,6 @@ public interface IUserController {
 	public ResponseJson find(User user);
 
 	/**
-	 * 添加用户
-	 * 
-	 * @param admin
-	 * @return
-	 */
-	public ResponseJson insert(User user);
-
-	/**
 	 * 修改管理员
 	 * 
 	 * @param admin
@@ -46,5 +40,15 @@ public interface IUserController {
 	 * @return
 	 */
 	ResponseJson updatePwd(String opwd, String npwd, Integer id);
+
+	/**
+	 * 用户注册
+	 * 
+	 * @param verifyCode
+	 * @param pwd
+	 * @param session
+	 * @return
+	 */
+	ResponseJson insert(String verifyCode, String pwd, HttpSession session);
 
 }

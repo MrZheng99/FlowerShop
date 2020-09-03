@@ -13,7 +13,7 @@ public interface IUserService {
 	 * @param session
 	 * @return
 	 */
-	public ResponseJson login(User user, HttpSession session);
+	public ResponseJson login(User user, String code, HttpSession session);
 
 	public ResponseJson findAll();
 

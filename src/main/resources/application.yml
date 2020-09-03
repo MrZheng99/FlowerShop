@@ -10,7 +10,25 @@ spring:
     url: jdbc:mysql://120.26.184.107:3306/flowershop?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
     username: root
     password: Zheng1125
-
+  mail:
+    # 邮件服务地址
+    host: smtp.qq.com
+    # 端口
+    port: 587
+    # 编码格式
+    default-encoding: utf-8
+    # 用户名
+    username: zjqq520@vip.qq.com
+    # 授权码
+    password: gjaqjddwxgltdgij
+    # 其它参数
+    properties:
+      mail:
+        smtp:
+          # 如果是用 SSL 方式，需要配置如下属性
+          starttls:
+            enable: true
+            required: true
 #mybatis的相关配置
 mybatis:
   #mapper配置文件
