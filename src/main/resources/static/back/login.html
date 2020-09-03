@@ -4,12 +4,13 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="css/login.css">
 <script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/md5.js"></script>
 <script type="text/javascript">
 function checkLogin() {
 	var account = $.trim($("#account").val());
 	var pwd = $.trim($("#pwd").val());
-	var level=$.trim($("#level").val());
-	
+	var role=$.trim($("#level").val());
+	pwd = hex_md5(pwd);
 	if (account == "") {
 		alert("请输入账号...");
 		return;
@@ -20,10 +21,36 @@ function checkLogin() {
 		return;
 	}
 	
-	if(level == 1){
-		location.href="manager/supermanager.html";
+	if(role == 1){
+		$.ajax({
+			url:"/zyl/back/login",
+			type:"post",
+			data:JSON.stringify({account:account,pwd:pwd,role:role}),
+			contentType:"application/json",
+			dataType:"json",
+			success:function(data){
+				if(data.success){
+					location.href="super";
+				}else{
+					alert("账号或密码错误...");
+				}
+			}
+		});
     }else{
-    	location.href="manager/normalmanager.html";
+    	$.ajax({
+			url:"/zyl/back/login",
+			type:"post",
+			data:JSON.stringify({account:account,pwd:pwd,role:role}),
+			contentType:"application/json",
+			dataType:"json",
+			success:function(data){
+				if(data.success){
+					location.href="/back/normal";
+				}else{
+					alert("账号或密码错误...");
+				}
+			}
+		});
     }
 
 
@@ -54,7 +81,7 @@ function checkLogin() {
 	<div id="login_center">
 		<div id="login_area">
 			<div id="login_form">
-				<form action="index.html" method="post" id="myform">
+				<form action="index.html" method="post" id="myform" enctype="application/x-www-form-urlencoded">
 					<div id="login_tip">
 						管理员登录&nbsp;&nbsp;UserLogin
 					</div>

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ClassUtils;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -60,21 +61,26 @@ public class AdminService implements IAdminService {
 
 		try {
 			fileName = uploadHeadImage(file);
-			admin.setHeadImg("images\\goods\\" + fileName);
+			admin.setHeadImg("static\\images\\adm\\" + fileName);
 			rs.put("fileName", fileName);
-			rs.put("upload", "images\\goods\\" + fileName);
+			rs.put("upload", "static\\images\\adm\\" + fileName);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Integer row = adminDao.insert(admin);
+		
+		  Integer row = adminDao.insert(admin);
 		if (row > 0)
 			return new ResponseJson(200, "添加成功", rs, true);
+	
 		return new ResponseJson(200, "添加失败", null, false);
+		
 	}
 
 	public String uploadHeadImage(MultipartFile file) throws IOException {
 		String fileName = "_" + System.currentTimeMillis() + "." + file.getOriginalFilename().split("\\.", 2)[1];
-		File dest = new File(ResourceUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX + "static/images/adm"), fileName);
+		//System.out.println(ResourceUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX + "static/images/adm"));
+		String basePath = ClassUtils.getDefaultClassLoader().getResource("static/images/adm").getPath();
+		File dest = new File(basePath, fileName);
 		file.transferTo(dest);
 		return fileName;
 	}
@@ -103,7 +109,8 @@ public class AdminService implements IAdminService {
 
 	public ResponseJson login(Admin admin, HttpSession session) {
 		Admin adm = adminDao.findByAccountPwdRole(admin);
-		if (adm.getAid() != null && adm.getAname() != null && adm.getAccount() != null) {
+		System.out.println(adm);
+		if (adm != null) {
 			session.setAttribute(SessionKey.CURRENT_ADMIN, adm);
 			return new ResponseJson(200, "login success", null, true);
 		} else

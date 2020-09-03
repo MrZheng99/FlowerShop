@@ -19,18 +19,18 @@
 			<div class="box_center">
 				<form action="" class="jqtransform" id="addNewsForm">
 					<table class="form_table pt15 pb15" width="100%" border="0" cellpadding="0" cellspacing="0">
-						<tr>
-							<td class="td_right">管理员姓名：</td>
-							<td>
-								<input type="text" id="aname" name="aname" class="input-text lh30" size="40" onBlur="checkUsername()">
-								<label id="username"></label>
-							</td>
-						</tr>
 					    <tr>
-							<td class="td_right">管理员账号：</td>
+							<td class="td_right">账号：</td>
 							<td>
 								<input type="text" id="account" name="account" class="input-text lh30" size="40" onBlur="checkAccount()">
 								<label id="caccount"></label>
+							</td>
+						</tr>
+						<tr>
+							<td class="td_right">姓名：</td>
+							<td>
+								<input type="text" id="aname" name="aname" class="input-text lh30" size="40" onBlur="checkUsername()">
+								<label id="username"></label>
 							</td>
 						</tr>
 						<tr>
@@ -53,9 +53,28 @@
 								<input type="text" id="tel" name="tel" class="input-text lh30" size="40" onBlur="checkTel()">
 								<label id="telephone"></label>
 							</td>
+						</tr>
+						<tr>
 							<td class="td_right">头像：</td>
 							<td>
-								<input type="file" id="pics" name="pics" class="input-text lh30" size="40" multiple="multiple" onchange="setImagePreviews(this,'showPics')">
+								<input type="file" id="pic" name="pic" class="input-text lh30" size="40" multiple="multiple" onchange="setImagePreviews(this,'showPics')">
+							</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td colspan="3" align="center">
+								<div id="showPics">
+								
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="td_right">管理员等级：</td>
+							<td colspan="3">
+								    <select id="level" value="0">
+							        <option value="0">普通管理员</option>
+							        <option value="1">超级管理员</option>					        
+							    </select>
 							</td>
 						</tr>
 						<tr>
@@ -70,6 +89,9 @@
 	</div>
 </div>
 <script type="text/javascript">
+function checkAccount(){
+
+}
 
 function checkUsername(){
 	var username; 
@@ -134,17 +156,37 @@ function reg(){
 		return;
 	}
 	
+	var account = $.trim($("#account").val());
 	var aname = $.trim($("#aname").val());
 	var pwd = $.trim($("#pwd").val());
 	var tel = $.trim($("#tel").val());
-	$.post("../../admin",{op:"reg",aname:aname,pwd:pwd,tel:tel},data => {
-		data = parseInt($.trim(data));
-		if(data != -1){
-			alert("注册成功！！！");
-		}else{
-			alert("账号或密码错误...");
-		}
-	},"text")
+	var role=$.trim($("#level").val());
+	pwd = hex_md5(pwd);
+
+	
+	$.ajaxFileUpload({
+		url:"/zyl/adm/insert",
+	    secureuri:false,
+	    fileElementId:"pic",
+	    dataType:"text",
+	    data:{account:account,aname:aname,pwd:pwd,tel:tel,role:role},
+	    success:function(data,status){
+	    	data = parseInt($.trim(data));
+	    	if(data == -1){
+	    		alert("您输入的管理员信息不完整...");
+	    	}else if(data>0){
+	    		$("#addNewsForm")[0].reset();
+	    		$("#showPics").html("");
+	    		alert("管理员信息添加成功...");
+	    	}else{
+	    		alert("管理员信息添加失败，请稍后重试...");
+	    	}
+	    },
+	    error:function(data,status,e){
+	    	alert("管理员信息添加失败...\n"+e);
+	    }
+	});
+	
 }
 </script>
 </body>

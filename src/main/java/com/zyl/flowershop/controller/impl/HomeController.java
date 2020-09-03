@@ -24,13 +24,21 @@ public class HomeController implements IHomeController {
 	UserService userService;
 
 	@Override
-	@RequestMapping("/back/home")
-	public ModelAndView back() {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:static/back/manager/index.html");
+	@RequestMapping("/back/super")
+	public ModelAndView backSuper() {
+		ModelAndView mav = new ModelAndView();		
+		mav.setViewName("/back/manager/supermanager.html");
 		return mav;
 	}
 
+	@Override
+	@RequestMapping("/back/normal")
+	public ModelAndView backNormal() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/static/back/manager/normalmanager.html");
+		return mav;
+	}
+	
 	@Override
 	@RequestMapping("/front/home")
 	public ModelAndView front() {
