@@ -1,6 +1,7 @@
 package com.zyl.flowershop.controller;
 
-import org.springframework.web.bind.annotation.RequestParam;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.zyl.flowershop.entity.Admin;
@@ -36,7 +37,7 @@ public interface IAdminController {
 	 * @param admin
 	 * @return
 	 */
-	ResponseJson update(Admin admin);
+	public ResponseJson update(Admin admin);
 
 	/**
 	 * 修改密码
@@ -46,6 +47,8 @@ public interface IAdminController {
 	 * @param id   管理员id
 	 * @return
 	 */
-	ResponseJson updatePwd(String opwd, String npwd, Integer id);
+	public ResponseJson updatePwd(String opwd, String npwd, Integer id);
+
+	public ResponseJson findCurrent(HttpSession session);
 
 }

@@ -29,7 +29,7 @@ public interface IUserController {
 	 * @param op
 	 * @return
 	 */
-	ResponseJson update(User user);
+	public ResponseJson update(User user);
 
 	/**
 	 * 修改密码
@@ -39,7 +39,7 @@ public interface IUserController {
 	 * @param id   管理员id
 	 * @return
 	 */
-	ResponseJson updatePwd(String opwd, String npwd, Integer id);
+	public ResponseJson updatePwd(String opwd, String npwd, Integer id);
 
 	/**
 	 * 用户注册
@@ -49,6 +49,8 @@ public interface IUserController {
 	 * @param session
 	 * @return
 	 */
-	ResponseJson insert(String verifyCode, String pwd, HttpSession session);
+	public ResponseJson insert(String verifyCode, String pwd, HttpSession session);
+
+	public ResponseJson findCurrent(HttpSession session);
 
 }

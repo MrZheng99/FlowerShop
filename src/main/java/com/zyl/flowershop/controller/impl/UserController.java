@@ -101,4 +101,11 @@ public class UserController implements IUserController {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	@GetMapping("/findCurrent")
+	public ResponseJson findCurrent(HttpSession session) {
+		return new ResponseJson(200, "获取成功", session.getAttribute(SessionKey.CURRENT_USER), true);
+	}
+
 }

@@ -1,6 +1,9 @@
 package com.zyl.flowershop.controller.impl;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +15,7 @@ import com.zyl.flowershop.controller.IAdminController;
 import com.zyl.flowershop.entity.Admin;
 import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.service.impl.AdminService;
+import com.zyl.flowershop.util.SessionKey;
 
 @RestController
 @RequestMapping("/adm")
@@ -56,6 +60,12 @@ public class AdminController implements IAdminController {
 	@PostMapping("/updatePwd")
 	public ResponseJson updatePwd(@RequestParam String opwd, @RequestParam String npwd, @RequestParam Integer id) {
 		return adminService.updatePwd(opwd, npwd, id);
+	}
+
+	@Override
+	@GetMapping("/findCurrent")
+	public ResponseJson findCurrent(HttpSession session) {
+		return new ResponseJson(200, "获取成功", session.getAttribute(SessionKey.CURRENT_ADMIN), true);
 	}
 
 }

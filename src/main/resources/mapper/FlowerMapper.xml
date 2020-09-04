@@ -46,7 +46,13 @@
 			<if test="flowerImg != null and flowerImg != ''">
 				and flowerImg=#{flowerImg}
 			</if>
+			<if test="status != null and status != ''">
+				and status=#{status}
+			</if>
 		</where>
+		<if test="page != null and page != '' and rows!=null and rows!=''">
+			limit page,rows
+		</if>
 	</select>
 
 	<insert id="insert" parameterType="Flower">

@@ -15,6 +15,9 @@ public class Flower {
 	private Double price;
 	private Double lprice; // 最低价
 	private Double hprice;// 最低价
+	private Integer page;// 第几页
+
+	private Integer rows;// 数量
 
 	private String flowerImg;
 	private String sale;
@@ -41,6 +44,22 @@ public class Flower {
 
 	public Flower() {
 
+	}
+
+	public Integer getPage() {
+		return page;
+	}
+
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+
+	public Integer getRows() {
+		return rows;
+	}
+
+	public void setRows(Integer rows) {
+		this.rows = rows;
 	}
 
 	public Integer getSid() {
@@ -167,8 +186,8 @@ public class Flower {
 	public String toString() {
 		return "Flower [fid=" + fid + ", fname=" + fname + ", description=" + description + ", flowerLan=" + flowerLan
 				+ ", deliveryDesc=" + deliveryDesc + ", price=" + price + ", lprice=" + lprice + ", hprice=" + hprice
-				+ ", flowerImg=" + flowerImg + ", sale=" + sale + ", sid=" + sid + ", tid=" + tid + ", type=" + type
-				+ ", series=" + series + ", status=" + status + "]";
+				+ ", page=" + page + ", rows=" + rows + ", flowerImg=" + flowerImg + ", sale=" + sale + ", sid=" + sid
+				+ ", tid=" + tid + ", type=" + type + ", series=" + series + ", status=" + status + "]";
 	}
 
 	@Override
@@ -183,7 +202,9 @@ public class Flower {
 		result = prime * result + ((fname == null) ? 0 : fname.hashCode());
 		result = prime * result + ((hprice == null) ? 0 : hprice.hashCode());
 		result = prime * result + ((lprice == null) ? 0 : lprice.hashCode());
+		result = prime * result + ((page == null) ? 0 : page.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
+		result = prime * result + ((rows == null) ? 0 : rows.hashCode());
 		result = prime * result + ((sale == null) ? 0 : sale.hashCode());
 		result = prime * result + ((series == null) ? 0 : series.hashCode());
 		result = prime * result + ((sid == null) ? 0 : sid.hashCode());
@@ -242,10 +263,20 @@ public class Flower {
 				return false;
 		} else if (!lprice.equals(other.lprice))
 			return false;
+		if (page == null) {
+			if (other.page != null)
+				return false;
+		} else if (!page.equals(other.page))
+			return false;
 		if (price == null) {
 			if (other.price != null)
 				return false;
 		} else if (!price.equals(other.price))
+			return false;
+		if (rows == null) {
+			if (other.rows != null)
+				return false;
+		} else if (!rows.equals(other.rows))
 			return false;
 		if (sale == null) {
 			if (other.sale != null)
