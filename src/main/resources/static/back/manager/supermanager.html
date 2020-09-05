@@ -6,6 +6,12 @@
 <link rel="stylesheet" type="text/css" href="/zyl/css/easyui.css" />
 <link rel="stylesheet" type="text/css" href="/zyl/css/wu.css" />
 <link rel="stylesheet" type="text/css" href="/zyl/css/icon.css" />
+<style type="text/css">
+#back_headImg{
+ max-height: 30px;
+ max-width: 30px;
+}
+</style>
 <script type="text/javascript" src="/zyl/js/jquery-1.12.4.js"></script>
 <script type="text/javascript" src="/zyl/js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="/zyl/js/easyui-lang-zh_CN.js"></script>
@@ -14,7 +20,7 @@
 <script type="text/javascript" src="/zyl/js/axios.js"></script>
 <script type="text/javascript" src="/zyl/js/vue.js"></script>
 <script type="text/javascript" src="/zyl/js/echarts.min.js"></script>
-<script type="text/javascript" src="/js/md5.js"></script>
+<script type="text/javascript" src="/zyl/back/js/md5.js"></script>
 <script src="/zyl/ckeditor/ckeditor.js"></script>
 </head>
 <body class="easyui-layout">
@@ -24,7 +30,8 @@
         	<h1>EasyUI Web Admin</h1>
         </div>
         <div class="wu-header-right" id="login_info" >
-        	<p><strong class="easyui-tooltip" title="2条未读消息"></strong>，欢迎您！</p>
+            <img :src="headImg" id="back_headImg"></img>
+        	<p><strong class="easyui-tooltip" title="2条未读消息">超级管理员</strong>，{{aname}}欢迎您！</p>
             <p><a href="#">网站首页</a>|<a href="#">支持论坛</a>|<a href="#">帮助中心</a>|<a href="#">安全退出</a></p>
         </div>
     </div>
@@ -34,30 +41,33 @@
     	<div class="easyui-accordion" data-options="border:false,fit:true"> 
         	<div title="鲜花信息管理" data-options="iconCls:'icon-report-picture'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
-                    <li iconCls="icon-report"><a href="javascript:void(0)" data-icon="icon-report" data-link="types.html" iframe="0">鲜花类型</a></li>
-                    <li iconCls="icon-report"><a href="javascript:void(0)" data-icon="icon-report" data-link="series.html" iframe="0">鲜花类型</a></li>
-                    <li iconCls="icon-report-add"><a href="javascript:void(0)" data-icon="icon-report-add" data-link="add_flo.html" iframe="0">添加鲜花</a></li>
-                    <li iconCls="icon-report-edit"><a href="javascript:void(0)" data-icon="icon-report-edit" data-link="view_flo.html" iframe="0">鲜花维护</a></li>
+                    <li iconCls="icon-report"><a href="javascript:void(0)" data-icon="icon-report" data-link="back/manager/view_types.html" iframe="0">鲜花类型</a></li>
+                    <li iconCls="icon-report"><a href="javascript:void(0)" data-icon="icon-report" data-link="back/manager/view_series.html" iframe="0">鲜花系列</a></li>
+                    <li iconCls="icon-report-add"><a href="javascript:void(0)" data-icon="icon-report-add" data-link="back/manager/add_flo.html" iframe="0">添加鲜花</a></li>
+                    <li iconCls="icon-report-edit"><a href="javascript:void(0)" data-icon="icon-report-edit" data-link="back/manager/view_flo.html" iframe="0">鲜花维护</a></li>
                 </ul>
             </div>
             <div title="销售信息管理" data-options="iconCls:'icon-report-picture'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
-                    <li iconCls="icon-report-edit"><a href="javascript:void(0)" data-icon="icon-report-edit" data-link="echarts.html" iframe="0">查看销售报表</a></li>
+                    <li iconCls="icon-report-edit"><a href="javascript:void(0)" data-icon="icon-report-edit" data-link="back/manager/echarts.html" iframe="0">查看销售报表</a></li>
                 </ul>
             </div>
             <div title="用户管理" data-options="iconCls:'icon-user'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
-                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="view_user.html" iframe="0">用户管理</a></li>
+                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="back/manager/view_user.html" iframe="0">用户管理</a></li>
                 </ul>
             </div>           
              <div title="管理员中心" data-options="iconCls:'icon-user'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
-                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="admin.html" iframe="0">添加管理员</a></li>
-                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="view_admin.html" iframe="0">管理员管理
-                    
-                    </a></li>
+                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="back/manager/add_admin.html" iframe="0">添加管理员</a></li>
+                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="back/manager/view_admin.html" iframe="0">管理员管理</a></li>
                 </ul>
             </div>
+            <div title="个人中心" data-options="iconCls:'icon-user'" style="padding:5px;">  	
+    			<ul class="easyui-tree wu-side-tree">
+                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="back/manager/admin.html" iframe="0">个人管理</a></li>
+                </ul>
+            </div> 
         </div>
     </div>	
     <!-- end of sidebar -->    
@@ -85,7 +95,7 @@
 				addTab(title,url,iconCls,iframe);
 			});	
 		});
-		/*
+		
 		let login = new Vue({
 			el: "#login_info",
 			data: {
@@ -94,18 +104,11 @@
 				level:""
 			},
 			mounted:function(){
-				axios.get("../../admin", {params:{op:"info"}}).then(result=> {
-					if(result.data.code == 200){ //已登录
-						this.aname=  result.data.data.aname;
-					    this.status = result.data.data.status;
-					    if(this.status == 1){
-					    	this.level = "普通管理员";
-					    }else if(this.status ==2){
-					    	this.level = "高级管理员";
-					    }else if(this.status == 3){
-					    	this.level = "店家";
-					    }
-					
+				axios.get("adm/findCurrent").then(result=> {
+					if(result.data.success){ //已登录
+						this.aname =  result.data.data.aname;
+					    this.role = result.data.data.role;
+					    this.headImg = result.data.data.headImg;
 					}  else{
 						this.aname = "wu";
 					}
@@ -113,9 +116,6 @@
 			}
 		})
 
-		*/
-		
-		
 		function info(){
 			return axios.get("../../admin", {params:{op:"info"}})
 		}

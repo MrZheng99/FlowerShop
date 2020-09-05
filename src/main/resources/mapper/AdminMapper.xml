@@ -14,7 +14,7 @@
 	<select id="findByAccountPwdRole" parameterType="Admin"
 		resultType="Admin">
 		select
-		aid,account,aname,role from
+		aid,account,aname,tel,headImg,role from
 		tb_adm where
 		account=#{account} and pwd=#{pwd} and role=#{role} and status=1;
 	</select>
@@ -36,7 +36,6 @@
 			</if>
 		</where>
 	</select>
-
 
 	<insert id="insert" parameterType="Admin" flushCache="true">
 		insert into
@@ -61,6 +60,9 @@
 			</if>
 			<if test="aname != null and aname !='' ">
 				aname=#{aname},
+			</if>
+			<if test="role != null and role !='' ">
+				role=#{role},
 			</if>
 			<if test="status != null and status !='' ">
 				status=#{status},

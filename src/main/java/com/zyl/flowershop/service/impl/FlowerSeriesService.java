@@ -48,7 +48,7 @@ public class FlowerSeriesService implements IFlowerSeriesService {
 	public ResponseJson insert(String sname) {
 		Integer row = 0;
 		try {
-			row = flowerSeriesDao.update(new FlowerSeries(sname));
+			row = flowerSeriesDao.insert(new FlowerSeries(sname));
 			if (row > 0)
 				return new ResponseJson(200, "修改成功", row, true);
 			return new ResponseJson(200, "修改失败", -1, false);

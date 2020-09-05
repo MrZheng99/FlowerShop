@@ -47,8 +47,6 @@
 		<if test="tel != null and tel !='' ">
 			and tel=#{tel}
 		</if>
-
-
 	</select>
 
 	<insert id="insert" parameterType="User" flushCache="true">

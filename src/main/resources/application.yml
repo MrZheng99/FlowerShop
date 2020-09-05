@@ -2,7 +2,8 @@ server:
   port: 8888
   servlet:
      context-path: /zyl
-  
+file:
+  path: /fileUpload/**
 spring:
   #数据库连接配置
   datasource:

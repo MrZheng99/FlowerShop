@@ -48,11 +48,13 @@ public class FlowerTypeService implements IFlowerTypeService {
 
 	@Override
 	public ResponseJson insert(MultipartFile file, String tname) {
+		if (file.isEmpty())
+			return new ResponseJson(200, "添加失败,头像不能为空", null, false);
 		if (!(file.getContentType().indexOf("image") >= 0))
-			return new ResponseJson(200, "添加失败,图片格式不正确", null, false);
+			return new ResponseJson(200, "添加失败,头像格式不正确", null, false);
 		String typeImg;
 		try {
-			typeImg = "images\\flower\\" + uploadImg.uploadWaterLogoImg(file, "classpath:static/images/flower/");
+			typeImg = "fileUpload\\types\\" + uploadImg.uploadWaterLogoImg(file, "\\images\\types");
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new ResponseJson(500, "添加失败", null, false);

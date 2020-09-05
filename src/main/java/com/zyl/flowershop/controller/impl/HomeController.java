@@ -25,7 +25,7 @@ public class HomeController implements IHomeController {
 	UserService userService;
 
 	@Override
-	@RequestMapping("/back/super")
+	@RequestMapping("/super")
 	public ModelAndView backSuper() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/back/manager/supermanager.html");
@@ -36,7 +36,7 @@ public class HomeController implements IHomeController {
 	@RequestMapping("/back/normal")
 	public ModelAndView backNormal() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/static/back/manager/normalmanager.html");
+		mav.setViewName("/back/manager/normalmanager.html");
 		return mav;
 	}
 
@@ -52,7 +52,7 @@ public class HomeController implements IHomeController {
 	@RequestMapping("/back")
 	public ModelAndView backIndex() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("static/back/login.html");
+		mav.setViewName("/back/login.html");
 		return mav;
 	}
 
@@ -60,7 +60,7 @@ public class HomeController implements IHomeController {
 	@RequestMapping("/front")
 	public ModelAndView frontIndex() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("static/front/login.html");
+		mav.setViewName("/front/login.html");
 		return mav;
 	}
 

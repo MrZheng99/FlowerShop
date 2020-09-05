@@ -2,6 +2,7 @@ package com.zyl.flowershop.controller.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,13 +27,14 @@ public class FlowerTypeController implements IFlowerTypeController {
 
 	@Override
 	@PostMapping("/insert")
-	public ResponseJson insert(@RequestParam MultipartFile file, @RequestParam String tname) {
+	public ResponseJson insert(@RequestParam("pic") MultipartFile file, @RequestParam String tname) {
 		return flowerTypeService.insert(file, tname);
 	}
 
 	@Override
 	@PostMapping("/update")
-	public ResponseJson update(FlowerType flowerType) {
+	public ResponseJson update(@RequestBody FlowerType flowerType) {
+		System.out.println(flowerType);
 		return flowerTypeService.update(flowerType);
 	}
 }
