@@ -10,7 +10,7 @@ import com.zyl.flowershop.entity.Store;
 public interface IStoreDao {
 	public List<Store> findAll();
 
-	public List<Store> find(Integer fid);
+	public List<Store> find(Store store);
 
 	public Integer insert(Store store);
 
