@@ -3,13 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="back/css/login.css">
-<script type="text/javascript" src="back/js/jquery.min.js"></script>
+<link rel="short icon" href="back/images/logo.png" type="image/x-icon">
+
+<title>后台登陆</title>
+</head>
+<body>
+	<div id="login_top">
+		<div id="welcome">
+			欢迎使用ZYL花城后台管理系统
+		</div>
+		<div id="back">
+			<a href="../index.html">返回首页</a>&nbsp;&nbsp; | &nbsp;&nbsp;
+			<a href="#">帮助</a>
+		</div>
+	</div>
+	<div id="login_center">
+		<div id="login_area">
+			<div id="login_form">
+				<form action="index.html" method="post" id="myform" enctype="application/x-www-form-urlencoded">
+					<div id="login_tip">
+						管理员登录&nbsp;&nbsp;UserLogin
+					</div>
+		
+					<div><input type="text" class="username" id="account" placeholder="请输入账号..."></div>
+					<div><input type="password" class="pwd" id="pwd" placeholder="请输入密码..."></div>
+					<div class="login_tip">
+                    <span>
+                        <label style="margin-right: 60px;"><input type="radio"  name="level" value="1">超级</label>
+                        <label ><input type="radio" name="level" value="0" checked >普通</label>
+                    </span>
+                </div>
+					<div id="btn_area">
+						<input type="button"  onclick="checkLogin()" id="sub_btn" value="登&nbsp;&nbsp;录">&nbsp;&nbsp;
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div id="login_bottom">
+		<label style="color:#FFF"><a class="copy" href="http://www.hyycinfo.com">ZYL花城</a>&copy; 版权所有</label>
+	</div>
+	<script type="text/javascript" src="back/js/jquery.min.js"></script>
 <script type="text/javascript" src="back/js/md5.js"></script>
 <script type="text/javascript">
+$(function(){
+    document.onkeyup = function(e) {
+        if (e.keyCode == 13) {
+        	checkLogin();
+        }
+    }
+})
 function checkLogin() {
 	var account = $.trim($("#account").val());
 	var pwd = $.trim($("#pwd").val());
-	var role=$.trim($("#level").val());
+	var role=$("input[name='level']:checked").val();
 	pwd = hex_md5(pwd);
 	if (account == "") {
 		alert("请输入账号...");
@@ -54,43 +101,5 @@ function checkLogin() {
     }
 }
 </script>
-<title>后台登陆</title>
-</head>
-<body>
-	<div id="login_top">
-		<div id="welcome">
-			欢迎使用ZYL花城后台管理系统
-		</div>
-		<div id="back">
-			<a href="../index.html">返回首页</a>&nbsp;&nbsp; | &nbsp;&nbsp;
-			<a href="#">帮助</a>
-		</div>
-	</div>
-	<div id="login_center">
-		<div id="login_area">
-			<div id="login_form">
-				<form action="index.html" method="post" id="myform" enctype="application/x-www-form-urlencoded">
-					<div id="login_tip">
-						管理员登录&nbsp;&nbsp;UserLogin
-					</div>
-					<div>
-					    <label>登录选项：</label>
-					    <select id="level" value="0">
-					        <option value="0">普通管理员</option>
-					        <option value="1">超级管理员</option>					        
-					    </select>
-					</div>
-					<div><input type="text" class="username" id="account" placeholder="请输入账号..."></div>
-					<div><input type="password" class="pwd" id="pwd" placeholder="请输入密码..."></div>
-					<div id="btn_area">
-						<input type="button"  onclick="checkLogin()" id="sub_btn" value="登&nbsp;&nbsp;录">&nbsp;&nbsp;
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	<div id="login_bottom">
-		<label style="color:#FFF"><a class="copy" href="http://www.hyycinfo.com">ZYL花城</a>&copy; 版权所有</label>
-	</div>
 </body>
 </html>
