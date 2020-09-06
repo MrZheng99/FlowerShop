@@ -76,5 +76,4 @@ public class HomeController implements IHomeController {
 		return userService.login(user, code, session);
 	}
 
-
 }

@@ -80,8 +80,8 @@ public class UserController implements IUserController {
 		if (verifyCode.equals(session.getAttribute(SessionKey.VALIDATE_REGISTERY_CODE))) {
 			User user = new User();
 			user.setAccount((String) session.getAttribute(SessionKey.CURRENT_REGISTERY_ACCOUNT));
-			user.setAccount((String) session.getAttribute(SessionKey.CURRENT_REGISTERY_EMAIL));
-			user.setAccount(pwd);
+			user.setEmail((String) session.getAttribute(SessionKey.CURRENT_REGISTERY_EMAIL));
+			user.setPwd(pwd);
 			return userService.insert(user);
 		}
 		return new ResponseJson(200, "验证码不正确", null, false);
