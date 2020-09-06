@@ -49,7 +49,7 @@ var types_obj = $('#types_data').datagrid({
 				    cache:false,
 				    iconCls:"icon-add",
 				    modal:true,
-				    href:"back/manager/add_flo_types.html",
+				    href:"manager/add_flo_types.html",
 				    buttons:[{
 				    	text:"确定",
 				    	iconCls:"icon-ok",
@@ -61,7 +61,7 @@ var types_obj = $('#types_data').datagrid({
 				    		    secureuri:false,
 				    		    fileElementId:"pic",
 				    		    dataType:"json",
-				    		    data:JSON.stringify({tname:tname}),
+				    		    data:{tname:tname},
 				    		    success:function(data){
 				    		       if(data.success){
 				    		    		alert("鲜花种类添加成功...");

@@ -54,7 +54,7 @@ public class FlowerTypeService implements IFlowerTypeService {
 			return new ResponseJson(200, "添加失败,头像格式不正确", null, false);
 		String typeImg;
 		try {
-			typeImg = "fileUpload\\types\\" + uploadImg.uploadWaterLogoImg(file, "\\images\\types");
+			typeImg = "..\\fileUpload\\types\\" + uploadImg.uploadWaterLogoImg(file, "\\images\\types");
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new ResponseJson(500, "添加失败", null, false);

@@ -60,7 +60,7 @@ public class AdminService implements IAdminService {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		try {
 			fileName = uploadImg.uploadImage(file, "\\images\\adm");
-			admin.setHeadImg("fileUpload\\adm\\" + fileName);
+			admin.setHeadImg("..\\fileUpload\\adm\\" + fileName);
 			rs.put("fileName", fileName);
 			rs.put("upload", "fileUpload\\adm\\" + fileName);
 
