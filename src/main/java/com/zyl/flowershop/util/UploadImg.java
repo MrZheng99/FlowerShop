@@ -12,16 +12,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.springframework.stereotype.Component;
-import org.springframework.util.ClassUtils;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class UploadImg {
 	public String uploadWaterLogoImg(MultipartFile file, String path) throws IOException {
 		String fileName = "_" + System.currentTimeMillis() + "." + file.getOriginalFilename().split("\\.", 2)[1];
-		File dest = new File((System.getProperty("user.dir") +path),
-                fileName);
+		File dest = new File((System.getProperty("user.dir") + path), fileName);
 		Image srcImg = ImageIO.read(file.getInputStream());
 		int srcImgWidth = srcImg.getWidth(null);
 		int srcImgHeight = srcImg.getHeight(null);
@@ -52,8 +49,7 @@ public class UploadImg {
 
 	public String uploadImage(MultipartFile file, String path) throws IOException {
 		String fileName = "_" + System.currentTimeMillis() + "." + file.getOriginalFilename().split("\\.", 2)[1];
-		 File dest = new File((System.getProperty("user.dir") +path),
-	                fileName);
+		File dest = new File((System.getProperty("user.dir") + path), fileName);
 		file.transferTo(dest);
 		return fileName;
 	}

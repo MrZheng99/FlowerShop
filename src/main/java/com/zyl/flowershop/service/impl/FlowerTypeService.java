@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +20,10 @@ public class FlowerTypeService implements IFlowerTypeService {
 	IFlowerTypeDao flowerTypeDao;
 	@Autowired
 	UploadImg uploadImg;
+	@Value("${file.types.path}")
+	private String path;
+	@Value("${file.types.uploadPath}")
+	private String uploadPath;
 
 	@Override
 	public ResponseJson findAll() {
@@ -49,12 +54,12 @@ public class FlowerTypeService implements IFlowerTypeService {
 	@Override
 	public ResponseJson insert(MultipartFile file, String tname) {
 		if (file.isEmpty())
-			return new ResponseJson(200, "添加失败,头像不能为空", null, false);
+			return new ResponseJson(200, "添加失败,图片不能为空", null, false);
 		if (!(file.getContentType().indexOf("image") >= 0))
-			return new ResponseJson(200, "添加失败,头像格式不正确", null, false);
+			return new ResponseJson(200, "添加失败,格式不正确", null, false);
 		String typeImg;
 		try {
-			typeImg = "fileUpload\\types\\" + uploadImg.uploadWaterLogoImg(file, "\\images\\types");
+			typeImg = path + uploadImg.uploadWaterLogoImg(file, uploadPath);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new ResponseJson(500, "添加失败", null, false);

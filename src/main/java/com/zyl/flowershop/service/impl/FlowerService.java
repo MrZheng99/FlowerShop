@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +23,10 @@ public class FlowerService implements IFlowerService {
 	IFlowerDao flowerDao;
 	@Autowired
 	UploadImg uploadImg;
+	@Value("${file.adm.path}")
+	private String path;
+	@Value("${file.adm.uploadPath}")
+	private String uploadPath;
 
 	@Override
 	public ResponseJson findAll() {
@@ -71,8 +76,7 @@ public class FlowerService implements IFlowerService {
 					if (!(file.getContentType().indexOf("image") >= 0)) {
 						return new ResponseJson(200, "添加失败,图片格式不正确", null, false);
 					}
-					listImage.add(
-							"images\\flower\\" + uploadImg.uploadWaterLogoImg(file, "classpath:static/images/flower/"));
+					listImage.add(path + uploadImg.uploadWaterLogoImg(file, uploadPath));
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -98,9 +102,9 @@ public class FlowerService implements IFlowerService {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		String fileName;
 		try {
-			fileName = uploadImg.uploadWaterLogoImg(file, "classpath:static/images/flower/");
+			fileName = uploadImg.uploadWaterLogoImg(file, uploadPath);
 			rs.put("fileName", fileName);
-			rs.put("upload", "images\\flower\\" + fileName);
+			rs.put("upload", path + fileName);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new ResponseJson(500, "上传失败", map, false);

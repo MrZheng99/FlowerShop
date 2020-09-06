@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +25,11 @@ public class AdminService implements IAdminService {
 	IAdminDao adminDao;
 	@Autowired
 	UploadImg uploadImg;
+
+	@Value("${file.adm.path}")
+	private String path;
+	@Value("${file.adm.uploadPath}")
+	private String uploadPath;
 
 	@Override
 	public ResponseJson findAll() {
@@ -59,10 +65,10 @@ public class AdminService implements IAdminService {
 		String fileName;
 		Map<String, Object> rs = new HashMap<String, Object>();
 		try {
-			fileName = uploadImg.uploadImage(file, "\\images\\adm");
-			admin.setHeadImg("fileUpload\\adm\\" + fileName);
+			fileName = uploadImg.uploadImage(file, uploadPath);
+			admin.setHeadImg(path + fileName);
 			rs.put("fileName", fileName);
-			rs.put("upload", "fileUpload\\adm\\" + fileName);
+			rs.put("upload", path + fileName);
 
 		} catch (IOException e) {
 			e.printStackTrace();
