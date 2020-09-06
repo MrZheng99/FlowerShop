@@ -16,25 +16,25 @@
 			<div class="box_top">
 				<b class="pl15">管理员</b>
 			</div>
-			<div class="box_center">
+			<div class="box_center" id="admin_info">
 				<form action="" class="jqtransform" id="changeForm">
 					<table class="form_table pt15 pb15" width="100%" border="0" cellpadding="0" cellspacing="0">
 				     	<tr>
 							<td class="td_right">编号：</td>
 							<td>
-								<label id="aid" >aid</label>
+								<label id="aid" >{{aid}}</label>
 							</td>
 						</tr>
 					    <tr>
 							<td class="td_right">账号：</td>
 							<td>
-								<label id="account">account</label>
+								<label id="account">{{account}}</label>
 							</td>
 						</tr>
 						<tr>
 							<td class="td_right">姓名：</td>
 							<td>
-								<input type="text" id="aname" name="aname" class="input-text lh30" size="40" onBlur="checkUsername()">
+								<input type="text" id="aname" name="aname" class="input-text lh30" size="40"  onBlur="checkAname()" :value="aname">
 								<label id="username"></label>
 							</td>
 						</tr>
@@ -55,20 +55,21 @@
 						<tr>
 							<td class="td_right">电话号码：</td>
 							<td>
-								<input type="text" id="tel" name="tel" class="input-text lh30" size="40" onBlur="checkTel()">
+								<input type="text" id="tel" name="tel" class="input-text lh30" size="40" onBlur="checkTel()" :value="tel">
 								<label id="telephone"></label>
 							</td>
 						</tr>
 						<tr>
 							<td class="td_right">头像：</td>
 							<td>
-								<input type="file" id="pic" name="pic" class="input-text lh30" size="40" multiple="multiple" onchange="setImagePreviews(this,'showPics')">
+								<input type="file" id="pic" name="pic" class="input-text lh30" size="40" multiple="multiple" onchange="setAdmImagePreviews(this,'showPics')">
 							</td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
 							<td colspan="3" align="center">
-								<div id="showPics">
+								<div id="showPics" align="left">
+								<img :src="headImg">
 								</div>
 							</td>
 						</tr>
@@ -84,6 +85,34 @@
 	</div>
 </div>
 <script type="text/javascript">
+let login = new Vue({
+	el: "#admin_info",
+	data: {
+		aid:"",
+		account:"",
+		aname: "",
+		status: 0,
+		level:"",
+		headImg:"",
+		tel:""
+	},
+	mounted:function(){
+		axios.get("adm/findCurrent").then(result=> {
+			if(result.data.success){ //已登录
+				this.aid = result.data.data.aid;
+				this.aname = result.data.data.aname;
+				this.account = result.data.data.account;		   
+				this.aid = result.data.data.aid;
+			    this.role = result.data.data.role;
+			    this.headImg = result.data.data.headImg;
+			    this.tel = result.data.data.tel;
+			}  else{
+				alert("请登陆后重试。。。")
+			}
+		})
+	}
+})
+
 function checkUsername(){
 	var username; 
 	username= $.trim($("#aname").val());

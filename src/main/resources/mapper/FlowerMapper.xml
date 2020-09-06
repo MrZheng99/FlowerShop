@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zyl.flowershop.dao.FlowerDao">
+<mapper namespace="com.zyl.flowershop.dao.IFlowerDao">
 	<select id="findAll" resultMap="flowerInfo">
 		select
 		fid,fname,description,flowerLan,deliveryDesc,price,flowerImg,sale,status,tid,sid

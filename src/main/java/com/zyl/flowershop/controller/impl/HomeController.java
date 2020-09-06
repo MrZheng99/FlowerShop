@@ -25,7 +25,7 @@ public class HomeController implements IHomeController {
 	UserService userService;
 
 	@Override
-	@RequestMapping("/super")
+	@RequestMapping("/back/super")
 	public ModelAndView backSuper() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/back/manager/supermanager.html");

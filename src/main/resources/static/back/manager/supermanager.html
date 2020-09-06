@@ -45,31 +45,31 @@
     	<div class="easyui-accordion" data-options="border:false,fit:true"> 
         	<div title="鲜花信息管理" data-options="iconCls:'icon-report-picture'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
-                    <li iconCls="icon-report"><a href="javascript:void(0)" data-icon="icon-report" data-link="back/manager/view_types.html" iframe="0">鲜花类型</a></li>
-                    <li iconCls="icon-report"><a href="javascript:void(0)" data-icon="icon-report" data-link="back/manager/view_series.html" iframe="0">鲜花系列</a></li>
-                    <li iconCls="icon-report-add"><a href="javascript:void(0)" data-icon="icon-report-add" data-link="back/manager/add_flo.html" iframe="0">添加鲜花</a></li>
-                    <li iconCls="icon-report-edit"><a href="javascript:void(0)" data-icon="icon-report-edit" data-link="back/manager/view_flo.html" iframe="0">鲜花维护</a></li>
+                    <li iconCls="icon-report"><a href="javascript:void(0)" data-icon="icon-report" data-link="manager/view_types.html" iframe="0">鲜花类型</a></li>
+                    <li iconCls="icon-report"><a href="javascript:void(0)" data-icon="icon-report" data-link="manager/view_series.html" iframe="0">鲜花系列</a></li>
+                    <li iconCls="icon-report-add"><a href="javascript:void(0)" data-icon="icon-report-add" data-link="manager/add_flo.html" iframe="0">添加鲜花</a></li>
+                    <li iconCls="icon-report-edit"><a href="javascript:void(0)" data-icon="icon-report-edit" data-link="manager/view_flo.html" iframe="0">鲜花维护</a></li>
                 </ul>
             </div>
             <div title="销售信息管理" data-options="iconCls:'icon-report-picture'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
-                    <li iconCls="icon-report-edit"><a href="javascript:void(0)" data-icon="icon-report-edit" data-link="back/manager/echarts.html" iframe="0">查看销售报表</a></li>
+                    <li iconCls="icon-report-edit"><a href="javascript:void(0)" data-icon="icon-report-edit" data-link="manager/echarts.html" iframe="0">查看销售报表</a></li>
                 </ul>
             </div>
             <div title="用户管理" data-options="iconCls:'icon-user'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
-                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="back/manager/view_user.html" iframe="0">用户管理</a></li>
+                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="manager/view_user.html" iframe="0">用户管理</a></li>
                 </ul>
             </div>           
              <div title="管理员中心" data-options="iconCls:'icon-user'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
-                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="back/manager/add_admin.html" iframe="0">添加管理员</a></li>
-                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="back/manager/view_admin.html" iframe="0">管理员管理</a></li>
+                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="manager/add_admin.html" iframe="0">添加管理员</a></li>
+                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="manager/view_admin.html" iframe="0">管理员管理</a></li>
                 </ul>
             </div>
             <div title="个人中心" data-options="iconCls:'icon-user'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
-                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="back/manager/admin.html" iframe="0">个人管理</a></li>
+                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="manager/admin.html" iframe="0">个人管理</a></li>
                 </ul>
             </div> 
         </div>
@@ -105,7 +105,8 @@
 			data: {
 				aname: "",
 				status: 0,
-				level:""
+				level:"",
+				headImg:""
 			},
 			mounted:function(){
 				axios.get("adm/findCurrent").then(result=> {
