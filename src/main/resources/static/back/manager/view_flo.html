@@ -1,4 +1,4 @@
-<table id="view_goods_data" data-options="fit:true">
+<table id="view_flo_data" data-options="fit:true">
   <div>
     <input type="text" id="sss"  class="easyui-searchbox"  prompt="请输入查询内容"  style="width:300px" searcher=""></input>
   </div>
@@ -6,12 +6,16 @@
 
 <div id="view_goods_search">
    <div class="datagrid-btn-separator"></div>
-   <label>菜品类型:</label>
-   <select id="view_goods_search_tno">
+   <label>鲜花类型:</label>
+   <select id="view_flo_search_tid">
        <option value=''>--请选择--</option>
    </select> 
-   <label>菜品类型:</label>
-   <input type="text" placeholder="请输入菜品名称..." id="views_goods_search_gname" />
+   <label>鲜花系列:</label>
+   <select id="view_flo_search_sid">
+       <option value=''>--请选择--</option>
+   </select> 
+   <label>鲜花名称:</label>
+   <input type="text" placeholder="请输入菜品名称..." id="views_flo_search_fname" />
    <a href="javascript:searchGoodsInfo()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
 </div>
 <div id="view_goods_dialog" data-options="closed:true">
@@ -19,40 +23,52 @@
 </div>
 <script>
 $(function(){
-	$.post("../../types", {op:"findAll"}, data=>{
+	$.post("/zyl/flowerType/findAll", data=>{
 		var str="";
-		$.each(data, function(index, item) {
-			str +="<option value='" + item.tno + "'>" + item.tname + "</option>";
+		$.each(data.data, function(index, item) {
+			str +="<option value='" + item.tid + "'>" + item.tname + "</option>";
 		})
-		$("#view_goods_search_tno").append($(str));
+		$("#view_flo_search_tid").append($(str));
+	}, "json");
+	
+	$.post("/zyl/flowerSeries/findAll", data=>{
+		var str="";
+		$.each(data.data, function(index, item) {
+			str +="<option value='" + item.sid + "'>" + item.sname + "</option>";
+		})
+		$("#view_flo_search_sid").append($(str));
 	}, "json");
 })
+
 
 var view_goods_obj;
 var statusObj = [{fno:0, fname:"不可用"}, {fno:1, fname:"可用"}];
 
 
-var view_goods_obj = $('#view_goods_data').datagrid({
-	url:'../../foods',
-	queryParams: {op:"finds"},
+var view_goods_obj = $('#view_flo_data').datagrid({
+	url:'/zyl/flower/findAll',
+	method:"get",
 	fitColumns: true,
 	loadMsg: '数据加载中，请稍后...',
 	striped: true,
-	sortName: "sales",
-	sortOrder: "desc",
 	remoteSort: false,
 	singleSelct: true,
 	pagination: true,
 	rownumbers: true,
 	pageSize: 10,
 	pageList: [10, 15, 20, 30, 40, 50, 100],
+	loadFilter:function(data){
+		info["total"]= data.data.length;
+		info["rows"]= data.data;
+		return info;
+	},
 	columns:[[
-		{field:'fno',title:'菜品编号',width:50,align:'center'},
-		{field:'fname', title:'菜品名称',width:100,align:'center'},
-		{field:'tname', title:'所属类型',width:100,align:'center'},
+		{field:'fid',title:'鲜花编号',width:50,align:'center'},
+		{field:'fname', title:'鲜花名称',width:100,align:'center'},
+		{field:'tid', title:'所属类型',width:50,align:'center'},
+		{field:'sid', title:'所属系列',width:50,align:'center'},
 		{field:'price', title:'单价',width:50,align:'center'},
-		{field:'sales', title:'销量',width:100,align:'center', sortable: true},
-		{field:'intro', title:'简介',width:200,align:'center'},
+		{field:'deliveryDesc', title:'配送说明',width:100,align:'center', sortable: true},
 		{field:'status',title:'类型状态',width:50,align:'center', formatter:function(val, row, index){
 			if(val == 0){
 				return "不可用";
@@ -66,8 +82,8 @@ var view_goods_obj = $('#view_goods_data').datagrid({
 
 
 function searchGoodsInfo(){
-	var tno = $.trim($("#view_goods_search_tno").val());
-	var fname = $.trim($("#views_goods_search_gname").val());
+	var tno = $.trim($("#view_flo_search_tid").val());
+	var fname = $.trim($("#views_flo_search_fname").val());
 	
 	view_goods_obj.datagrid({
 		url:"../../foods",
