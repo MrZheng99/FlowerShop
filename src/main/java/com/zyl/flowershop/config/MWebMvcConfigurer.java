@@ -25,18 +25,10 @@ public class MWebMvcConfigurer implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 注册拦截器
-		AdmInterceptor admInterceptor = new AdmInterceptor();
-		InterceptorRegistration loginRegistry = registry.addInterceptor(admInterceptor);
-		// 拦截路径
-		loginRegistry.addPathPatterns("/**");
-		// 排除路径
-		loginRegistry.excludePathPatterns("/");
-		loginRegistry.excludePathPatterns("/login");
-		loginRegistry.excludePathPatterns("/loginout");
-		// 排除资源请求
-		loginRegistry.excludePathPatterns("/css/login/*.css");
-		loginRegistry.excludePathPatterns("/js/login/**/*.js");
-		loginRegistry.excludePathPatterns("/image/login/*.png");
+		InterceptorRegistration admRegistry = registry.addInterceptor(new AdmInterceptor());
+//		// 拦截路径
+		admRegistry.addPathPatterns("/back/super");
+		admRegistry.addPathPatterns("/back/normal", "/back/super", "/*/find", "/*/findAll", "/*/insert", "/*/update");
 	}
 
 }

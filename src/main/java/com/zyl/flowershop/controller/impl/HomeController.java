@@ -28,7 +28,7 @@ public class HomeController implements IHomeController {
 	@RequestMapping("/back/super")
 	public ModelAndView backSuper() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/zyl/back/manager/supermanager.html");
+		mav.setViewName("/back/manager/supermanager.html");
 		return mav;
 	}
 
@@ -36,7 +36,7 @@ public class HomeController implements IHomeController {
 	@RequestMapping("/back/normal")
 	public ModelAndView backNormal() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/zyl/back/manager/normalmanager.html");
+		mav.setViewName("/back/manager/normalmanager.html");
 		return mav;
 	}
 

@@ -13,9 +13,10 @@ public class AdmInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		Admin admin = (Admin) request.getSession().getAttribute(SessionKey.CURRENT_ADMIN);
-		if (admin != null) {
+		System.out.println(admin);
+		if (admin == null) {
 			// 未登录，重定向到登录页
-			response.sendRedirect("/back");
+			response.sendRedirect("/zyl/back");
 			return false;
 		}
 		return true;
