@@ -23,9 +23,9 @@ public class FlowerService implements IFlowerService {
 	IFlowerDao flowerDao;
 	@Autowired
 	UploadImg uploadImg;
-	@Value("${file.adm.path}")
+	@Value("${file.flower.path}")
 	private String path;
-	@Value("${file.adm.uploadPath}")
+	@Value("${file.flower.uploadPath}")
 	private String uploadPath;
 
 	@Override
@@ -83,6 +83,7 @@ public class FlowerService implements IFlowerService {
 				return new ResponseJson(500, "添加失败", null, false);
 			}
 		}
+		
 		String flowerImg;
 		if (listImage.size() > 0)
 			flowerImg = String.join(",", listImage);
@@ -93,11 +94,10 @@ public class FlowerService implements IFlowerService {
 		if (row > 0)
 			return new ResponseJson(200, "添加成功", row, true);
 		return new ResponseJson(200, "添加失败", null, false);
-
 	}
 
 	@Override
-	public ResponseJson uploadImage(MultipartFile file) {
+	public Map<String, Object> uploadImage(MultipartFile file) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> rs = new HashMap<String, Object>();
 		String fileName;
@@ -107,15 +107,18 @@ public class FlowerService implements IFlowerService {
 			rs.put("upload", path + fileName);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return new ResponseJson(500, "上传失败", map, false);
 
 		}
+		String url = (String) rs.get("upload");
+		//url = url.replaceAll("\\\\", "/");
+		//url = url.replaceAll("//", "/");
+		//System.out.println(url);
 		if (rs != null) {
 			map.put("fileName", rs.get("fileName"));
-			map.put("url", rs.getOrDefault("upload", ""));
+			map.put("url",url);
 			map.put("uploaded", 1);
 		}
-		return new ResponseJson(200, "上传成功", map, true);
+		return map;
 
 	}
 

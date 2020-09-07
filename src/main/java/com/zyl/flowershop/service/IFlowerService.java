@@ -1,5 +1,7 @@
 package com.zyl.flowershop.service;
 
+import java.util.Map;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.zyl.flowershop.entity.Flower;
@@ -15,5 +17,5 @@ public interface IFlowerService {
 	public ResponseJson insert(MultipartFile[] files, String fname, String description, String flowerLan,
 			String deliveryDesc, Double price, String sale, Integer sid, Integer tid);
 
-	public ResponseJson uploadImage(MultipartFile file);
+	public Map<String, Object> uploadImage(MultipartFile file);
 }

@@ -62,8 +62,14 @@ var view_goods_obj = $('#view_flo_data').datagrid({
 	columns:[[
 		{field:'fid',title:'鲜花编号',width:50,align:'center'},
 		{field:'fname', title:'鲜花名称',width:100,align:'center'},
-		{field:'tid', title:'所属类型',width:50,align:'center'},
-		{field:'sid', title:'所属系列',width:50,align:'center'},
+		{field:'type.tname', title:'所属类型',width:50,align:'center',formatter: function(value,row,index){
+				return row.type.tname;
+		    }
+        },
+		{field:'seris.name', title:'所属系列',width:50,align:'center',formatter: function(value,row,index){
+			return row.series.sname;
+	    }
+    },
 		{field:'price', title:'单价',width:50,align:'center'},
 		{field:'deliveryDesc', title:'配送说明',width:100,align:'center'},
 		{field:'status',title:'类型状态',width:50,align:'center', formatter:function(val, row, index){
@@ -79,12 +85,24 @@ var view_goods_obj = $('#view_flo_data').datagrid({
 
 
 function searchGoodsInfo(){
-	var tno = $.trim($("#view_flo_search_tid").val());
+	var tid= $.trim($("#view_flo_search_tid").val());
+	var sid= $.trim($("#view_flo_search_sid").val());
 	var fname = $.trim($("#views_flo_search_fname").val());
 	
 	view_goods_obj.datagrid({
-		url:"../../foods",
-		queryParams: {op:"findByCondition", tno:tno, fname:fname}
+		   loader : function(flower, success, error) {
+               $.ajax({
+                   type : "post",
+                   url : "/zyl/flower/find",
+                   dataType : 'json',
+                   contentType : 'application/json;charset=utf-8', // 设置请求头信息
+                   data : JSON.stringify({tid:tid,sid:sid,fname:fname}),
+                   success : function(data) {       
+                             success(data);           
+                   }
+               });
+           }
+
 	})
 }
 </script>

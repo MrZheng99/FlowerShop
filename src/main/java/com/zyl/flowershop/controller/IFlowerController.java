@@ -1,5 +1,7 @@
 package com.zyl.flowershop.controller;
 
+import java.util.Map;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.zyl.flowershop.entity.Flower;
@@ -22,6 +24,6 @@ public interface IFlowerController {
 	 * @param file
 	 * @return
 	 */
-	public ResponseJson uploadImage(MultipartFile file);
+	public Map<String, Object> uploadImage(MultipartFile file);
 
 }

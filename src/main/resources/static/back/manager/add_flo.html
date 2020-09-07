@@ -56,12 +56,14 @@
 						<tr>
 						  <td class="td_right">图片：</td>
 							<td>
-								<input type="file" id="pics" name="pics" class="input-text lh30" size="40" multiple="multiple" onchange="setImagePreviews(this,'showPics')">
+								<input type="file" id="pics" name="pics" class="input-text lh30" size="40" multiple="multiple" onchange="setImagePreviews(this,'showPics')" accept="image/gif, image/jpeg, image/jpg, image/png">
 							</td>	
 							<td class="td_right">花语：</td>
 							<td>
 								<input type="text" id="flowerLan" name="flowerLan" class="input-text lh30" size="40" >
 							</td>						
+						</tr>
+						<tr>
 							<td>&nbsp;</td>
 							<td colspan="3" align="center">
 								<div id="showPics">
@@ -110,7 +112,7 @@ $(function(){
 
 
 
-function addFloInfo(){
+function addFloInfo(){	
 	var tid = $.trim($("#floType").val());
 	var sid = $.trim($("#floSeries").val());
 	var fname = $.trim($("#fname").val());
@@ -119,15 +121,19 @@ function addFloInfo(){
 	var deliveryDesc = $.trim($("#deliveryDesc").val());
 	var flowerLan = $.trim($("#flowerLan").val());
 	var description = CKEDITOR.instances.editor1.getData();//获取ckeditor下面的内容，设置setData("");	
+	
+	if(fname == "" || price == "" || sale == "" || deliveryDesc == "" || flowerLan == "" || description == ""){
+		alert("请完善信息后添加!!!!");
+		return;
+	}
 
 	$.ajaxFileUpload({
 		url:"/zyl/flower/insert",
 	    secureuri:false,
 	    fileElementId:"pics",
-	    dataType:"text",
+	    dataType:"json",
 	    data:{tid:tid, sid:sid, fname:fname, price:price, sale:sale, deliveryDesc:deliveryDesc, flowerLan:flowerLan, description:description},
 	    success:function(data,status){
-	    	data = parseInt($.trim(data));
             if(data.success){
 	    		$("#addNewsForm")[0].reset();
 	    		$("#showPics").html("");

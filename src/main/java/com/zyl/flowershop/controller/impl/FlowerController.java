@@ -1,5 +1,7 @@
 package com.zyl.flowershop.controller.impl;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,12 +30,13 @@ public class FlowerController implements IFlowerController {
 	@Override
 	@RequestMapping("/find")
 	public ResponseJson find(@RequestBody Flower flower) {
+		System.out.println("flower" + flower);
 		return flowerService.find(flower);
 	}
 
 	@Override
 	@PostMapping("/insert")
-	public ResponseJson insert(@RequestParam MultipartFile[] files, @RequestParam String fname,
+	public ResponseJson insert(@RequestParam("pics") MultipartFile[] files, @RequestParam String fname,
 			@RequestParam String description, @RequestParam String flowerLan, @RequestParam String deliveryDesc,
 			@RequestParam Double price, @RequestParam String sale, @RequestParam Integer sid,
 			@RequestParam Integer tid) {
@@ -48,7 +51,7 @@ public class FlowerController implements IFlowerController {
 
 	@Override
 	@PostMapping(value = "/uploadImage")
-	public ResponseJson uploadImage(@RequestParam("upload") MultipartFile file) {
+	public Map<String, Object> uploadImage(@RequestParam("upload") MultipartFile file) {
 		return flowerService.uploadImage(file);
 	}
 }

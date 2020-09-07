@@ -106,7 +106,6 @@ public class AdminService implements IAdminService {
 
 	public ResponseJson login(Admin admin, HttpSession session) {
 		Admin adm = adminDao.findByAccountPwdRole(admin);
-		System.out.println(adm);
 		if (adm != null) {
 			session.setAttribute(SessionKey.CURRENT_ADMIN, adm);
 			return new ResponseJson(200, "login success", null, true);

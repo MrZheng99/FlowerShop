@@ -5,8 +5,8 @@
 <mapper namespace="com.zyl.flowershop.dao.IFlowerDao">
 	<select id="findAll" resultMap="flowerInfo">
 		select
-		fid,fname,description,flowerLan,deliveryDesc,price,flowerImg,sale,status,tid,sid
-		from tb_flower;
+		fid,fname,flowerLan,deliveryDesc,price,sale,f.status,f.tid,f.sid, tname, sname
+		from tb_flower f,tb_type t, tb_series s where f.tid=t.tid and f.sid=s.sid;
 	</select>
 	<resultMap type="Flower" id="flowerInfo" autoMapping="true">
 		<id column="fid" property="fid"></id>
@@ -22,14 +22,14 @@
 
 	<select id="find" resultMap="flowerInfo">
 		select
-		fid,fname,description,flowerLan,deliveryDesc,price,flowerImg,sale,status,tid,sid
-		from tb_flower
+		fid,fname,flowerLan,deliveryDesc,price,sale,f.status,f.tid,f.sid, tname, sname
+		from tb_flower f,tb_type t, tb_series s 
 		<where>
 			<if test="fid != null and fid != ''">
 				and fid=#{fid}
 			</if>
 			<if test="fname != null and fname != ''">
-				and fname=#{fname}
+				and fname like concat("%",#{fname},"%")
 			</if>
 			<if test="description != null and description != ''">
 				and description=#{description}
@@ -49,7 +49,13 @@
 			<if test="status != null and status != ''">
 				and status=#{status}
 			</if>
-		</where>
+			<if test="tid != null and tid != ''">
+				and f.tid=#{tid}
+			</if>		
+			<if test="sid != null and sid != ''">
+				and f.sid=#{sid}
+			</if>			
+			</where>
 		<if test="page != null and page != '' and rows!=null and rows!=''">
 			limit page,rows
 		</if>
