@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +20,6 @@ import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.entity.User;
 import com.zyl.flowershop.service.impl.UserService;
 import com.zyl.flowershop.util.CodeUtil;
-import com.zyl.flowershop.util.SendEmailUtil;
 import com.zyl.flowershop.util.SessionKey;
 
 @RestController
@@ -29,10 +27,6 @@ import com.zyl.flowershop.util.SessionKey;
 public class UserController implements IUserController {
 	@Autowired
 	UserService userService;
-	@Autowired
-	JavaMailSender jms;
-	@Autowired
-	SendEmailUtil emailUtil;
 	@Autowired
 	CodeUtil codeUtil;
 
@@ -60,20 +54,6 @@ public class UserController implements IUserController {
 		return userService.updatePwd(id, opwd, npwd);
 	}
 
-	@PostMapping(value = "/getEmailCode")
-	public ResponseJson getCode(@RequestParam String email, @RequestParam String account, HttpSession session) {
-		session.setAttribute(SessionKey.CURRENT_REGISTERY_EMAIL, email);
-		session.setAttribute(SessionKey.CURRENT_REGISTERY_ACCOUNT, account);
-		try {
-			SendEmailUtil emailUtil = new SendEmailUtil();
-			session.setAttribute(SessionKey.VALIDATE_REGISTERY_CODE, emailUtil.send(jms, email, 4));
-			return new ResponseJson(200, "发送验证码成功", null, true);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseJson(500, "发送验证码失败", null, false);
-		}
-	}
-
 	@Override
 	@PostMapping(value = "/insert")
 	public ResponseJson insert(@RequestParam String verifyCode, @RequestParam String pwd, HttpSession session) {
@@ -87,6 +67,7 @@ public class UserController implements IUserController {
 		return new ResponseJson(200, "验证码不正确", null, false);
 	}
 
+	/********** 登录 ***********/
 	@GetMapping("/getLoginCode")
 	public void code(HttpSession session, HttpServletResponse resp) {
 		try {

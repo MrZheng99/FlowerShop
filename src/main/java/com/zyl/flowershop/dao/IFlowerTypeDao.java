@@ -14,4 +14,6 @@ public interface IFlowerTypeDao {
 
 	public Integer update(FlowerType flowerType);
 
+	public List<FlowerType> find();
+
 }

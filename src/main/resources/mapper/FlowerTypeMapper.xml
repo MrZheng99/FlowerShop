@@ -4,16 +4,22 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zyl.flowershop.dao.IFlowerTypeDao">
 	<select id="findAll" resultType="FlowerType">
-		select tid,tname,typeImg,status from tb_type;
+		select tid,tname,description,typeImg,status from tb_type;
+	</select>
+	<select id="find" resultType="FlowerType">
+		select tid,tname,description,typeImg,status from tb_type where status=1;
 	</select>
 	<insert id="insert" parameterType="FlowerType">
-		insert into tb_type(`tname`,`typeImg`,`status`) values(#{tname},#{typeImg},1);
+		insert into tb_type(`tname`,`description`,`typeImg`,`status`) values(#{tname},#{description},#{typeImg},1);
 	</insert>
 	<update id="update" parameterType="FlowerType">
 		update tb_type
 		<set>
 			<if test="tname !=null and tname !='' ">
 				tname=#{tname},
+			</if>
+			<if test="description !=null and description !='' ">
+				description=#{description},
 			</if>
 			<if test="typeImg !=null and typeImg !='' ">
 				typeImg=#{typeImg},

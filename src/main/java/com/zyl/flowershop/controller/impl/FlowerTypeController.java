@@ -26,6 +26,12 @@ public class FlowerTypeController implements IFlowerTypeController {
 	}
 
 	@Override
+	@RequestMapping("/find")
+	public ResponseJson find() {
+		return flowerTypeService.find();
+	}
+
+	@Override
 	@PostMapping("/insert")
 	public ResponseJson insert(@RequestParam("pic") MultipartFile file, @RequestParam String tname) {
 		return flowerTypeService.insert(file, tname);

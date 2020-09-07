@@ -10,13 +10,18 @@
 	</select>
 	<resultMap type="Flower" id="flowerInfo" autoMapping="true">
 		<id column="fid" property="fid"></id>
+		<id column="tid" property="tid"></id>
+		<id column="sid" property="sid"></id>
+
 		<association property="type" javaType="FlowerType"
-			column="tid" autoMapping="true">
+			column="tid">
 			<id column="tid" property="tid"></id>
+			<result column="tname" property="tname" />
 		</association>
 		<association property="series" javaType="FlowerSeries"
-			column="sid" autoMapping="true">
+			column="sid">
 			<id column="sid" property="sid"></id>
+			<result column="sname" property="sname" />
 		</association>
 	</resultMap>
 

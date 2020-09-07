@@ -33,14 +33,14 @@ public class UserService implements IUserService {
 	@Override
 	public ResponseJson login(User user, String code, HttpSession session) {
 		if (!code.equals(session.getAttribute(SessionKey.VALIDATE_LOGIN_CODE)))
-			return new ResponseJson(200, "验证码错误", null, false);
+			return new ResponseJson(404, "验证码错误", null, false);
 		session.removeAttribute(SessionKey.VALIDATE_LOGIN_CODE);
 		User u = userDao.findByAccountPwd(user);
-		if (u.getUid() != null && u.getUname() != null && u.getAccount() != null) {
-			session.setAttribute(SessionKey.CURRENT_USER, user);
+		if (u != null) {
+			session.setAttribute(SessionKey.CURRENT_USER, u);
 			return new ResponseJson(200, "login success", null, true);
 		} else
-			return new ResponseJson(200, "login fail", null, false);
+			return new ResponseJson(200, "账户名和密码不匹配", null, false);
 	}
 
 	@Override
@@ -60,7 +60,6 @@ public class UserService implements IUserService {
 		Integer row = userDao.insert(user);
 		if (row > 0)
 			return new ResponseJson(200, "添加成功", null, true);
-
 		return new ResponseJson(200, "添加失败", null, false);
 	}
 
@@ -78,6 +77,27 @@ public class UserService implements IUserService {
 		if (row > 0)
 			return new ResponseJson(200, "修改密码成功", null, true);
 		return new ResponseJson(200, "修改密码失败", null, false);
+	}
+
+	public Boolean find(String account) {
+		User user = new User();
+		user.setAccount(account);
+		List<User> listUser = userDao.find(user);
+		if (listUser.size() > 0)
+			return true;
+		return false;
+	}
+
+	@Override
+	public ResponseJson insert(HttpSession session) {
+		String email = (String) session.getAttribute(SessionKey.CURRENT_REGISTERY_EMAIL);
+		String account = (String) session.getAttribute(SessionKey.CURRENT_REGISTERY_ACCOUNT);
+		String password = (String) session.getAttribute(SessionKey.CURRENT_REGISTERY_PASSWORD);
+		User user = new User();
+		user.setAccount(account);
+		user.setEmail(email);
+		user.setPwd(password);
+		return insert(user);
 	}
 
 }

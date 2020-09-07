@@ -38,6 +38,18 @@ public class FlowerTypeService implements IFlowerTypeService {
 	}
 
 	@Override
+	public ResponseJson find() {
+		List<FlowerType> listFlowerType;
+		try {
+			listFlowerType = flowerTypeDao.find();
+			return new ResponseJson(200, "获取成功", listFlowerType, true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseJson(500, "获取失败", null, false);
+		}
+	}
+
+	@Override
 	public ResponseJson update(FlowerType flowerType) {
 		Integer row = 0;
 		try {

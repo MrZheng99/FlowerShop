@@ -8,19 +8,10 @@
     
     <script type="text/javascript">
         function getCode() {
-        	let email = document.getElementById("email").value;
-        	if(!checkMail(email)){
-				return;
-        	}
-            document.getElementById('codeError').textContent = '';
             $.ajax({
                 type: 'POST',
-                url: "/register/getCode",
+                url: "register/getEmailCode",
                 dataTypa: 'text',
-                data: {
-                    email: $("#email").val().trim()
-                },
-
                 success: function(rs) {
                     if (rs.success) {
                         setTimeOut();
@@ -33,10 +24,9 @@
 
         function verify() {
             console.log($("#verifyCode").val().trim());
-
             $.ajax({
                 type: 'POST',
-                url: "/register/verifyCode",
+                url: "register/verifyCode",
                 dataTypa: 'json/text',
                 data: {
                     verifyCode: $("#verifyCode").val().trim()
@@ -46,7 +36,7 @@
                     if (rs.success) {
                         $.ajax({
                             type: 'GET',
-                            url: "/register/success",
+                            url: "register/step3",
                             dataTypa: 'json/text',
                             success: function(rs) {
                                 $("ol li:eq(1)").removeClass("active");
@@ -81,11 +71,7 @@
 
 <body>
     <form action="#" class="mform" role="form" onsubmit="return false">
-        <div class="form-line">
-            <span class="msg">邮箱：</span>
-            <input id="email" name="email" type="text" class="form-control" onfocus="document.getElementById('emailError').textContent = '';" onblur="checkMail(this.value.trim())">
-            <span class="msgError" id="emailError"></span>
-        </div>
+       
         <div class="form-line">
             <span class="msg">验证码：</span>
             <input type="text" style="width:25%;" id="verifyCode" name="verifyCode" class="form-control">
