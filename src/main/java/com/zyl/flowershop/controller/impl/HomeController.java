@@ -41,10 +41,10 @@ public class HomeController implements IHomeController {
 	}
 
 	@Override
-	@RequestMapping("/front/home")
+	@RequestMapping("/front/index")
 	public ModelAndView front() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:static/front/index.html");
+		mav.setViewName("/front/index.html");
 		return mav;
 	}
 

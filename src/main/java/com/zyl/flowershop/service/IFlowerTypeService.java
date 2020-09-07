@@ -12,4 +12,11 @@ public interface IFlowerTypeService {
 
 	public ResponseJson insert(MultipartFile file, String tname);
 
+	/***
+	 * 查询可用类别
+	 * 
+	 * @return
+	 */
+	public ResponseJson find();
+
 }

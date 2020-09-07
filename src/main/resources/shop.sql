@@ -2,7 +2,7 @@ create database if not exists flowershop default CHARSET utf8 collate utf8_gener
 use flowershop;
 create table if not exists tb_user(
 	uid int(11) primary key auto_increment,
-	uname varchar(100) not null,
+	uname varchar(100)  null,
 	account varchar(200) not null unique,
 	pwd varchar(200) not null,
 	sex char(1)  null,
@@ -29,6 +29,7 @@ create table if not exists tb_adm(
 create table if not exists tb_type(
 	tid int(11) primary key auto_increment,
 	tname varchar(100) not null,
+	description varchar(255) null,
 	typeImg  varchar(200) not null,
 	status char(1) not null
 )auto_increment=101 engine=InnoDB default charset=utf8;

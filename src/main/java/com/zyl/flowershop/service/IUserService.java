@@ -40,4 +40,8 @@ public interface IUserService {
 	 */
 	public ResponseJson updatePwd(Integer id, String opwd, String npwd);
 
+	public Boolean find(String account);
+
+	public ResponseJson insert(HttpSession session);
+
 }

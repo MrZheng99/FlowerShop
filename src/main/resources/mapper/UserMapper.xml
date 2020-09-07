@@ -32,8 +32,8 @@
 	<select id="findByAccountPwd" parameterType="User"
 		resultType="User">
 		select
-		uid,account,uname,sex,email,tel,headImg,status from tb_user and
-		status=1
+		uid,account,uname,sex,email,tel,headImg from tb_user where 
+		status=1 
 		<if test="account != null and account !='' ">
 			and account=#{account}
 		</if>
@@ -51,10 +51,10 @@
 
 	<insert id="insert" parameterType="User" flushCache="true">
 		insert into
-		tb_user (`account`,`uname`,`tel`,`email`, `pwd`, `tel`, `headImg`,
+		tb_user (`account`,`uname`,`email`, `pwd`,`tel`, `headImg`,
 		`status`)
 		values
-		(#{acount},#{aname},#{email},#{pwd},#{tel},#{headImg},#{role},1);
+		(#{account},#{uname},#{email},#{pwd},#{tel},#{headImg},1);
 	</insert>
 
 	<update id="updatePwd" flushCache="true">

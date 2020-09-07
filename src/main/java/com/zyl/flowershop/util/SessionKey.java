@@ -15,5 +15,6 @@ public class SessionKey {
 	public static final String CURRENT_ADMIN = "currentAdmin";
 
 	public static final String CURRENT_USER = "currentUser";
+	public static final String CURRENT_REGISTERY_PASSWORD = "currentRegisteryPassword";
 
 }

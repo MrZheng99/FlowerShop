@@ -9,6 +9,7 @@ package com.zyl.flowershop.entity;
 public class FlowerType {
 	private Integer tid;
 	private String tname;
+	private String description;
 	private String typeImg;// 种类图片url
 	private String status;
 
@@ -46,13 +47,15 @@ public class FlowerType {
 
 	@Override
 	public String toString() {
-		return "FlowerType [tid=" + tid + ", tname=" + tname + ", typeImg=" + typeImg + ", status=" + status + "]";
+		return "FlowerType [tid=" + tid + ", tname=" + tname + ", description=" + description + ", typeImg=" + typeImg
+				+ ", status=" + status + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((tid == null) ? 0 : tid.hashCode());
 		result = prime * result + ((tname == null) ? 0 : tname.hashCode());
@@ -69,6 +72,11 @@ public class FlowerType {
 		if (getClass() != obj.getClass())
 			return false;
 		FlowerType other = (FlowerType) obj;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
 		if (status == null) {
 			if (other.status != null)
 				return false;
@@ -90,6 +98,14 @@ public class FlowerType {
 		} else if (!typeImg.equals(other.typeImg))
 			return false;
 		return true;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }
