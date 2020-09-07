@@ -52,8 +52,16 @@ public class AdminController implements IAdminController {
 
 	@Override
 	@PostMapping("/update")
-	public ResponseJson update(@RequestBody Admin admin) {
-		return adminService.update(admin);
+	public ResponseJson update(@RequestParam("pic") MultipartFile file, @RequestParam String aname,
+			@RequestParam String account, @RequestParam String role,
+			@RequestParam String tel,@RequestParam Integer aid){
+				Admin admin = new Admin();
+				admin.setAccount(account);
+				admin.setAname(aname);
+				admin.setTel(tel);
+				admin.setRole(role);
+				admin.setAid(aid);
+				return adminService.update(admin);
 	}
 
 	@Override
