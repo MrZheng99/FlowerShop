@@ -28,7 +28,8 @@ public class MWebMvcConfigurer implements WebMvcConfigurer {
 		InterceptorRegistration admRegistry = registry.addInterceptor(new AdmInterceptor());
 //		// 拦截路径
 		admRegistry.addPathPatterns("/back/super");
-		admRegistry.addPathPatterns("/back/normal", "/back/super", "/*/find", "/*/findAll", "/*/insert", "/*/update");
+		admRegistry.addPathPatterns("/back/normal", "/back/super", "/adm/find", "/adm/findAll", "/*/insert",
+				"/*/update");
 	}
 
 }
