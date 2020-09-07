@@ -10,79 +10,46 @@
 
 </head>
 <body>
-<div id="forms" class="mt10">
-	<div class="box">
-		<div class="box_border">
-			<div class="box_top">
-				<b class="pl15">管理员</b>
+<div class="easyui-panel" title="<center>个人信息修改</center>"
+		style="padding:3% 20%; text-align: center; width: 100%;height:100%; ">
+		<form action="" id="addAdmForm" data-options="novalidate:true" onSubmit="return false">
+			<div style="margin-bottom: 20px">
+				<input class="easyui-textbox" id="account" style="width: 40%"
+					data-options="label:'账号：',required:true,iconCls:'icon-man',validType:'account'">
 			</div>
-			<div class="box_center" id="admin_info">
-				<form action="" class="jqtransform" id="changeForm">
-					<table class="form_table pt15 pb15" width="100%" border="0" cellpadding="0" cellspacing="0">
-				     	<tr>
-							<td class="td_right">编号：</td>
-							<td>
-								<label id="aid" >{{aid}}</label>
-							</td>
-						</tr>
-					    <tr>
-							<td class="td_right">账号：</td>
-							<td>
-								<label id="account">{{account}}</label>
-							</td>
-						</tr>
-						<tr>
-							<td class="td_right">姓名：</td>
-							<td>
-								<input type="text" id="aname" name="aname" class="input-text lh30" size="40"  onBlur="checkAname()" :value="aname">
-								<label id="username"></label>
-							</td>
-						</tr>
-						<tr>
-							<td class="td_right">密码：</td>
-							<td>
-								<input type="password" id="pwd" name="pwd" class="input-text lh30" size="40"  onBlur="checkPwd()">
-								<label id="password"></label>
-							</td>
-						</tr>
-						<tr>
-							<td class="td_right">确认密码：</td>
-							<td>
-								<input type="password" id="ck" name="ck" class="input-text lh30" size="40"  onBlur="cPwd()">
-								<label id="ckpw"></label>
-							</td>
-						</tr>
-						<tr>
-							<td class="td_right">电话号码：</td>
-							<td>
-								<input type="text" id="tel" name="tel" class="input-text lh30" size="40" onBlur="checkTel()" :value="tel">
-								<label id="telephone"></label>
-							</td>
-						</tr>
-						<tr>
-							<td class="td_right">头像：</td>
-							<td>
-								<input type="file" id="pic" name="pic" class="input-text lh30" size="40" multiple="multiple" onchange="setAdmImagePreviews(this,'showPics')">
-							</td>
-						</tr>
-						<tr>
-							<td>&nbsp;</td>
-							<td colspan="3" align="center">
-								<div id="showPics" align="left">
-								<img :src="headImg">
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="4" align="center">
-								<input type="button" name="button" class="btn btn82 btn_save2" onclick="change()" value="修改个人信息">
-							</td>
-						</tr>
-					</table>
-				</form>
+			<div style="margin-bottom: 20px">
+				<input class="easyui-textbox" id="aname" style="width: 40%"
+					data-options="label:'姓名：',required:true,iconCls:'icon-man',validType:'name'">
 			</div>
-		</div>
-	</div>
+			<div style="margin-bottom: 20px">
+				<input class="easyui-textbox" id="tel" style="width: 40%"
+					data-options="label:'电话：',required:true,iconCls:'icon-tel',validType:'phone'">
+			</div>
+			<div style="margin-bottom: 20px">
+				<input class="easyui-textbox" type="password" id="pwd" style="width: 40%"
+					data-options="label:'密码：',required:true,iconCls:'icon-lock',validType:'password'">
+			</div>
+			<div style="margin-bottom: 20px">
+				<input class="easyui-textbox"   type="password" id="ck" style="width: 40%"
+					data-options="label:'确认密码：',required:true,iconCls:'icon-lock',validType:'password'">
+			</div>
+			<div style="margin-bottom: 20px">
+				<span style="float: center;">头像：</span> <input type="file" id="pic"
+					name="pic" style="width: 70% margin-left:"
+					onchange="setImagePreviews(this,'showPics')">
+			</div>
+			<div style="margin-bottom: 20px; height: 80px; text-align: center;"
+				id="showPics"></div>
+			<div>
+				<input class="easyui-radiobutton" name="level" checked="checked"
+					value="0" label="普通管理员"> <input class="easyui-radiobutton"
+					name="level" value="1" label="超级管理员">
+			</div>
+			<div style="margin-bottom: 20px;margin-top: 20px;">
+				<button class="easyui-linkbutton" data-options="iconCls:'icon-add'"
+					onclick="submitForm()" style="width: 130px">添加</button>
+			</div>
+		</form>
 </div>
 <script type="text/javascript">
 let login = new Vue({

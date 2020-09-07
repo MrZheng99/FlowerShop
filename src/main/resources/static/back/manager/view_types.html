@@ -26,6 +26,7 @@ var types_obj = $('#types_data').datagrid({
 	columns:[[
 		{field:'tid',title:'类型编号',width:50,align:'center'},
 		{field:'tname',title:'类型名称',width:100,align:'center',editor:{type:"text", options:{required:true}}},
+		{field:'description',title:'类型描述',width:100,align:'center',editor:{type:"text", options:{required:true}}},
 		{field:'typeImg',title:'类型图片',width:100,align:'center',formatter:function(val,row,index){
 			return"<img src='"+ val + "' width='50px' height='50px'/>";
 		}},
@@ -55,13 +56,14 @@ var types_obj = $('#types_data').datagrid({
 				    	iconCls:"icon-ok",
 				    	handler:function(){
 				    		var tname = document.getElementById("types").value;
+				    		var description = document.getElementById("description").value;
 				    		
 				    		$.ajaxFileUpload({
 				    			url:"/zyl/flowerType/insert",
 				    		    secureuri:false,
 				    		    fileElementId:"pic",
 				    		    dataType:"json",
-				    		    data:{tname:tname},
+				    		    data:{tname:tname,description:description},
 				    		    success:function(data){
 				    		       if(data.success){
 				    		    		alert("鲜花种类添加成功...");

@@ -10,7 +10,7 @@ public interface IFlowerTypeController {
 
 	public ResponseJson update(FlowerType flowerType);
 
-	public ResponseJson insert(MultipartFile file, String tname);
-
 	public ResponseJson find();
+
+	public ResponseJson insert(MultipartFile file, String tname, String description);
 }

@@ -33,8 +33,8 @@ public class FlowerTypeController implements IFlowerTypeController {
 
 	@Override
 	@PostMapping("/insert")
-	public ResponseJson insert(@RequestParam("pic") MultipartFile file, @RequestParam String tname) {
-		return flowerTypeService.insert(file, tname);
+	public ResponseJson insert(@RequestParam("pic") MultipartFile file, @RequestParam String tname, @RequestParam String description) {
+		return flowerTypeService.insert(file, tname, description);
 	}
 
 	@Override

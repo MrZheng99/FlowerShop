@@ -10,7 +10,7 @@ public interface IFlowerTypeService {
 
 	public ResponseJson update(FlowerType flowerType);
 
-	public ResponseJson insert(MultipartFile file, String tname);
+	public ResponseJson insert(MultipartFile file, String tname, String description);
 
 	/***
 	 * 查询可用类别

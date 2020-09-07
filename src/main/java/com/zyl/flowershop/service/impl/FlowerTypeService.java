@@ -64,7 +64,7 @@ public class FlowerTypeService implements IFlowerTypeService {
 	}
 
 	@Override
-	public ResponseJson insert(MultipartFile file, String tname) {
+	public ResponseJson insert(MultipartFile file, String tname,String description) {
 		if (file.isEmpty())
 			return new ResponseJson(200, "添加失败,图片不能为空", null, false);
 		if (!(file.getContentType().indexOf("image") >= 0))
@@ -79,6 +79,7 @@ public class FlowerTypeService implements IFlowerTypeService {
 		FlowerType flowerType = new FlowerType();
 		flowerType.setTname(tname);
 		flowerType.setTypeImg(typeImg);
+		flowerType.setDescription(description);
 		Integer row = flowerTypeDao.insert(flowerType);
 		if (row > 0)
 			return new ResponseJson(200, "添加成功", row, true);
