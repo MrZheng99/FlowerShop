@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ZYL花城-快递网上花店</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit|ie-comp">
+    <meta name="mobile-agent" content="format=html5; url=https://m.hua.com/">
+
+    <link rel="icon" href="https://www.hua.com/favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        /* Make the image fully responsive */
+        
+        .carousel-inner img {
+            width: 100%;
+            height: 60%;
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="css/home.css">
+
+    <style>
+        .festival-item-price {
+            color: #C26137;
+        }
+        
+        #navi .navi-nav li {
+            margin: 0 14px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <!-- 顶部导航 -->
+    <div class="top-nav">
+        <div class="top-nav-wrapper">
+    
+            <ul class="top-nav-r">
+                <!--登陆状态信息显示start-->
+                <li class="menu login" id="LoginInfo"><a href="#" rel="nofollow">你好，请登录</a><a href="#" rel="nofollow">注册</a></li>
+                <!--登陆状态信息显示end-->
+                <li class="menu"> <a href="#" rel="nofollow" target="_blank">订单查询</a> </li>
+                <li class="menu menu-dropdown"> <a href="#" target="_blank">客户服务<span class="icon-arrow"></span></a>
+                    <div class="dropdown-box dropdown-box-service"> <a href="#" target="_blank">帮助中心</a> <a href="#" target="_blank">售后服务</a> <a href="#"
+                            target="_blank">配送范围</a> <a href="#" target="_blank">留言反馈</a> </div>
+                </li>
+                <!--购物车信息显示start-->
+                <li class="menu"> <a href="#" rel="nofollow" target="_blank"> 购物车 <span class="text-primary" id="gwcCount">(2)</span> </a> </li>
+                <!--购物车信息显示end-->
+                <li class="menu slogan">ZYL花城 </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 顶部导航 End -->
+    <!-- 头部 -->
+    <div id="header" class="clearfix">
+        <div class="header-container">
+            <div class="logo">
+                <a href="#" class="logo-nav"></a>
+            </div>
+            <div class="search-box">
+                <form name="i_search" method="get" action="/search/">
+                    <div class="search-box-group">
+                        <div class="search-box-icon"> <span class="icon icon-search"></span> </div>
+                        <input name="keyword" type="text" class="search-box-input" placeholder="商品搜索">
+                        <span class="search-box-btn">
+          <button class="btn btn-primary" type="button" onclick="this.form.submit()">搜索</button>
+          </span> </div>
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+    <!-- 头部 End -->
+
+    <!-- 导航 -->
+    <div id="navi" class="clearfix">
+        <div class="navi-container">
+            <div class="navi-categorys">
+                <h3 class="categorys-title"> <span class="icon icon-category"></span> <a href="#" target="_blank">所有分类</a> </h3>
+                <div class="dropdown-cate">
+                    <div class="dropdown-cate-item">
+                        <h4><a href="#" target="_blank">鲜花用途</a></h4>
+                        <ul class="cate-list cate-list-inline">
+                            <li><a href="#" target="_blank">爱情鲜花</a></li>
+
+                        </ul>
+                    </div>
+                   
+              
+                </div>
+            </div>
+            <ul class="navi-nav">
+                <li><a href="#" target="_blank">鲜花</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- 导航 End -->
+    <!-- 大图轮翻 -->
+    <div id="mainCarousel" class="carousel slide carousel-fade">
+        <div id="demo" class="carousel slide" data-ride="carousel">
+
+            <!-- 指示符 -->
+            <ul class="carousel-indicators">
+                <li data-target="#demo" data-slide-to="0" class="active"></li>
+                <li data-target="#demo" data-slide-to="1"></li>
+                <li data-target="#demo" data-slide-to="2"></li>
+            </ul>
+
+            <!-- 轮播图片 -->
+            <div class="carousel-inner">
+                <div class="carousel-item active"> <img src="https://static.runoob.com/images/mix/img_fjords_wide.jpg"> </div>
+                <div class="carousel-item"> <img src="https://static.runoob.com/images/mix/img_nature_wide.jpg"> </div>
+                <div class="carousel-item"> <img src="https://static.runoob.com/images/mix/img_mountains_wide.jpg"> </div>
+            </div>
+
+            <!-- 左右切换按钮 -->
+            <a class="carousel-control-prev" href="#demo" data-slide="prev"> <span class="carousel-control-prev-icon"></span> </a>
+            <a class="carousel-control-next" href="#demo" data-slide="next"> <span class="carousel-control-next-icon"></span> </a>
+        </div>
+    </div>
+
+    <!-- 场景入口 -->
+    <div class="scene clearfix" style="margin-bottom:30px;">
+        <div class="scene-list">
+            <div class="scene-item-vertical">
+                <a href="#" target="_blank"> <img src="images/home_channel_lover.jpg" alt=""> </a>
+            </div>
+        </div>
+        <div class="scene-list">
+            <div class="scene-item-horizontal">
+                <a href="#" target="_blank"> <img src="images/home_channel_elder.jpg" alt=""> </a>
+            </div>
+            <div class="scene-item-horizontal">
+                <a href="#" target="_blank"> <img src="images/home_channel_friend.jpg" alt=""> </a>
+            </div>
+        </div>
+        <div class="scene-list">
+            <div class="scene-item-vertical">
+                <a href="#" target="_blank"> <img src="images/home_channel_birthday.jpg" alt=""> </a>
+            </div>
+        </div>
+        <div class="scene-list">
+            <div class="scene-item-horizontal">
+                <div class="scene-item-vertical-mini">
+                    <a href="#" target="_blank"> <img src="images/home_channel_express.jpg" alt=""> </a>
+                </div>
+                <div class="scene-item-vertical-mini">
+                    <a href="#" target="_blank"> <img src="images/home_channel_business.png" alt=""> </a>
+                </div>
+            </div>
+            <div class="scene-item-horizontal">
+                <a href="#" target="_blank"> <img src="images/home_channel_you_2.jpg" alt=""> </a>
+            </div>
+        </div>
+    </div>
+    <!-- 场景入口 End -->
+    <!-- 新品来袭 -->
+    <div class="scene clearfix">
+        <div class="scene-list">
+            <div class="scene-item-vertical">
+                <a href="#" target="_blank"> <img src="images/home_channel_rexiao.png" alt=""> </a> <span>热销21.6万束</span> </div>
+        </div>
+    </div>
+    <div class="fl-wrapper clearfix">
+        <!-- 楼层 爱情鲜花 -->
+        <div class="fl f-lover">
+            <div class="fl-container">
+                <div class="hd"> <a class="more" href="https://www.hua.com/aiqingxianhua/" target="_blank">更多爱情鲜花<span class="icon icon-arrow-right"></span></a>
+                    <h3><a href="#" target="_blank">爱情鲜花</a><span>送 · 让你怦然心动的人</span></h3>
+                </div>
+                <div class="bd">
+                    <div class="bd-l">
+                        <div class="banner-box">
+                            <a href="#" target="_blank"><img data-original="//img02.hua.com/pc/pimg/home/home_floor_lover.png" src="images/home_floor_lover.png" style="display: inline;" width="288" height="656"></a>
+                            <div class="link-cover"> <a href="#" target="_blank">爱情鲜花专区<span class="icon icon-dotarrow"></span></a> </div>
+                        </div>
+                    </div>
+                    <div class="fl-products">
+                        <div class="fl-products-item">
+                            <a href="#" target="_blank">
+                                <div class="img-box" href=""> <img data-original="https://img01.hua.com/uploadpic/newpic/9010966.jpg_220x240.jpg" src="images/9010966.jpg" style="display: inline;" width="220" height="240"> </div>
+                                <div class="product-content">
+                                    <p class="product-title">爱情 · 一往情深</p>
+                                    <p class="product-price"> <span class="price-sign">¥</span> <span class="price-num" data-pp="9010966">239</span> </p>
+                                    <p class="product-sell">已售 12.7万 件</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 楼层 爱情鲜花 End -->
+
+    <!-- 楼层 晒单&资讯 -->
+    <div class="fl f-comments">
+        <div class="fl-container">
+            <div class="hd"> <a class="more" href="" target="_blank">查看所有评价<span class="icon icon-arrow-right"></span></a>
+                <h3><a href="#" target="_blank">晒单评价</a><span>用户实拍晒单</span></h3>
+            </div>
+            <div class="bd">
+                <div class="f-comments-list clearfix">
+                    <div class="f-comments-item">
+                        <a href="#" target="_blank">
+                            <div class="f-comments-item-l">
+                                <div class="f-comments-item-user"> <img src="images/132_003.jpg"> <span>mo*o</span> </div>
+                                <div class="f-comments-item-info">
+                                    <p class="f-comments-item-content">凌晨香港下单，当日早上10时多送到，花很漂亮，客服回复很快。满意：）</p>
+                                    <div class="f-comments-item-time">
+                                        <p>四川成都市青羊区</p>
+                                        <p>2020-09-04</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="f-comments-item-r"> <img src="images/53127c64a3134a538e50a01b264ab4f4.jpeg" alt=""> </div>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</html>
