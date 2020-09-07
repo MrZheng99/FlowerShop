@@ -97,7 +97,7 @@ let login = new Vue({
 		tel:""
 	},
 	mounted:function(){
-		axios.get("adm/findCurrent").then(result=> {
+		axios.get("../adm/findCurrent").then(result=> {
 			if(result.data.success){ //已登录
 				this.aid = result.data.data.aid;
 				this.aname = result.data.data.aname;

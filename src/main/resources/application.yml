@@ -5,13 +5,13 @@ server:
 file:
   path: /fileUpload/**
   adm: 
-    path: fileUpload\\adm\\
+    path: ..\\fileUpload\\adm\\
     uploadPath: \\images\\adm
   types: 
-    path: fileUpload\\types\\
+    path: ..\\fileUpload\\types\\
     uploadPath: \\images\\types
   flower: 
-    path: fileUpload\\flower\\
+    path: ..\\fileUpload\\flower\\
     uploadPath: \\images\\flower
 spring:
   #数据库连接配置
