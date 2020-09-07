@@ -3,21 +3,17 @@
 <head>
 <meta charset="utf-8" />
 <title>后台管理</title>
-<link rel="stylesheet" type="text/css" href="/zyl/css/easyui.css" />
 <link rel="stylesheet" type="text/css" href="/zyl/css/wu.css" />
-<link rel="stylesheet" type="text/css" href="/zyl/css/icon.css" />
 <style type="text/css">
 #back_headImg{
  max-height: 30px;
  max-width: 30px;
 }
 </style>
-    <link rel="stylesheet" type="text/css" href="/zyl/easyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="/zyl/easyui/themes/icon.css">
-    <script type="text/javascript" src="/zyl/easyui/jquery.min.js">
-    </script>
-    <script type="text/javascript" src="/zyl/easyui/jquery.easyui.min.js">
-    </script>
+<link rel="stylesheet" type="text/css" href="/zyl/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="/zyl/easyui/themes/icon.css">
+<script type="text/javascript" src="/zyl/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/zyl/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="/zyl/js/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="/zyl/js/showpic.js"></script>
 <script type="text/javascript" src="/zyl/js/ajaxfileupload.js"></script>
@@ -109,7 +105,7 @@
 				headImg:""
 			},
 			mounted:function(){
-				axios.get("adm/findCurrent").then(result=> {
+				axios.get("../adm/findCurrent").then(result=> {
 					if(result.data.success){ //已登录
 						this.aname =  result.data.data.aname;
 					    this.role = result.data.data.role;

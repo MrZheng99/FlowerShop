@@ -46,12 +46,12 @@ var types_obj = $('#series_data').datagrid({
 				    cache:false,
 				    iconCls:"icon-add",
 				    modal:true,
-				    href:"back/manager/add_flo_series.html",
+				    href:"manager/add_flo_series.html",
 				    buttons:[{
 				    	text:"确定",
 				    	iconCls:"icon-ok",
 				    	handler:function(){
-				    		var sname = document.getElementById("types").value;				    		
+				    		var sname = document.getElementById("series").value;				    		
 				    	   	$.ajax({
 				    			url:"/zyl/flowerSeries/insert",
 				    			type:"post",

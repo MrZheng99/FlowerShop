@@ -11,25 +11,25 @@
 <body>
 	<div class="easyui-panel" title="<center>添加管理员</center>"
 		style="padding:3% 20%; text-align: center; width: 100%;height:100%; ">
-		<form action="" id="addNewsForm" data-options="novalidate:true">
+		<form action="" id="addAdmForm" data-options="novalidate:true" onSubmit="return false">
 			<div style="margin-bottom: 20px">
-				<input class="easyui-textbox" name="account" style="width: 100%"
+				<input class="easyui-textbox" id="account" style="width: 100%"
 					data-options="label:'账号：',required:true,iconCls:'icon-man',validType:'account'">
 			</div>
 			<div style="margin-bottom: 20px">
-				<input class="easyui-textbox" name="aname" style="width: 100%"
+				<input class="easyui-textbox" id="aname" style="width: 100%"
 					data-options="label:'姓名：',required:true,iconCls:'icon-man',validType:'name'">
 			</div>
 			<div style="margin-bottom: 20px">
-				<input class="easyui-textbox" name="tel" style="width: 100%"
+				<input class="easyui-textbox" id="tel" style="width: 100%"
 					data-options="label:'电话：',required:true,iconCls:'icon-tel',validType:'phone'">
 			</div>
 			<div style="margin-bottom: 20px">
-				<input class="easyui-textbox" type="password" name="pwd" style="width: 100%"
+				<input class="easyui-textbox" type="password" id="pwd" style="width: 100%"
 					data-options="label:'密码：',required:true,iconCls:'icon-lock',validType:'password'">
 			</div>
 			<div style="margin-bottom: 20px">
-				<input class="easyui-textbox"   type="password" name="ck" style="width: 100%"
+				<input class="easyui-textbox"   type="password" id="ck" style="width: 100%"
 					data-options="label:'确认密码：',required:true,iconCls:'icon-lock',validType:'password'">
 			</div>
 			<div style="margin-bottom: 20px">
@@ -81,9 +81,10 @@
 	</script>
 	<script type="text/javascript">
 		function submitForm() {
-			var validate = $(this).form('enableValidation').form('validate');
-			if (!validate)
+			var validate = $("#addAdmForm").form('enableValidation').form('validate');
+			if (!validate){
 				return;
+			}
 			var pwd = $.trim($("#pwd").val());
 			if(pwd!=$.trim($("#ck").val()))
 				alert("两次密码不一致");
@@ -92,6 +93,7 @@
 			var tel = $.trim($("#tel").val());
 			var role = $("input[name='level']:checked").val();
 			pwd = hex_md5(pwd);
+
 			$.ajaxFileUpload({
 				url : "/zyl/adm/insert",
 				secureuri : false,
@@ -106,7 +108,7 @@
 				},
 				success : function(data) {
 					if (data.success) {
-						$("#addNewsForm")[0].reset();
+						$("#addAdmForm")[0].reset();
 						$("#showPics").html("");
 						alert("管理员信息添加成功...");
 					} else {
