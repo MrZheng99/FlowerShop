@@ -53,6 +53,13 @@ public class FlowerService implements IFlowerService {
 	}
 
 	@Override
+	public ResponseJson find(Integer fid) {
+		Flower flower = new Flower();
+		flower.setFid(fid);
+		return find(flower);
+	}
+
+	@Override
 	public ResponseJson update(Flower flower) {
 		Integer row = 0;
 		try {
@@ -64,36 +71,6 @@ public class FlowerService implements IFlowerService {
 			e.printStackTrace();
 			return new ResponseJson(500, "修改失败", -1, false);
 		}
-	}
-
-	@Override
-	public ResponseJson insert(MultipartFile[] files, String fname, String description, String flowerLan,
-			String deliveryDesc, Double price, String sale, Integer sid, Integer tid) {
-		List<String> listImage = new ArrayList<String>();
-		if (files.length > 0) {
-			try {
-				for (MultipartFile file : files) {
-					if (!(file.getContentType().indexOf("image") >= 0)) {
-						return new ResponseJson(200, "添加失败,图片格式不正确", null, false);
-					}
-					listImage.add(path + uploadImg.uploadWaterLogoImg(file, uploadPath));
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-				return new ResponseJson(500, "添加失败", null, false);
-			}
-		}
-		
-		String flowerImg;
-		if (listImage.size() > 0)
-			flowerImg = String.join(",", listImage);
-		else
-			flowerImg = "images\\zanwu.jpg";
-		Flower flower = new Flower(fname, description, flowerLan, deliveryDesc, price, flowerImg, sale, sid, tid);
-		Integer row = flowerDao.insert(flower);
-		if (row > 0)
-			return new ResponseJson(200, "添加成功", row, true);
-		return new ResponseJson(200, "添加失败", null, false);
 	}
 
 	@Override
@@ -110,16 +87,44 @@ public class FlowerService implements IFlowerService {
 
 		}
 		String url = (String) rs.get("upload");
-		//url = url.replaceAll("\\\\", "/");
-		//url = url.replaceAll("//", "/");
-		//System.out.println(url);
 		if (rs != null) {
 			map.put("fileName", rs.get("fileName"));
-			map.put("url",url);
+			map.put("url", url);
 			map.put("uploaded", 1);
 		}
 		return map;
 
+	}
+
+	@Override
+	public ResponseJson insert(MultipartFile[] files, String fname, String description, String flowerLan,
+			String deliveryDesc, Double price, String sale, String intro, String pack, Integer sid, Integer tid) {
+		List<String> listImage = new ArrayList<String>();
+		if (files.length > 0) {
+			try {
+				for (MultipartFile file : files) {
+					if (!(file.getContentType().indexOf("image") >= 0)) {
+						return new ResponseJson(200, "添加失败,图片格式不正确", null, false);
+					}
+					listImage.add(path + uploadImg.uploadWaterLogoImg(file, uploadPath));
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				return new ResponseJson(500, "添加失败", null, false);
+			}
+		}
+
+		String flowerImg;
+		if (listImage.size() > 0)
+			flowerImg = String.join(",", listImage);
+		else
+			flowerImg = "images\\zanwu.jpg";
+		Flower flower = new Flower(fname, description, flowerLan, deliveryDesc, price, intro, pack, sale, sid, tid,
+				flowerImg);
+		Integer row = flowerDao.insert(flower);
+		if (row > 0)
+			return new ResponseJson(200, "添加成功", row, true);
+		return new ResponseJson(200, "添加失败", null, false);
 	}
 
 }

@@ -12,10 +12,13 @@ public interface IFlowerService {
 
 	public ResponseJson find(Flower flower);
 
+	public ResponseJson find(Integer fid);
+
 	public ResponseJson update(Flower flower);
 
 	public ResponseJson insert(MultipartFile[] files, String fname, String description, String flowerLan,
-			String deliveryDesc, Double price, String sale, Integer sid, Integer tid);
+			String deliveryDesc, Double price, String sale, String intro, String pack, Integer sid, Integer tid);
 
 	public Map<String, Object> uploadImage(MultipartFile file);
+
 }

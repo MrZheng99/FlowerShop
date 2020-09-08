@@ -13,10 +13,9 @@ public interface IFlowerController {
 
 	public ResponseJson find(Flower flower);
 
-	public ResponseJson update(Flower flower);
+	public ResponseJson find(Integer fid);
 
-	public ResponseJson insert(MultipartFile[] files, String fname, String description, String flowerLan,
-			String deliveryDesc, Double price, String sale, Integer sid, Integer tid);
+	public ResponseJson update(Flower flower);
 
 	/**
 	 * 上传商品描述中的图片
@@ -25,5 +24,8 @@ public interface IFlowerController {
 	 * @return
 	 */
 	public Map<String, Object> uploadImage(MultipartFile file);
+
+	public ResponseJson insert(MultipartFile[] files, String fname, String description, String flowerLan,
+			String deliveryDesc, Double price, String sale, String intro, String pack, Integer sid, Integer tid);
 
 }

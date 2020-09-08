@@ -22,9 +22,11 @@
 	width: 100%;
 	height: 60%;
 }
+
 .festival-item-price {
 	color: #C26137;
 }
+
 #navi .navi-nav li {
 	margin: 0 14px;
 }
@@ -197,49 +199,50 @@
 	</div>
 	<div class="fl-wrapper clearfix">
 		<!-- 楼层 爱情鲜花 -->
-		<div class="fl f-lover">
-			<div class="fl-container">
+		<div class="fl f-lover" id="app">
+			<div class="fl-container" v-for="type in types">
 				<div class="hd">
-					<a class="more" href="#"
-						target="_blank">更多爱情鲜花<span class="icon icon-arrow-right"></span></a>
+					<a class="more" href="#" target="_blank">更多{{type.tname}}<span
+						class="icon icon-arrow-right"></span></a>
 					<h3>
-						<a href="#" target="_blank">爱情鲜花</a><span>送 · 让你怦然心动的人</span>
+						<a href="#" target="_blank">{{type.tname}}</a><span>{{type.description}}</span>
 					</h3>
 				</div>
+
+
+
 				<div class="bd">
 					<div class="bd-l">
 						<div class="banner-box">
-							<a href="#" target="_blank"><img
-								data-original="//img02.hua.com/pc/pimg/home/home_floor_lover.png"
-								src="images/home_floor_lover.png" style="display: inline;"
-								width="288" height="656"></a>
+							<a href="#" target="_blank"><img :src="type.typeImg"
+								style="display: inline;" width="288" height="656"></a>
 							<div class="link-cover">
-								<a href="#" target="_blank">爱情鲜花专区<span
+								<a href="#" target="_blank">{{type.tname}}<span
 									class="icon icon-dotarrow"></span></a>
 							</div>
 						</div>
 					</div>
-					<div class="fl-products">
+
+					<div class="fl-products" v-for="flower in flowers"
+						v-if="flower.tid == type.tid">
 						<div class="fl-products-item">
-							<a href="#" target="_blank">
-								<div class="img-box" href="">
-									<img
-										data-original="https://img01.hua.com/uploadpic/newpic/9010966.jpg_220x240.jpg"
-										src="images/9010966.jpg" style="display: inline;" width="220"
-										height="240">
+							<a :href="'/zyl/front/flower/'+flower.fid" target="_blank">
+								<div class="img-box">
+									<img :src="flower.flowerImg" style="display: inline;"
+										width="220" height="240">
 								</div>
 								<div class="product-content">
-									<p class="product-title">爱情 · 一往情深</p>
+									<p class="product-title">{{flower.fname}}</p>
 									<p class="product-price">
 										<span class="price-sign">¥</span> <span class="price-num"
-											data-pp="9010966">239</span>
+											data-pp="9010966">{{flower.price}}</span>
 									</p>
-									<p class="product-sell">已售 12.7万 件</p>
 								</div>
 							</a>
 						</div>
 						</a>
 					</div>
+
 				</div>
 			</div>
 		</div>
@@ -280,4 +283,35 @@
 			</div>
 		</div>
 	</div>
+</body>
+<script src="/zyl/back/js/vue.js" type="text/javascript"></script>
+<script src="/zyl/back/js/axios.js" type="text/javascript"></script>
+
+<script>
+
+ let vm = new Vue({
+		el:"#app",
+		data:{
+			flowers: [],
+			types: []
+		},
+		methods: {
+			
+		},
+		mounted: function(){//页面渲染完成后执行的方法
+			axios.post("/zyl/flowerType/find").then(result =>{
+				console.info(result);
+				this.types = result.data.data
+			})
+			axios.post("/zyl/flower/findAll").then(res =>{
+				console.info(res);
+		        let imgs = Object.entries(res.data.data);
+		        for (var i = 0; i <= imgs.length - 1; i++) {
+		        	res.data.data[i].flowerImg = res.data.data[i].flowerImg.split(",")[0];
+		        }
+				this.flowers = res.data.data;
+			})
+		}
+	})
+ </script>
 </html>
