@@ -202,7 +202,7 @@
 		<div class="fl f-lover" id="app">
 			<div class="fl-container" v-for="type in types">
 				<div class="hd">
-					<a class="more" href="#" target="_blank">更多爱情鲜花<span
+					<a class="more" href="#" target="_blank">更多{{type.tname}}<span
 						class="icon icon-arrow-right"></span></a>
 					<h3>
 						<a href="#" target="_blank">{{type.tname}}</a><span>{{type.description}}</span>
@@ -226,8 +226,8 @@
 					<div class="fl-products" v-for="flower in flowers"
 						v-if="flower.tid == type.tid">
 						<div class="fl-products-item">
-							<a href="#" target="_blank">
-								<div class="img-box" v-on:click="findById(flower.fid)">
+							<a :href="'/zyl/front/flower/'+flower.fid" target="_blank">
+								<div class="img-box">
 									<img :src="flower.flowerImg" style="display: inline;"
 										width="220" height="240">
 								</div>
@@ -296,12 +296,7 @@
 			types: []
 		},
 		methods: {
-			findById: function(fid){
-				axios.post("/zyl/flower/find",{fid:fid}).then(result =>{
-					console.info(result);
-
-			});
-				}
+			
 		},
 		mounted: function(){//页面渲染完成后执行的方法
 			axios.post("/zyl/flowerType/find").then(result =>{
@@ -310,7 +305,7 @@
 			})
 			axios.post("/zyl/flower/findAll").then(res =>{
 				console.info(res);
-		         let imgs = Object.entries(res.data.data);
+		        let imgs = Object.entries(res.data.data);
 		        for (var i = 0; i <= imgs.length - 1; i++) {
 		        	res.data.data[i].flowerImg = res.data.data[i].flowerImg.split(",")[0];
 		        }

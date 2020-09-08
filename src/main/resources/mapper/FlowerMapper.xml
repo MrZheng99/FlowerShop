@@ -5,8 +5,10 @@
 <mapper namespace="com.zyl.flowershop.dao.IFlowerDao">
 	<select id="findAll" resultMap="flowerInfo">
 		select
-		fid,fname,flowerLan,flowerImg,deliveryDesc,price,sale,f.status,f.tid,f.sid, tname, sname
-		from tb_flower f,tb_type t, tb_series s where f.tid=t.tid and f.sid=s.sid;
+		fid,fname,flowerLan,flowerImg,deliveryDesc,price,sale,intro,pack,f.status,f.tid,f.sid,
+		tname, sname
+		from tb_flower f,tb_type t, tb_series s where f.tid=t.tid
+		and f.sid=s.sid;
 	</select>
 	<resultMap type="Flower" id="flowerInfo" autoMapping="true">
 		<id column="fid" property="fid"></id>
@@ -27,8 +29,9 @@
 
 	<select id="find" resultMap="flowerInfo">
 		select
-		fid,fname,flowerLan,flowerImg,deliveryDesc,price,sale,f.status,f.tid,f.sid, tname, sname
-		from tb_flower f,tb_type t, tb_series s 
+		fid,fname,flowerLan,flowerImg,deliveryDesc,price,sale,intro,pack,f.status,f.tid,f.sid,
+		tname, sname
+		from tb_flower f,tb_type t, tb_series s
 		<where>
 			<if test="fid != null and fid != ''">
 				and fid=#{fid}
@@ -56,11 +59,11 @@
 			</if>
 			<if test="tid != null and tid != ''">
 				and f.tid=#{tid}
-			</if>		
+			</if>
 			<if test="sid != null and sid != ''">
 				and f.sid=#{sid}
-			</if>			
-			</where>
+			</if>
+		</where>
 		<if test="page != null and page != '' and rows!=null and rows!=''">
 			limit page,rows
 		</if>
@@ -68,8 +71,8 @@
 
 	<insert id="insert" parameterType="Flower">
 		insert into
-		tb_flower(`fname`,`description`,`flowerLan`,`deliveryDesc`,`price`,`flowerImg`,`sale`,`sid`,`tid`,`status`)
-		values(#{fname},#{description},#{flowerLan},#{deliveryDesc},#{price},#{flowerImg},#{sale},#{sid},#{tid},1);
+		tb_flower(`fname`,`description`,`flowerLan`,`deliveryDesc`,`price`,`flowerImg`,`sale`,`intro`,`pack`,`sid`,`tid`,`status`)
+		values(#{fname},#{description},#{flowerLan},#{deliveryDesc},#{price},#{flowerImg},#{sale},#{intro},#{pack},#{sid},#{tid},1);
 	</insert>
 	<update id="update" parameterType="FlowerSeries">
 		update tb_flower
@@ -94,6 +97,12 @@
 			</if>
 			<if test="sale !=null and sale !='' ">
 				sale=#{sale},
+			</if>
+			<if test="intro !=null and intro !='' ">
+				intro=#{intro},
+			</if>
+			<if test="pack !=null and pack !='' ">
+				pack=#{pack},
 			</if>
 			<if test="sid !=null and sid !='' ">
 				sid=#{sid},

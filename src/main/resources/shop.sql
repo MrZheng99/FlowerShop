@@ -48,6 +48,8 @@ create table if not exists tb_flower(
 	deliveryDesc varchar(100) not null, #配送说明
 	price decimal(6,2) not null,
 	flowerImg varchar(200) not null,
+	intro varchar(255) null,//简述
+	pack varcahr(255) null,//包装
 	sale varchar(3) not null,#折扣
 	tid int(11) not null,
 	sid int(11) null, 

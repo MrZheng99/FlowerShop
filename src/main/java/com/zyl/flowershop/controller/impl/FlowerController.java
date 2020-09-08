@@ -3,6 +3,7 @@ package com.zyl.flowershop.controller.impl;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,12 +36,19 @@ public class FlowerController implements IFlowerController {
 	}
 
 	@Override
+	@RequestMapping("/{fid}")
+	public ResponseJson find(@PathVariable Integer fid) {
+		return flowerService.find(fid);
+	}
+
+	@Override
 	@PostMapping("/insert")
 	public ResponseJson insert(@RequestParam("pics") MultipartFile[] files, @RequestParam String fname,
 			@RequestParam String description, @RequestParam String flowerLan, @RequestParam String deliveryDesc,
-			@RequestParam Double price, @RequestParam String sale, @RequestParam Integer sid,
-			@RequestParam Integer tid) {
-		return flowerService.insert(files, fname, description, flowerLan, deliveryDesc, price, sale, sid, tid);
+			@RequestParam Double price, @RequestParam String sale, @RequestParam String intro,
+			@RequestParam String pack, @RequestParam Integer sid, @RequestParam Integer tid) {
+		return flowerService.insert(files, fname, description, flowerLan, deliveryDesc, price, sale, intro, pack, sid,
+				tid);
 	}
 
 	@Override
