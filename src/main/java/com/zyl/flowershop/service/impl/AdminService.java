@@ -83,12 +83,27 @@ public class AdminService implements IAdminService {
 	}
 
 	@Override
-	public ResponseJson update(Admin admin) {
+	public ResponseJson update(MultipartFile file, Admin admin, HttpSession session) {
+		// 上传图片
+		if (file.isEmpty())
+			return new ResponseJson(200, "修改失败,头像不能为空", null, false);
+		if (!(file.getContentType().indexOf("image") >= 0))
+			return new ResponseJson(200, "修改失败,头像格式不正确", null, false);
+		String fileName;
+		Map<String, Object> rs = new HashMap<String, Object>();
+		try {
+			fileName = uploadImg.uploadImage(file, uploadPath);
+			admin.setHeadImg(path + fileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		Integer row = 0;
 		try {
 			row = adminDao.update(admin);
-			if (row > 0)
+			if (row > 0) {
+				session.setAttribute(SessionKey.CURRENT_ADMIN, admin);
 				return new ResponseJson(200, "修改成功", row, true);
+			}
 			return new ResponseJson(200, "修改失败", row, false);
 
 		} catch (NumberFormatException e) {
@@ -97,8 +112,8 @@ public class AdminService implements IAdminService {
 		}
 	}
 
-	public ResponseJson updatePwd(String opwd, String npwd, Integer id) {
-		Integer row = adminDao.updatePwd(id, opwd, npwd);
+	public ResponseJson updatePwd(String opwd, String npwd, Integer aid) {
+		Integer row = adminDao.updatePwd(aid, opwd, npwd);
 		if (row > 0)
 			return new ResponseJson(200, "添加密码成功", null, true);
 		return new ResponseJson(200, "修改密码失败", null, false);

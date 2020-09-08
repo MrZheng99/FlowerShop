@@ -99,14 +99,15 @@ var types_obj = $('#admin_data').datagrid({
 					success:function(data){
 						if(data.success){
 							$.messager.show({title:'成功提示',msg: '会员信息修改成功...', timeout:2000, showType:'slide'});
+							$('#admin_data').datagrid('loadData');
 						}else{
 							$.messager.show('失败提示',  '会员类型修改失败...', 'error');
+							$('#admin_data').datagrid('reload');
 						}
 					}
 				});
 				row = null;
 				types_editRow = undefined;
-				$('#admin_data').datagrid('reload');
 			}
 		},'-',{
 			text:"删除",

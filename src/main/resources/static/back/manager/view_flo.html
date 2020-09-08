@@ -14,11 +14,18 @@
    <label>鲜花名称:</label>
    <input type="text" placeholder="请输入菜品名称..." id="views_flo_search_fname" />
    <a href="javascript:searchGoodsInfo()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+   <a href="javascript:editFlower()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" style="float:left">编辑</a>
 </div>
-<div id="view_goods_dialog" data-options="closed:true">
+<div id="view_flo_dialog" data-options="closed:true">
 
 </div>
 <script>
+var view_flo_obj;
+var statusObj = [{fno:0, fname:"不可用"}, {fno:1, fname:"可用"}];
+var flo_editRow = undefined;
+var flo_op;
+var flo_flag;
+
 $(function(){
 	$.post("/zyl/flowerType/findAll", data=>{
 		var str="";
@@ -38,11 +45,8 @@ $(function(){
 })
 
 
-var view_goods_obj;
-var statusObj = [{fno:0, fname:"不可用"}, {fno:1, fname:"可用"}];
 
-
-var view_goods_obj = $('#view_flo_data').datagrid({
+var view_flo_obj = $('#view_flo_data').datagrid({
 	url:'/zyl/flower/findAll',
 	method:"get",
 	fitColumns: true,
@@ -68,8 +72,8 @@ var view_goods_obj = $('#view_flo_data').datagrid({
         },
 		{field:'seris.name', title:'所属系列',width:50,align:'center',formatter: function(value,row,index){
 			return row.series.sname;
-	    }
-    },
+	        }
+        },
 		{field:'price', title:'单价',width:50,align:'center'},
 		{field:'deliveryDesc', title:'配送说明',width:100,align:'center'},
 		{field:'status',title:'类型状态',width:50,align:'center', formatter:function(val, row, index){
@@ -104,5 +108,63 @@ function searchGoodsInfo(){
            }
 
 	})
+}
+
+function editFlower(){
+	var row = view_flo_obj.datagrid("getSelected");
+	if(flo_editRow != undefined){
+		return;
+	}
+	
+	if( row == null){
+		$.messager.show({title:'温馨提示',msg: '请选择您要修改的鲜花信息...', timeout:2000, showType:'slide'});
+		return;
+	}
+	flo_editRow = view_flo_obj.datagrid("getRowIndex", row);
+	
+	
+	$("#view_flo_dialog").dialog({
+		title:"添加鲜花类别",
+		width:800,
+	    height:600,
+	    closed:false,
+	    cache:false,
+	    iconCls:"icon-add",
+	    modal:true,
+	    href:"manager/view_flo_details.html",
+	    buttons:[{
+	    	text:"确定",
+	    	iconCls:"icon-ok",
+	    	handler:function(){
+	    		var tname = document.getElementById("types").value;
+	    		var description = document.getElementById("description").value;
+	    		
+	    		$.ajaxFileUpload({
+	    			url:"/zyl/flower/update",
+	    		    secureuri:false,
+	    		    fileElementId:"pic",
+	    		    dataType:"json",
+	    		    data:{tname:tname,description:description},
+	    		    success:function(data){
+	    		       if(data.success){
+	    		    		alert("鲜花种类添加成功...");
+	    		    	}else{
+	    		    		alert("鲜花种类添加失败，请稍后重试...");
+	    		    	}
+	    		    },
+	    		    error:function(data,status,e){
+	    		    	alert("鲜花种类添加失败...\n"+e);
+	    		    }
+	    		});
+	    	}
+	    },{
+	    	text:"取消",
+	    	iconCls:"icon-cancel",
+	    	handler:function(){
+	    		$("#view_goods_dialog").dialog('close');
+	    	}
+	    }]
+	});
+	
 }
 </script>

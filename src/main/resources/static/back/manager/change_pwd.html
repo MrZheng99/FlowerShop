@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ZYL花城-修改密码</title>
+<link rel="shortcut icon" href="back/images/copylogo.png"
+	type="image/x-icon" />
+<link rel="stylesheet" href="back/css/common.css">
+<link rel="stylesheet" href="back/css/main.css">
+</head>
+<body>
+	<div class="easyui-panel" title="<center>添加管理员</center>"
+		style="padding:3% 20%; text-align: center; width: 100%;height:100%; ">
+		<form action="" id="changePwdForm" data-options="novalidate:true" onSubmit="return false">
+			<div style="margin-bottom: 20px">
+				<input class="easyui-textbox" id="aid" style="width: 40%"  readonly="readonly" 
+					data-options="label:'编号：',iconCls:'icon-man'">
+			</div>
+			<div style="margin-bottom: 20px">
+				<input class="easyui-textbox" type="password" id="old-pwd" style="width: 40%"
+					data-options="label:'旧密码：',required:true,iconCls:'icon-lock',validType:'password'">
+			</div>
+			<div style="margin-bottom: 20px">
+				<input class="easyui-textbox" type="password" id="pwd" style="width: 40%"
+					data-options="label:'密码：',required:true,iconCls:'icon-lock',validType:'password'">
+			</div>
+			<div style="margin-bottom: 20px">
+				<input class="easyui-textbox"   type="password" id="ck" style="width: 40%"
+					data-options="label:'确认密码：',required:true,iconCls:'icon-lock',validType:'password'">
+			</div>
+			<div style="margin-bottom: 20px;margin-top: 150px;">
+				<button class="easyui-linkbutton" data-options="iconCls:'icon-add'"
+					onclick="submitForm()" style="width: 130px">修改密码</button>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript">
+		$.extend($.fn.validatebox.defaults.rules, {
+			password : {// 验证密码
+				validator : function(value) {
+					return /^[a-zA-Z0-9_]{5,15}$/i.test(value);
+				},
+				message : '密码不合法（允许6-16字节，允许字母数字下划线）'
+			}
+		});
+	</script>
+	<script type="text/javascript">
+	let login = new Vue({
+		el: "#changePwdForm",
+		data: {
+			aid:"",
+		},
+		mounted:function(){
+			axios.get("../adm/findCurrent").then(result=> {
+				if(result.data.success){ //已登录
+					this.aid = result.data.data.aid;
+					 $("#aid").textbox("setValue",this.aid);
+	     		}  else{
+					alert("请登陆后重试。。。")
+				}
+			})
+		}
+	})
+	
+		function submitForm() {
+			var validate = $("#changePwdForm").form('enableValidation').form('validate');
+			if (!validate){
+				return;
+			}
+			var aid = $.trim($("#aid").val());
+			var opwd = $.trim($("#old-pwd").val());
+			var npwd = $.trim($("#pwd").val());
+			if(npwd!=$.trim($("#ck").val())){
+				alert("两次密码不一致");
+			    return;
+			}
+
+			$.ajax({
+				url : "/zyl/adm/updatePwd",
+				dataType : "json",
+				type:"post",
+				data:{opwd:hex_md5(opwd),npwd:hex_md5(npwd),aid:aid},
+				success : function(data) {
+					if (data.success) {
+						$("#changePwdForm")[0].reset();
+						$("#showPics").html("");
+						alert("管理员密码修改成功...");
+					} else {
+						alert("管理员密码修改失败，请稍后重试...");
+					}
+				},
+				error : function(data, status, e) {
+					alert("管理员密码修改失败...\n" + e);
+				}
+			});
+
+		}
+	</script>
+</body>
+</html>

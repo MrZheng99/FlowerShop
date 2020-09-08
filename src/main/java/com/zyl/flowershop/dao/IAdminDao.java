@@ -55,7 +55,7 @@ public interface IAdminDao {
 	 * @param pwd
 	 * @return
 	 */
-	public Integer updatePwd(@Param("id") Integer id, @Param("opwd") String opwd, @Param("npwd") String npwd);
+	public Integer updatePwd(@Param("aid") Integer aid, @Param("opwd") String opwd, @Param("npwd") String npwd);
 
 	/**
 	 * 总记录数

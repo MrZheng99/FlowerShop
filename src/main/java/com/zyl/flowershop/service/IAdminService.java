@@ -20,7 +20,7 @@ public interface IAdminService {
 	 * @param admin
 	 * @return
 	 */
-	public ResponseJson update(Admin admin);
+	public ResponseJson update(MultipartFile file, Admin admin, HttpSession session);
 
 	/**
 	 * 管理员登录
@@ -31,4 +31,7 @@ public interface IAdminService {
 	 */
 	public ResponseJson login(Admin admin, HttpSession session);
 
+
+
+	
 }

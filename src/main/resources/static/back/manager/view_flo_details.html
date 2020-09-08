@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ZYL-添加鲜花</title>
+<link rel="shortcut icon" href="../../images/copylogo.png" type="image/x-icon" />
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/main.css">
+<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+</head>
+<body>
+<div id="forms" class="mt10">
+	<div class="box">
+		<div class="box_border">
+			<div class="box_top">
+				<b class="pl15">修改鲜花信息</b>
+			</div>
+			<div class="box_center">
+				<form action="" class="jqtransform" id="addNewsForm">
+					<table class="form_table pt15 pb15" width="100%" border="0" cellpadding="0" cellspacing="0">
+						<tr>
+							<td class="td_right">鲜花类型：</td>
+							<td>
+								<select class="select" name="tno" id="floType">
+								
+								</select>
+							</td>
+							<td class="td_right">鲜花系列：</td>
+							<td>
+								<select class="select" name="sno" id="floSeries">
+								
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="td_right">鲜花名称：</td>
+							<td>
+								<input type="text" id="fname" name="fname" class="input-text lh30" size="40" placeholder="请输入鲜花名称">
+							</td>
+							<td class="td_right">价格：</td>
+							<td>
+								<input type="text" id="price" name="price" class="input-text lh30" size="40" value="99">
+							</td>					
+						</tr>
+						<tr>
+							<td class="td_right">折扣：</td>
+							<td>
+								<input type="text" id="sale" name="sale" class="input-text lh30" size="40" >
+							</td>					
+							<td class="td_right">配送说明：</td>
+							<td>
+								<input type="text" id="deliveryDesc" name="deliveryDesc" class="input-text lh30" size="40" value="顺丰配送">
+							</td>							
+						</tr>
+						<tr>
+						  <td class="td_right">图片：</td>
+							<td>
+								<input type="file" id="pics" name="pics" class="input-text lh30" size="40" multiple="multiple" onchange="setImagePreviews(this,'showPics')" accept="image/gif, image/jpeg, image/jpg, image/png">
+							</td>	
+							<td class="td_right">花语：</td>
+							<td>
+								<input type="text" id="flowerLan" name="flowerLan" class="input-text lh30" size="40" >
+							</td>						
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td colspan="3" align="center">
+								<div id="showPics">
+								
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="td_right">具体描述：</td>
+							<td colspan="3">
+								<textarea name="editor1" id="editor1" rows="10" cols="80"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="4" align="center">
+								<input type="button" name="button" class="btn btn82 btn_save2" onclick="addFloInfo()" value="添加">
+								<input type="reset" name="button" class="btn btn82 btn_res" value="重置">
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">	
+CKEDITOR.replace( 'editor1' );
+
+$(function(){
+	$.post("/zyl/flowerType/findAll",data => {
+		var str="";
+		$.each(data.data,function(index,item){
+			str +="<option value='" + item.tid + "'>" + item.tname + "</option>";
+		})
+		$("#floType").append($(str));
+	},"json")
+	
+	$.post("/zyl/flowerSeries/findAll",data => {
+		var str="";
+		$.each(data.data,function(index,item){
+			str +="<option value='" + item.sid + "'>" + item.sname + "</option>";
+		})
+		$("#floSeries").append($(str));
+	},"json")
+})
+
+
+
+function addFloInfo(){	
+	var tid = $.trim($("#floType").val());
+	var sid = $.trim($("#floSeries").val());
+	var fname = $.trim($("#fname").val());
+	var price = $.trim($("#price").val());
+	var sale = $.trim($("#sale").val());
+	var deliveryDesc = $.trim($("#deliveryDesc").val());
+	var flowerLan = $.trim($("#flowerLan").val());
+	var description = CKEDITOR.instances.editor1.getData();//获取ckeditor下面的内容，设置setData("");	
+	
+	if(fname == "" || price == "" || sale == "" || deliveryDesc == "" || flowerLan == "" || description == ""){
+		alert("请完善信息后添加!!!!");
+		return;
+	}
+
+	$.ajaxFileUpload({
+		url:"/zyl/flower/insert",
+	    secureuri:false,
+	    fileElementId:"pics",
+	    dataType:"json",
+	    data:{tid:tid, sid:sid, fname:fname, price:price, sale:sale, deliveryDesc:deliveryDesc, flowerLan:flowerLan, description:description},
+	    success:function(data,status){
+            if(data.success){
+	    		$("#addNewsForm")[0].reset();
+	    		$("#showPics").html("");
+	    		CKEDITOR.instances.editor1.setData("");
+	    		alert("鲜花信息添加成功...");
+	    	}else{
+	    		alert("鲜花信息添加失败，请稍后重试...");
+	    	}
+	    },
+	    error:function(data,status,e){
+	    	alert("鲜花信息添加失败...\n"+e);
+	    }
+	});
+}
+</script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>源辰-添加管理员</title>
+<title>ZYL花城-修改个人信息</title>
 <link rel="shortcut icon" href="../../images/copylogo.png" type="image/x-icon" />
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/main.css">
@@ -32,20 +32,15 @@
 			<div style="margin-bottom: 20px">
 				<span style="float: center;">头像：</span> <input type="file" id="pic"
 					name="pic" style="width: 70% margin-left:"
-					onchange="setImagePreviews(this,'showPics')">
+					onchange="setAdmImagePreviews(this,'showPics')">
 			</div>
-			<div style="margin-bottom: 20px; height: 80px; text-align: center;"
+			<div style="margin-bottom: 20px; height: 80px; text-align: center;width:200px;margin-left:33%;"
 				id="showPics">
-				<img :src="headImg">
+				<img :src="headImg" height="200px" width="200px">
 				</div>
-			<div>
-				<input class="easyui-radiobutton" name="level" checked="checked"
-					value="0" label="普通管理员"> <input class="easyui-radiobutton"
-					name="level" value="1" label="超级管理员">
-			</div>
-			<div style="margin-bottom: 20px;margin-top: 20px;">
+			<div style="margin-bottom: 20px;margin-top: 150px;">
 				<button class="easyui-linkbutton" data-options="iconCls:'icon-add'"
-					onclick="submitForm()" style="width: 130px">添加</button>
+					onclick="submitForm()" style="width: 130px">修改</button>
 			</div>
 		</form>
 </div>
@@ -135,6 +130,7 @@ function submitForm() {
 		success : function(data) {
 			if (data.success) {
 				alert("管理员信息修改成功...");
+				location.reload();
 			} else {
 				alert("管理员信息修改失败，请稍后重试...");
 			}

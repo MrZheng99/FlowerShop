@@ -37,8 +37,8 @@ public interface IAdminController {
 	 * @param admin
 	 * @return
 	 */
-	public ResponseJson update(MultipartFile file, String aname, String account, String role, String tel, Integer aid);
-
+	public 	ResponseJson update(MultipartFile file, String aname, String account, String role, String tel, Integer aid,
+			HttpSession session);
 	/**
 	 * 修改密码
 	 * 
@@ -50,6 +50,8 @@ public interface IAdminController {
 	public ResponseJson updatePwd(String opwd, String npwd, Integer id);
 
 	public ResponseJson findCurrent(HttpSession session);
+
+
 
 
 }

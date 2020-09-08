@@ -43,14 +43,14 @@ function setAdmImagePreviews(imagesObj,divid) {
     dd.innerHTML = "";
     var fileList = imagesObj.files;
     for (var i = 0; i < fileList.length; i++) {            
-        dd.innerHTML += "<div style='float:left' > <img id='"+divid+"_img" + i + "'  /> </div>";
+        dd.innerHTML += "<div style='text-align:center' > <img id='"+divid+"_img" + i + "'  /> </div>";
         var imgObjPreview = document.getElementById(divid+"_img"+i); 
         if (imagesObj.files && imagesObj.files[i]) {
             //火狐下，直接设img属性
             imgObjPreview.style.display = 'block';
-            imgObjPreview.style.width = '400px';
-            imgObjPreview.style.height = '400px';
-            imgObjPreview.src = window.URL.createObjectURL(imagesObj.files[i]);
+            imgObjPreview.style.width = '200px';
+            imgObjPreview.style.height = '200px';
+           imgObjPreview.src = window.URL.createObjectURL(imagesObj.files[i]);
         }else {
             //IE下，使用滤镜
             imagesObj.select();
@@ -58,8 +58,8 @@ function setAdmImagePreviews(imagesObj,divid) {
             //alert(imgSrc);
             var localImagId = document.getElementById("img" + i);
             //必须设置初始大小
-            localImagId.style.width = "400px";
-            localImagId.style.height = "400px";
+            localImagId.style.width = "200px";
+            localImagId.style.height = "200px";
             //图片异常的捕捉
             try {
                 localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader( true,sizingMethod=scale,src = imgSrc)";  //scale：缩放图片以适应对象的尺寸边界。

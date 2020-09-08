@@ -54,20 +54,20 @@ public class AdminController implements IAdminController {
 	@PostMapping("/update")
 	public ResponseJson update(@RequestParam("pic") MultipartFile file, @RequestParam String aname,
 			@RequestParam String account, @RequestParam String role,
-			@RequestParam String tel,@RequestParam Integer aid){
+			@RequestParam String tel,@RequestParam Integer aid,HttpSession session){
 				Admin admin = new Admin();
 				admin.setAccount(account);
 				admin.setAname(aname);
 				admin.setTel(tel);
 				admin.setRole(role);
 				admin.setAid(aid);
-				return adminService.update(admin);
+				return adminService.update(file,admin, session);
 	}
 
 	@Override
 	@PostMapping("/updatePwd")
-	public ResponseJson updatePwd(@RequestParam String opwd, @RequestParam String npwd, @RequestParam Integer id) {
-		return adminService.updatePwd(opwd, npwd, id);
+	public ResponseJson updatePwd(@RequestParam String opwd, @RequestParam String npwd, @RequestParam Integer aid) {
+		return adminService.updatePwd(opwd, npwd, aid);
 	}
 
 	@Override

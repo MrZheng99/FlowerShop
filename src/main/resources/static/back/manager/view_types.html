@@ -43,7 +43,7 @@ var types_obj = $('#types_data').datagrid({
 			iconCls: 'icon-add',
 			handler: function(){
 				$("#view_goods_dialog").dialog({
-					title:"添加商品信息",
+					title:"添加鲜花类别",
 					width:600,
 				    height:400,
 				    closed:false,
@@ -126,6 +126,7 @@ var types_obj = $('#types_data').datagrid({
 				var status = row.status;
 				var tid = row.tid;
 				var tname = row.tname;
+				var description = row.description;
 												
 				$.ajax({
 					url:"/zyl/flowerType/update",
@@ -136,14 +137,15 @@ var types_obj = $('#types_data').datagrid({
 					success:function(data){
 						if(data.success){
 							$.messager.show({title:'成功提示',msg: '鲜花种类信息修改成功...', timeout:2000, showType:'slide'});
+							$('#types_data').datagrid('loadData');
 						}else{
 							$.messager.show('失败提示',  '鲜花种类信息修改失败...', 'error');
+							$('#types_data').datagrid('reload');
 						}
 					}
 				});
 				row = null;
 				types_editRow = undefined;
-				$('#types_data').datagrid('reload');
 			}
 		},'-',{
 			text:"删除",
