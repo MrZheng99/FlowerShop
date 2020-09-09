@@ -223,9 +223,9 @@
 						</div>
 					</div>
 
-					<div class="fl-products" v-for="flower in flowers"
+					<div class="fl-products">
+						<div class="fl-products-item" v-for="flower in flowers"
 						v-if="flower.tid == type.tid">
-						<div class="fl-products-item">
 							<a :href="'/zyl/front/flower/'+flower.fid" target="_blank">
 								<div class="img-box">
 									<img :src="flower.flowerImg" style="display: inline;"
