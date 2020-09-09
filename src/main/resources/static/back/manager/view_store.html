@@ -101,7 +101,7 @@ var store_obj = $('#store_data').datagrid({
 				
 				var row = store_obj.datagrid("getSelected");
 				if( row == null){
-					$.messager.show({title:'温馨提示',msg: '请选择您要修改的商品类型信息...', timeout:2000, showType:'slide'});
+					$.messager.show({title:'温馨提示',msg: '请选择您要修改的库存信息...', timeout:2000, showType:'slide'});
 					return;
 				}
 				
@@ -128,22 +128,23 @@ var store_obj = $('#store_data').datagrid({
 				var row = store_obj.datagrid("getChanges")[0];
 				
 				var status = row.status;
-				var tid = row.tid;
-				var tname = row.tname;
-				var description = row.description;
+				var sid = row.sid;
+				var color = row.color;
+				var size = row.size;
+				var num  = row.num;
 												
 				$.ajax({
-					url:"/zyl/flowerType/update",
+					url:"/zyl/store/update",
 					type:"post",
-					data:JSON.stringify({status:status,tname:tname,tid:tid}),
+					data:JSON.stringify({status:status,sid:sid,color:color,size:size,num:num}),
 					contentType:"application/json",
 					dataType:"json",
 					success:function(data){
 						if(data.success){
-							$.messager.show({title:'成功提示',msg: '鲜花种类信息修改成功...', timeout:2000, showType:'slide'});
+							$.messager.show({title:'成功提示',msg: '库存信息修改成功...', timeout:2000, showType:'slide'});
 							$('#store_data').datagrid('loadData');
 						}else{
-							$.messager.show('失败提示',  '鲜花种类信息修改失败...', 'error');
+							$.messager.show('失败提示',  '库存信息修改失败...', 'error');
 							$('#store_data').datagrid('reload');
 						}
 					}
@@ -151,7 +152,9 @@ var store_obj = $('#store_data').datagrid({
 				row = null;
 				types_editRow = undefined;
 			}
-		},'-',{
+		}
+		/*
+		,'-',{
 			text:"删除",
 			iconCls:'icon-remove',
 			handler:function(){
@@ -181,7 +184,9 @@ var store_obj = $('#store_data').datagrid({
 					})
 				})
 			}
-		},'-',{
+		}
+		*/
+		,'-',{
 			text:"撤销",
 			iconCls:'icon-undo',
 			handler:function(){
