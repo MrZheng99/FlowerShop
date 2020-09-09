@@ -31,7 +31,6 @@ public class FlowerController implements IFlowerController {
 	@Override
 	@RequestMapping("/find")
 	public ResponseJson find(@RequestBody Flower flower) {
-		System.out.println("flower" + flower);
 		return flowerService.find(flower);
 	}
 

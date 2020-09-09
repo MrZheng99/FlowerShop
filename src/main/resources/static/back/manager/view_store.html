@@ -1,8 +1,8 @@
-<table id="types_data" data-options="fit:true"></table>
+<table id="store_data" data-options="fit:true"></table>
 
-<a href="javascript:openAddTypesDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="float:left">添加</a>
+<a href="javascript:openAddStoreDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="float:left">添加</a>
 
-<div id="view_goods_dialog" data-options="closed:true">
+<div id="view_store_dialog" data-options="closed:true">
 </div>
 <script>
 var statusObj = [{tno:0, tname:"下架"}, {tno:1, tname:"可用"}];
@@ -10,8 +10,8 @@ var types_editRow = undefined;
 var types_op;
 var types_flag;
 
-var types_obj = $('#types_data').datagrid({
-	url:'/zyl/flowerType/findAll',
+var store_obj = $('#store_data').datagrid({
+	url:'/zyl/store/findAll',
 	method:"get",
     fitColumns: true,
 	loadMsg: '数据加载中，请稍后...',
@@ -24,10 +24,12 @@ var types_obj = $('#types_data').datagrid({
 		return info;
 	},
 	columns:[[
-		{field:'tid',title:'类型编号',width:50,align:'center'},
-		{field:'tname',title:'类型名称',width:100,align:'center',editor:{type:"text", options:{required:true}}},
-		{field:'description',title:'类型描述',width:100,align:'center',editor:{type:"text", options:{required:true}}},
-		{field:'typeImg',title:'类型图片',width:100,align:'center',formatter:function(val,row,index){
+		{field:'sid',title:'编号',width:50,align:'center'},
+		{field:'color',title:'颜色',width:50,align:'center',editor:{type:"text", options:{required:true}}},
+		{field:'size',title:'规格',width:100,align:'center',editor:{type:"text", options:{required:true}}},
+		{field:'num',title:'库存',width:50,align:'center',editor:{type:"text", options:{required:true}}},
+		{field:'fid',title:'所属鲜花编号',width:100,align:'center',editor:{type:"text", options:{required:true}}},
+		{field:'img',title:'图片',width:100,align:'center',formatter:function(val,row,index){
 			return"<img src='"+ val + "' width='50px' height='50px'/>";
 		}},
 		{field:'status',title:'类型状态',width:50,align:'center', formatter:function(val, row, index){
@@ -42,37 +44,39 @@ var types_obj = $('#types_data').datagrid({
 			text: "添加",
 			iconCls: 'icon-add',
 			handler: function(){
-				$("#view_goods_dialog").dialog({
-					title:"添加鲜花类别",
+				$("#view_store_dialog").dialog({
+					title:"添加鲜花库存",
 					width:600,
 				    height:400,
 				    closed:false,
 				    cache:false,
 				    iconCls:"icon-add",
 				    modal:true,
-				    href:"manager/add_flo_types.html",
+				    href:"manager/add_flo_store.html",
 				    buttons:[{
 				    	text:"确定",
 				    	iconCls:"icon-ok",
 				    	handler:function(){
-				    		var tname = document.getElementById("types").value;
-				    		var description = document.getElementById("description").value;
+				    		var color = document.getElementById("color").value;
+				    		var size = document.getElementById("size").value;
+				    		var num = document.getElementById("num").value;
+				    		var fid = document.getElementById("fid").value;
 				    		
 				    		$.ajaxFileUpload({
-				    			url:"/zyl/flowerType/insert",
+				    			url:"/zyl/store/insert",
 				    		    secureuri:false,
 				    		    fileElementId:"pic",
 				    		    dataType:"json",
-				    		    data:{tname:tname,description:description},
+				    		    data:{color:color,size:size,num:num,fid:fid},
 				    		    success:function(data){
 				    		       if(data.success){
-				    		    		alert("鲜花种类添加成功...");
+				    		    		alert("鲜花库存添加成功...");
 				    		    	}else{
-				    		    		alert("鲜花种类添加失败，请稍后重试...");
+				    		    		alert("鲜花库存添加失败，请稍后重试...");
 				    		    	}
 				    		    },
 				    		    error:function(data,status,e){
-				    		    	alert("鲜花种类添加失败...\n"+e);
+				    		    	alert("鲜花库存添加失败...\n"+e);
 				    		    }
 				    		});
 				    	}
@@ -80,7 +84,7 @@ var types_obj = $('#types_data').datagrid({
 				    	text:"取消",
 				    	iconCls:"icon-cancel",
 				    	handler:function(){
-				    		$("#view_goods_dialog").dialog('close');
+				    		$("#view_store_dialog").dialog('close');
 				    	}
 				    }]
 				});
@@ -95,15 +99,15 @@ var types_obj = $('#types_data').datagrid({
 					return;
 				}
 				
-				var row = types_obj.datagrid("getSelected");
+				var row = store_obj.datagrid("getSelected");
 				if( row == null){
 					$.messager.show({title:'温馨提示',msg: '请选择您要修改的商品类型信息...', timeout:2000, showType:'slide'});
 					return;
 				}
 				
-				types_editRow = types_obj.datagrid("getRowIndex", row);
+				types_editRow = store_obj.datagrid("getRowIndex", row);
 				
-				types_obj.datagrid("beginEdit", types_editRow);
+				store_obj.datagrid("beginEdit", types_editRow);
 			}
 		},'-',{
 			text:"保存",
@@ -113,15 +117,15 @@ var types_obj = $('#types_data').datagrid({
 					return;
 				}
 				
-				types_obj.datagrid("endEdit", types_editRow);
+				store_obj.datagrid("endEdit", types_editRow);
 				
-				if(types_obj.datagrid("getChanges")[0] == null){
+				if(store_obj.datagrid("getChanges")[0] == null){
 					row = null;
 					types_editRow = undefined;
 					return;
 				}
 				
-				var row = types_obj.datagrid("getChanges")[0];
+				var row = store_obj.datagrid("getChanges")[0];
 				
 				var status = row.status;
 				var tid = row.tid;
@@ -137,10 +141,10 @@ var types_obj = $('#types_data').datagrid({
 					success:function(data){
 						if(data.success){
 							$.messager.show({title:'成功提示',msg: '鲜花种类信息修改成功...', timeout:2000, showType:'slide'});
-							$('#types_data').datagrid('loadData');
+							$('#store_data').datagrid('loadData');
 						}else{
 							$.messager.show('失败提示',  '鲜花种类信息修改失败...', 'error');
-							$('#types_data').datagrid('reload');
+							$('#store_data').datagrid('reload');
 						}
 					}
 				});
@@ -155,7 +159,7 @@ var types_obj = $('#types_data').datagrid({
 					return;
 				}
 				
-				var row = types_obj.datagrid("getSelected");
+				var row = store_obj.datagrid("getSelected");
 				if( row == null){
 					$.messager.show({title:'温馨提示',msg: '请选择您要修改的商品类型信息', timeout:2000, showType:'slide'});
 					return
@@ -169,7 +173,7 @@ var types_obj = $('#types_data').datagrid({
 					$.post("../../types", {op:"delete", tno:row.tno}, data=>{
 						if(data > 0){
 					       $.messager.show({title:'成功提示',msg: types_flag +'商品类型删除成功', timeout:2000, showType:'slide'});	
-					       types_obj.datagrid("reload");
+					       store_obj.datagrid("reload");
 						} else{
 							$.messager.alert('失败提示', '商品类型删除失败...', 'error');
 						}
@@ -182,7 +186,7 @@ var types_obj = $('#types_data').datagrid({
 			iconCls:'icon-undo',
 			handler:function(){
 				row = null;
-				types_obj.datagrid("rejectChanges");
+				store_obj.datagrid("rejectChanges");
 				types_editRow = undefined;
 			}
 		}]

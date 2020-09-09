@@ -13,6 +13,9 @@ file:
   flower: 
     path: ..\fileUpload\flower\
     uploadPath: \images\flower
+  store: 
+    path: ..\fileUpload\store\
+    uploadPath: \images\store    
 spring:
   #数据库连接配置
   datasource:

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+ <div style="margin-bottom: 20px">
+	<input class="easyui-textbox" id="color" style="width: 80%"
+	data-options="label:'颜色:',required:true,validType:'account'">
+</div>
+ <div style="margin-bottom: 20px">
+	<input class="easyui-textbox" id="size" style="width: 80%"
+	data-options="label:'规格:',required:true,validType:'account'">
+</div>
+ <div style="margin-bottom: 20px">
+	<input class="easyui-textbox" id="num" style="width: 80%"
+	data-options="label:'库存:',required:true,validType:'account'">
+</div>
+<script type="text/javascript">	
+$(function(){
+	$.post("/zyl/flower/findAll",data => {
+		var str="";
+		$.each(data.data,function(index,item){
+			str +="<option value='" + item.fid + "'>" + item.fname + "</option>";
+		})
+		$("#fid").append($(str));
+	},"json")
+	
+})
+</script>
+<div class="td_right">鲜花：
+	<select class="select" name="fid" id="fid">
+	
+	</select>
+</div>
+<div>
+	<tr>
+		<td class="td_right">图片：</td>
+		<td>
+			<input type="file" id="pic" name="pic" class="input-text lh30" size="40" onchange="setImagePreviews(this,'showPics')">
+		</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td colspan="3" align="center">
+			<div id="showPics">
+			</div>
+		</td>
+	</tr>
+</div>
+</body>
+</html>

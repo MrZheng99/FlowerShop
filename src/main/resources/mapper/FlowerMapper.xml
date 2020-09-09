@@ -5,7 +5,7 @@
 <mapper namespace="com.zyl.flowershop.dao.IFlowerDao">
 	<select id="findAll" resultMap="flowerInfo">
 		select
-		fid,fname,flowerLan,flowerImg,deliveryDesc,price,sale,intro,pack,f.status,f.tid,f.sid,
+		fid,fname,f.description,flowerLan,flowerImg,deliveryDesc,price,sale,intro,pack,f.status,f.tid,f.sid,
 		tname, sname
 		from tb_flower f,tb_type t, tb_series s where f.tid=t.tid
 		and f.sid=s.sid;
@@ -29,7 +29,7 @@
 
 	<select id="find" resultMap="flowerInfo">
 		select
-		fid,fname,flowerLan,flowerImg,deliveryDesc,price,sale,intro,pack,f.status,f.tid,f.sid,
+		fid,fname,f.description,flowerLan,flowerImg,deliveryDesc,price,sale,intro,pack,f.status,f.tid,f.sid,
 		tname, sname
 		from tb_flower f,tb_type t, tb_series s
 		<where>

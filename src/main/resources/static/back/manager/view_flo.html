@@ -11,9 +11,15 @@
    <select id="view_flo_search_sid">
        <option value=''>--请选择--</option>
    </select> 
-   <label>鲜花名称:</label>
+   <!-- 
+   <label>最低价:</label>
+   <input id="lprice" type="text">
+    <label>最搞价:</label>
+   <input id="hprice" type="text">  
+    <label>鲜花名称:</label>
+     --> 
    <input type="text" placeholder="请输入菜品名称..." id="views_flo_search_fname" />
-   <a href="javascript:searchGoodsInfo()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+   <a href="javascript:searchFloInfo()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
    <a href="javascript:editFlower()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" style="float:left">编辑</a>
 </div>
 <div id="view_flo_dialog" data-options="closed:true">
@@ -88,12 +94,14 @@ var view_flo_obj = $('#view_flo_data').datagrid({
 });
 
 
-function searchGoodsInfo(){
+function searchFloInfo(){
 	var tid= $.trim($("#view_flo_search_tid").val());
 	var sid= $.trim($("#view_flo_search_sid").val());
 	var fname = $.trim($("#views_flo_search_fname").val());
+	//var lprice = $.trim($("#lprice").val());
+	//var hprice = $.trim($("#hprice").val());
 	
-	view_goods_obj.datagrid({
+	view_flo_obj.datagrid({
 		   loader : function(flower, success, error) {
                $.ajax({
                    type : "post",
@@ -117,54 +125,63 @@ function editFlower(){
 	}
 	
 	if( row == null){
-		$.messager.show({title:'温馨提示',msg: '请选择您要修改的鲜花信息...', timeout:2000, showType:'slide'});
+		$.messager.show({title:'温馨提示',msg: '请选择您要修改的鲜花...', timeout:2000, showType:'slide'});
 		return;
 	}
 	flo_editRow = view_flo_obj.datagrid("getRowIndex", row);
 	
-	
+	var fid = row.fid;
+	var fname = row.fname;
+		
 	$("#view_flo_dialog").dialog({
-		title:"添加鲜花类别",
-		width:800,
+		title:fname +  "--信息修改",
+		width:1100,
 	    height:600,
 	    closed:false,
 	    cache:false,
+	    resizable:true,
 	    iconCls:"icon-add",
 	    modal:true,
 	    href:"manager/view_flo_details.html",
 	    buttons:[{
-	    	text:"确定",
-	    	iconCls:"icon-ok",
-	    	handler:function(){
-	    		var tname = document.getElementById("types").value;
-	    		var description = document.getElementById("description").value;
-	    		
-	    		$.ajaxFileUpload({
-	    			url:"/zyl/flower/update",
-	    		    secureuri:false,
-	    		    fileElementId:"pic",
-	    		    dataType:"json",
-	    		    data:{tname:tname,description:description},
-	    		    success:function(data){
-	    		       if(data.success){
-	    		    		alert("鲜花种类添加成功...");
-	    		    	}else{
-	    		    		alert("鲜花种类添加失败，请稍后重试...");
-	    		    	}
-	    		    },
-	    		    error:function(data,status,e){
-	    		    	alert("鲜花种类添加失败...\n"+e);
-	    		    }
-	    		});
-	    	}
-	    },{
-	    	text:"取消",
+	    	text:"关闭",
 	    	iconCls:"icon-cancel",
 	    	handler:function(){
-	    		$("#view_goods_dialog").dialog('close');
-	    	}
-	    }]
+		    	flo_editRow = undefined;
+				row = null;
+				$("#view_flo_dialog").dialog('close');
+			}
+	    }],
+	    onLoad:function(){
+	       $("#floType").val(row.tid);
+	       $("#floSeries").val(row.sid);
+	       $("#fname").val(row.fname);
+	       $("#price").val(row.price);
+	       $("#sale").val(row.sale);
+	       $("#deliveryDesc").val(row.deliveryDesc);
+	       $("#pack").val(row.pack);
+	       $("#flowerLan").val(row.flowerLan);
+	       $("#intro").val(row.intro)
+	       $("#editor2").val(row.description)
+	       var pic = row.flowerImg.split(",");
+	       var str = "";
+	       for(let i=0; i<pic.length; i++){
+	    	   str += "<td><div style='text-align:center' id='showPics" + i + "' ><img width='150px' height='150px' src=' "+ pic[i] + "' id='showPics" + i + "_img" + i + "' /> <input type='file' id='pic_"+ i + "'  style='display:none;' onchange='show_img(this ,"+ i +")'> <input type='button' value='修改图片' onclick='modify_img("+i+")'> </div></td>";
+	       }
+	       $("#showPics").html(str);
+	    }
 	});
 	
 }
+
+function modify_img(i){
+	$("#pic_" + i).click();
+}
+
+function show_img(imagesObj,i){
+	modifyFloImagePreviews(imagesObj, 'showPics' + i , i);
+}
+</script>
+
+<script>
 </script>

@@ -10,7 +10,7 @@ var types_flag;
 var aname;
 var info;
 
-var types_obj = $('#admin_data').datagrid({
+var admin_obj = $('#admin_data').datagrid({
 	url:'/zyl/adm/findAll',
 	method:"get",
 	fitColumns: true,
@@ -50,7 +50,7 @@ var types_obj = $('#admin_data').datagrid({
 				//types_op = "update";
 				types_flag = "修改";
 				
-				var row = types_obj.datagrid("getSelected");
+				var row = admin_obj.datagrid("getSelected");
 
 				if(types_editRow != undefined){
 					return;
@@ -61,9 +61,9 @@ var types_obj = $('#admin_data').datagrid({
 					return;
 				}
 				
-				types_editRow = types_obj.datagrid("getRowIndex", row);
+				types_editRow = admin_obj.datagrid("getRowIndex", row);
 				
-				types_obj.datagrid("beginEdit", types_editRow);
+				admin_obj.datagrid("beginEdit", types_editRow);
 			}
 		},'-',{
 			text:"保存",
@@ -73,15 +73,15 @@ var types_obj = $('#admin_data').datagrid({
 					return;
 				}
 				
-				types_obj.datagrid("endEdit", types_editRow);
+				admin_obj.datagrid("endEdit", types_editRow);
 				
-				if(types_obj.datagrid("getChanges")[0] == null){
+				if(admin_obj.datagrid("getChanges")[0] == null){
 					row = null;
 					types_editRow = undefined;
 					return;
 				}
 			    
-				var row = types_obj.datagrid("getChanges")[0];
+				var row = admin_obj.datagrid("getChanges")[0];
 				
 				var status = row.status;
 				var aid = row.aid;
@@ -114,7 +114,7 @@ var types_obj = $('#admin_data').datagrid({
 					return;
 				}
 				
-				var row = types_obj.datagrid("getSelected");
+				var row = admin_obj.datagrid("getSelected");
 				if( row == null){
 					$.messager.show({title:'温馨提示',msg: '请选择您要修改的管理员信息', timeout:2000, showType:'slide'});
 					return
@@ -128,7 +128,7 @@ var types_obj = $('#admin_data').datagrid({
 					$.post("/zyl/adm/delete", {aid:row.aid}, data=>{
 						if(data > 0){
 					       $.messager.show({title:'成功提示',msg: '管理员删除成功', timeout:2000, showType:'slide'});	
-					       types_obj.datagrid("reload");
+					       admin_obj.datagrid("reload");
 						} else{
 							$.messager.alert('失败提示', '管理员删除失败...', 'error');
 						}
@@ -140,7 +140,7 @@ var types_obj = $('#admin_data').datagrid({
 			text:"撤销",
 			iconCls:'icon-undo',
 			handler:function(){
-				types_obj.datagrid("rejectChanges");
+				admin_obj.datagrid("rejectChanges");
 				types_editRow = undefined;
 			}
 		}]

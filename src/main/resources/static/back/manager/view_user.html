@@ -1,4 +1,4 @@
-<table id="admin_data" data-options="fit:true"></table>
+<table id="user_data" data-options="fit:true"></table>
 
 <script>
 var statusObj = [{aid:0, aname:"冻结"}, {aid:1, aname:"恢复正常"}];
@@ -8,7 +8,7 @@ var types_flag;
 var aname;
 var info;
 
-var types_obj = $('#admin_data').datagrid({
+var user_obj = $('#user_data').datagrid({
 	url:'/zyl/user/findAll',
 	method:"get",
 	fitColumns: true,
@@ -54,7 +54,7 @@ var types_obj = $('#admin_data').datagrid({
 			handler: function(){
 				types_flag = "修改";
 				
-				var row = types_obj.datagrid("getSelected");
+				var row = user_obj.datagrid("getSelected");
 
 				if(types_editRow != undefined){
 					return;
@@ -65,9 +65,9 @@ var types_obj = $('#admin_data').datagrid({
 					return;
 				}
 				
-				types_editRow = types_obj.datagrid("getRowIndex", row);
+				types_editRow = user_obj.datagrid("getRowIndex", row);
 				
-				types_obj.datagrid("beginEdit", types_editRow);
+				user_obj.datagrid("beginEdit", types_editRow);
 			}
 		},'-',{
 			text:"保存",
@@ -77,15 +77,15 @@ var types_obj = $('#admin_data').datagrid({
 					return;
 				}
 				
-				types_obj.datagrid("endEdit", types_editRow);
+				user_obj.datagrid("endEdit", types_editRow);
 				
-				if(types_obj.datagrid("getChanges")[0] == null){
+				if(user_obj.datagrid("getChanges")[0] == null){
 					row = null;
 					types_editRow = undefined;
 					return;
 				}
 			    
-				var row = types_obj.datagrid("getChanges")[0];
+				var row = user_obj.datagrid("getChanges")[0];
 				
 				var status = row.status;
 				var uid = row.uid;
@@ -99,10 +99,10 @@ var types_obj = $('#admin_data').datagrid({
 					success:function(data){
 						if(data.success){
 							$.messager.show({title:'成功提示',msg: '会员信息修改成功...', timeout:2000, showType:'slide'});
-							$('#admin_data').datagrid('loadData');
+							$('#user_data').datagrid('loadData');
 						}else{
 							$.messager.show('失败提示',  '会员类型修改失败...', 'error');
-							$('#admin_data').datagrid('reload');
+							$('#user_data').datagrid('reload');
 						}
 					}
 				});
@@ -117,7 +117,7 @@ var types_obj = $('#admin_data').datagrid({
 					return;
 				}
 				
-				var row = types_obj.datagrid("getSelected");
+				var row = user_obj.datagrid("getSelected");
 				if( row == null){
 					$.messager.show({title:'温馨提示',msg: '请选择您要修改的管理员信息', timeout:2000, showType:'slide'});
 					return
@@ -131,7 +131,7 @@ var types_obj = $('#admin_data').datagrid({
 					$.post("../../admin", {op:"delete", aid:row.aid}, data=>{
 						if(data > 0){
 					       $.messager.show({title:'成功提示',msg: '管理员删除成功', timeout:2000, showType:'slide'});	
-					       types_obj.datagrid("reload");
+					       user_obj.datagrid("reload");
 						} else{
 							$.messager.alert('失败提示', '管理员删除失败...', 'error');
 						}
@@ -143,7 +143,7 @@ var types_obj = $('#admin_data').datagrid({
 			text:"撤销",
 			iconCls:'icon-undo',
 			handler:function(){
-				types_obj.datagrid("rejectChanges");
+				user_obj.datagrid("rejectChanges");
 				types_editRow = undefined;
 			}
 		}]

@@ -54,9 +54,9 @@
 							</td>							
 						</tr>
 						<tr>
-						  <td class="td_right">图片：</td>
+			            	<td class="td_right">包装：</td>
 							<td>
-								<input type="file" id="pics" name="pics" class="input-text lh30" size="40" multiple="multiple" onchange="setImagePreviews(this,'showPics')" accept="image/gif, image/jpeg, image/jpg, image/png">
+								<input type="text" id="pack" name="pack" class="input-text lh30" size="40" >
 							</td>	
 							<td class="td_right">花语：</td>
 							<td>
@@ -64,10 +64,19 @@
 							</td>						
 						</tr>
 						<tr>
+						  <td class="td_right">图片：</td>
+							<td>
+								<input type="file" id="pics" name="pics" class="input-text lh30" size="40" multiple="multiple" onchange="setImagePreviews(this,'showPics')" accept="image/gif, image/jpeg, image/jpg, image/png">
+							</td>
+							<td class="td_right">简述：</td>
+							<td>
+								<input type="text" id="intro" name="intro" class="input-text lh30" size="40" >
+							</td>							
+						</tr>	
+							<tr>
 							<td>&nbsp;</td>
 							<td colspan="3" align="center">
 								<div id="showPics">
-								
 								</div>
 							</td>
 						</tr>
@@ -118,11 +127,13 @@ function addFloInfo(){
 	var fname = $.trim($("#fname").val());
 	var price = $.trim($("#price").val());
 	var sale = $.trim($("#sale").val());
+	var pack = $.trim($("#pack").val());
 	var deliveryDesc = $.trim($("#deliveryDesc").val());
 	var flowerLan = $.trim($("#flowerLan").val());
+	var intro = $.trim($("#intro").val());
 	var description = CKEDITOR.instances.editor1.getData();//获取ckeditor下面的内容，设置setData("");	
 	
-	if(fname == "" || price == "" || sale == "" || deliveryDesc == "" || flowerLan == "" || description == ""){
+	if(fname == "" || price == "" || sale == "" || deliveryDesc == "" || flowerLan == "" || description == "" || pack==""  || intro == ""){
 		alert("请完善信息后添加!!!!");
 		return;
 	}
@@ -132,7 +143,7 @@ function addFloInfo(){
 	    secureuri:false,
 	    fileElementId:"pics",
 	    dataType:"json",
-	    data:{tid:tid, sid:sid, fname:fname, price:price, sale:sale, deliveryDesc:deliveryDesc, flowerLan:flowerLan, description:description},
+	    data:{tid:tid, sid:sid, fname:fname, price:price, sale:sale, deliveryDesc:deliveryDesc, flowerLan:flowerLan,pack:pack,intro:intro, description:description},
 	    success:function(data,status){
             if(data.success){
 	    		$("#addNewsForm")[0].reset();
