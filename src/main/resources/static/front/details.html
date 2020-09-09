@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ZYL花城</title>
-<meta name="description"
-	content="ZYL花城">
+<meta name="description" content="ZYL花城">
 <meta name="keywords" content="鲜花,高档礼盒装鲜花">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="renderer" content="webkit|ie-comp">
@@ -49,11 +49,13 @@
 
 
 			<ul class="navi-nav">
-				<li><div class="crumb">
+				<li>
+					<div class="crumb">
 						<a href="#">首页</a> &gt; <a href="#"></a> &gt;
-						{{flower.type.tname}}<a href="#"></a> &gt;
+						{{flower.type.tname}} <a href="#"></a> &gt;
 						{{flower.series.sname}}
-					</div></li>
+					</div>
+				</li>
 			</ul>
 
 		</div>
@@ -78,10 +80,16 @@
 							</div>
 						</div>
 						<div class="preview-list clearfix" id="swiperController">
-							<div class="preview-list-item active" v-for="flowerImg in flower.flowerImg">
+							<div class="preview-list-item active"
+								@mouseover="changeImg(0,$event)" @mouseout="changeImg(0,$event)">
+								<img :src="'..\\'+flower.flowerImg[0]">
+							</div>
+							<div class="preview-list-item" v-if="index>0"
+								v-for="(flowerImg,index) in flower.flowerImg"
+								@mouseover="changeImg(index,$event)"
+								@mouseout="changeImg(index,$event)">
 								<img :src="'..\\'+flowerImg" alt="">
 							</div>
-				
 						</div>
 					</div>
 				</div>
@@ -124,21 +132,23 @@
 							</p>
 						</div>
 						<div id="deliItem" class="delivery-item delivery-addr" style="">
-							<span class="delivery-label">配送至</span>
-							<div class="stock-address delivery-address  text-primary">
-								
-								<div class="delivery-area-pop">
-									
-									<input type="hidden" id="delivery_area_code" value="">
-								</div>
-							</div>
+							<span class="delivery-label">配送至</span> <select
+								@change="selectProvince($event)" id="province">
+								<option :value="prov.name" v-for="prov in province">{{prov.name}}
+								</option>
+							</select> <select id="city" @change="selectCity($event)">
+								<option :value="c.name" v-for="c in city">{{c.name}}</option>
+							</select> <select id="area">
+								<option :value="a.name" v-for="a in area">{{a.name}}</option>
+							</select>
+
 						</div>
 						<div class="delivery-item sku-product" style="display: block;">
 							<span class="delivery-label">选择</span>
 							<div class="sku-list">
 								<a href="#">
 									<div class="sku-box active">
-										<img :src="flower.flowerImg" alt=""><span
+										<img :src="'../'+flower.flowerImg[0]" alt=""><span
 											class="sku-name">一往情深</span><span class="icon icon-chosen"></span><i
 											class="sku-border-top"></i><i class="sku-border-right"></i><i
 											class="sku-border-bottom"></i> <i class="sku-border-left"></i>
@@ -148,12 +158,10 @@
 						</div>
 					</div>
 					<div class="btn-group">
-						<a id="btnAddcart" class="btn-group-item btn-addcart"
-							href=""><span
+						<a id="btnAddcart" class="btn-group-item btn-addcart" href=""><span
 							class="icon icon-addcartbtn"></span>加入购物车</a> <a id="btnSoonbuy"
-							class="btn-group-item btn-soonbuy"
-							href="">立即购买</a>
-						<a id="btnOtherarea" class="btn-group-item btn-addcart"
+							class="btn-group-item btn-soonbuy" href="">立即购买</a> <a
+							id="btnOtherarea" class="btn-group-item btn-addcart"
 							href="javascript:;" style="display: none;">查看该地区鲜花</a> <span
 							id="btnSoldout" class="btn-group-item btn-invalid"
 							href="javascript:;" style="display: none;">售罄/下架</span>
@@ -187,7 +195,7 @@
 						<ul class="hot-list">
 							<li class="hot-item"><a href="#">
 									<div class="hot-item-pic">
-										<img src="../front/images/9010966_002.jpg" alt="">
+										<img src="#" alt="">
 									</div>
 									<div class="hot-item-info">
 										<p class="p-title">一往情深</p>
@@ -211,8 +219,7 @@
 								<p class="fixed-price">
 									¥<span>239</span>
 								</p>
-								<a class="fixed-btn"
-									href="">立即购买</a>
+								<a class="fixed-btn" href="">立即购买</a>
 							</div>
 						</div>
 					</div>
@@ -243,10 +250,8 @@
 						</div>
 						<div class="detail-product-content">
 							<p style="text-align: center;">
-								<img src="../front/images/by_20190903105724798.jpg" alt="">
+								<img src="#" alt="">
 							</p>
-
-
 						</div>
 					</div>
 				</div>
@@ -257,47 +262,38 @@
 								<li class="detail-hd-tab" data-anchor="#product">商品详情</li>
 								<li class="detail-hd-tab active" data-anchor="#comment">用户评价(<span>8954</span>)
 								</li>
-
 							</ul>
 							<div class="fixed-group">
 								<p class="fixed-price">
 									¥<span>239</span>
 								</p>
-								<a class="fixed-btn"
-									href="https://www.hua.com/shopping/addtocart?product_code=9010966&amp;actionType=soonbuy&amp;type=">立即购买</a>
+								<a class="fixed-btn" href="#">立即购买</a>
 							</div>
 						</div>
 					</div>
 					<div class="detail-bd">
-			
 						<div class="detail-comment-bd">
 							<div class="detail-comment-list">
 								<div class="detail-comment-item">
 									<div class="detail-comment-item-user">
 										<div class="detail-comment-item-avatar">
-											<img src="../front/images/avatar_default_09.jpg" alt="朱*">
+											<img src="#" alt="朱*">
 										</div>
 										<p>朱*</p>
 									</div>
 									<div class="detail-comment-item-main tm-m-photos">
-
 										<div class="detail-comment-item-content">
 											<p>老婆满意就是最好</p>
 										</div>
 										<ul
 											class="detail-comment-item-imglist tm-m-photos-thumb clearfix">
-											<li class="detail-comment-item-img"
-												data-src="//img.hua.com/reviewpic/m/2020/04/23/93bf20d48346413599f5229870484ecd.jpg">
-												<img
-												src="../front/images/93bf20d48346413599f5229870484ecd.jpg"
-												alt="">
-											</li>
+											<li class="detail-comment-item-img" data-src="#"><img
+												src="#" alt=""></li>
 										</ul>
 										<div class="detail-comment-item-imgviewer tm-m-photo-viewer">
 											<a class="detail-comment-item-closeview" href="javascript:;">关闭大图</a>
-											<img class="detail-comment-item-viewimg"
-												src="../front/images/93bf20d48346413599f5229870484ecd.jpg">
-											<a class="tm-m-photo-viewer-navleft" href="javascript:;"><span
+											<img class="detail-comment-item-viewimg" src="#"> <a
+												class="tm-m-photo-viewer-navleft" href="javascript:;"><span
 												class="icon icon-imgviewer-left"></span></a> <a
 												class="tm-m-photo-viewer-navright" href="javascript:;"><span
 												class="icon icon-imgviewer-right"></span></a>
@@ -309,37 +305,128 @@
 									</div>
 								</div>
 							</div>
-
 						</div>
-						<span id="_calculateTextWidth"
-							style="visibility: hidden; font-size: 16px; display: inline-block; position: absolute; left: -100%; top: -100%;">咨询客服</span>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<div id="address" style="display: none"></div>
 </body>
+
+<script type="text/javascript"
+	src="//api.map.baidu.com/api?v=2.0&ak=Fn0BvD3aGemRSpKuVLa6wn9AWWc01EsX"></script>
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
 <script src="/zyl/back/js/vue.js" type="text/javascript"></script>
 <script src="/zyl/back/js/axios.js" type="text/javascript"></script>
-
+<script src="/zyl/front/js/mcity.js" type="text/javascript"></script>
 <script>
- let vm = new Vue({
-		el:"#app",
-		data:{
-			flower:'',
-			fid:-1
-		},
-		methods: {
-			
-		},
-		mounted: function(){//页面渲染完成后执行的方法
-			let arr = window.location.href.split("/");
-			this.fid=arr[arr.length-1]
-			 axios.get("/zyl/flower/"+this.fid).then(res =>{
-		        res.data.data[0].flowerImg = res.data.data[0].flowerImg.split(",");
-				this.flower = res.data.data[0];
-			}) 
-		}
-	})
- </script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            flower: '',
+            fid: -1,
+            province: '',
+            city: '',
+            area: ''
+        },
+        methods: {
+            //切换图片
+            changeImg: function(index, e) {
+                $(e.currentTarget).addClass("active").siblings().removeClass("active");
+                $("#productImg img").attr("src", "../" + this.flower.flowerImg[index]);
+            },
+            mProvince: function(val) {
+                for (let i = 0, len = this.province.length; i < len; i++) {
+                    if (this.province[i].name == val) {
+                        this.city = this.province[i].sub;
+                        this.area = '';
+                        return;
+                    }
+                }
+            },
+            mCity: function(val) {
+                for (let i = 0, len = this.city.length; i < len; i++) {
+                    if (this.city[i].name == val) {
+                        this.area = this.city[i].sub;
+                        return;
+                    }
+                }
+            },
+            selectProvince: function(e) {
+                console.log(e.currentTarget.value);
+                let val = e.currentTarget.value;
+                this.mProvince(val);
+
+            },
+            selectCity: function(e) {
+                let val = e.currentTarget.value;
+                console.log(this.city);
+                this.mCity(val);
+            }
+
+        },
+        mounted: function() { //页面渲染完成后执行的方法
+            let arr = window.location.href.split("/");
+            this.fid = arr[arr.length - 1]
+            axios.get("/zyl/flower/" + this.fid).then(res => {
+                res.data.data[0].flowerImg = res.data.data[0].flowerImg.split(",");
+                this.flower = res.data.data[0];
+            });
+            axios.get("/zyl/front/js/city.json").then(res => {
+                this.province = res.data;
+            });
+           
+        },
+
+        created: function() {
+            // 百度地图API功能	
+            var map = new BMap.Map("address");
+            var point = new BMap.Point(116.331398, 39.897445);
+            map.centerAndZoom(point, 12);
+            var geoc = new BMap.Geocoder();
+            var geolocation = new BMap.Geolocation();
+            let that = this;
+            geolocation.getCurrentPosition(function(r) {
+                if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                    var mk = new BMap.Marker(r.point);
+                    geoc.getLocation(r.point, function(rs) {
+                            var addComp = rs.addressComponents;
+                            console.info(addComp);
+                            let prov;
+                            if (addComp.province.length > 3) {
+                                prov = addComp.province.substring(0, 3);
+                            } else {
+                                prov = addComp.province.substring(0, 2);
+                            }
+                            let c;
+                            if (addComp.city.length > 2) {
+                                c = addComp.city.substring(0, 2);
+                            } else {
+                                c = addComp.city.substring(0, 1);
+                            }
+                        
+                            that.mProvince(prov);
+                            that.mCity(c);
+                            //渲染完在选择
+                            setTimeout(function(){
+                            	 $("#province").val(prov);
+                                 $("#city").val(c);
+                                 $("#area").val(addComp.district);
+                            },300);
+                            	
+                        }
+
+                    );
+                } else {
+                    alert('failed' + this.getStatus());
+                }
+            }, {
+                enableHighAccuracy: true
+            })
+           
+        }
+    })
+</script>
+
 </html>

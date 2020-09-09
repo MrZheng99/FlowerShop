@@ -20,7 +20,7 @@ function addrInit() {
     } else {
         xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
-    xmlhttp.open("GET", "city.xml", true); //发送-一个请求
+    xmlhttp.open("GET", "../js/city.xml", true); //发送-一个请求
     xmlhttp.send(null); //发送请求参数，null说明没有参数
     var dom;
     xmlhttp.onreadystatechange = function() {
@@ -28,6 +28,7 @@ function addrInit() {
             dom = xmlhttp.responseXML.documentElement;
             // 获取所有省份
             var pros = dom.getElementsByTagName("province");
+            console.log(pros);
             for (var i = 0, len = pros.length; i < len; i++) {
                 addoption(pros[i], proObj);
             }
