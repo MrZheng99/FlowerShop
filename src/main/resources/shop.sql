@@ -51,22 +51,12 @@ create table if not exists tb_flower(
 	intro varchar(255) null,//简述
 	pack varcahr(255) null,//包装
 	sale varchar(3) not null,#折扣
+	store varchar(5) not null,
 	tid int(11) not null,
 	sid int(11) null, 
 	status char(1) not null,
 	constraint `fk_flower_tid` foreign key(`tid`) references `tb_type`(`tid`),
 	constraint `fk_flower_sid` foreign key(`sid`) references `tb_series`(`sid`)
-)auto_increment=101 engine=InnoDB default charset=utf8;
-# 库存表
-create table if not exists tb_store(
-	sid int(11) primary key auto_increment,
-	color varchar(30) not null,
-	size varchar(10) not null,
-	img varchar(200) not null,
-	num varchar(5) not null,
-	fid int(11) not null,
-	status char(1) not null,
-	constraint `fk_store_tid` foreign key(`fid`) references `tb_flower`(`fid`)
 )auto_increment=101 engine=InnoDB default charset=utf8;
 
 create table if not exists tb_address(
@@ -123,17 +113,6 @@ create table if not exists tb_advertisement(
 	adImg varchar(200) not null,
 	position varchar(20) not null, #广告位置
 	status char(1) not null
-)auto_increment=101 engine=InnoDB default charset=utf8;
-# 购物车表
-create table if not exists tb_cart(
-	cid int(11) primary key auto_increment,
-	fid int(11) not null,
-	uid int(11) not null,
-	num int(11) not null,
-	sid int(11) not null,
-	constraint `fk_cart_fid` foreign key(`fid`) references `tb_flower`(`fid`),
-	constraint `fk_cart_sid` foreign key(`fid`) references `tb_store`(`sid`),
-	constraint `fk_cart_uid` foreign key(`uid`) references `tb_user`(`uid`)
 )auto_increment=101 engine=InnoDB default charset=utf8;
 
 

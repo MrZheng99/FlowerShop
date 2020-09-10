@@ -5,7 +5,7 @@
 <mapper namespace="com.zyl.flowershop.dao.IFlowerDao">
 	<select id="findAll" resultMap="flowerInfo">
 		select
-		fid,fname,f.description,flowerLan,flowerImg,deliveryDesc,price,sale,intro,pack,f.status,f.tid,f.sid,
+		fid,fname,f.description,flowerLan,flowerImg,deliveryDesc,price,sale,intro,pack,store,f.status,f.tid,f.sid,
 		tname, sname
 		from tb_flower f,tb_type t, tb_series s where f.tid=t.tid
 		and f.sid=s.sid;
@@ -29,7 +29,7 @@
 
 	<select id="find" resultMap="flowerInfo">
 		select
-		fid,fname,f.description,flowerLan,flowerImg,deliveryDesc,price,sale,intro,pack,f.status,f.tid,f.sid,
+		fid,fname,f.description,flowerLan,flowerImg,deliveryDesc,price,sale,intro,pack,store,f.status,f.tid,f.sid,
 		tname, sname
 		from tb_flower f,tb_type t, tb_series s
 		<where>
@@ -71,8 +71,8 @@
 
 	<insert id="insert" parameterType="Flower">
 		insert into
-		tb_flower(`fname`,`description`,`flowerLan`,`deliveryDesc`,`price`,`flowerImg`,`sale`,`intro`,`pack`,`sid`,`tid`,`status`)
-		values(#{fname},#{description},#{flowerLan},#{deliveryDesc},#{price},#{flowerImg},#{sale},#{intro},#{pack},#{sid},#{tid},1);
+		tb_flower(`fname`,`description`,`flowerLan`,`deliveryDesc`,`price`,`flowerImg`,`sale`,`intro`,`pack`,`store`,`sid`,`tid`,`status`)
+		values(#{fname},#{description},#{flowerLan},#{deliveryDesc},#{price},#{flowerImg},#{sale},#{intro},#{pack},#{store},#{sid},#{tid},1);
 	</insert>
 	<update id="update" parameterType="FlowerSeries">
 		update tb_flower
@@ -103,6 +103,9 @@
 			</if>
 			<if test="pack !=null and pack !='' ">
 				pack=#{pack},
+			</if>
+			<if test="store !=null and store !='' ">
+				store=#{store},
 			</if>
 			<if test="sid !=null and sid !='' ">
 				sid=#{sid},
