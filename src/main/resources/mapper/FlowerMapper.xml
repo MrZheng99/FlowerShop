@@ -68,7 +68,10 @@
 			limit page,rows
 		</if>
 	</select>
-
+	<!-- 生成订单时候需要使用 -->
+	<select id="findPrice" resultType="Flower">
+		select price,sale,fname from tb_flower where fid=#{fid}
+	</select>
 	<insert id="insert" parameterType="Flower">
 		insert into
 		tb_flower(`fname`,`description`,`flowerLan`,`deliveryDesc`,`price`,`flowerImg`,`sale`,`intro`,`pack`,`store`,`sid`,`tid`,`status`)

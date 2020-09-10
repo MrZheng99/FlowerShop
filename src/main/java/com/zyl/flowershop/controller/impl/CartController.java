@@ -31,4 +31,16 @@ public class CartController implements ICartController {
 		return service.find(uid);
 	}
 
+	@Override
+	@PostMapping("/update")
+	public ResponseJson update(@RequestBody Cart cart) {
+		return service.add(cart);
+	}
+
+	@Override
+	@PostMapping("/delete")
+	public ResponseJson delete(@RequestBody Cart cart) {
+		return service.add(cart);
+	}
+
 }

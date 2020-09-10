@@ -8,4 +8,8 @@ public interface ICartController {
 
 	public ResponseJson findByUid(Integer uid);
 
+	public ResponseJson update(Cart cart);
+
+	public ResponseJson delete(Cart cart);
+
 }

@@ -8,36 +8,41 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zyl.flowershop.controller.IOrderController;
 import com.zyl.flowershop.entity.Order;
+import com.zyl.flowershop.entity.OrderData;
 import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.service.IOrderService;
 
 @RestController
 @RequestMapping("order")
-public class OrderController implements IOrderController{
+public class OrderController implements IOrderController {
 	@Autowired
 	IOrderService orderService;
-	
+
 	@Override
 	@RequestMapping("/findAll")
 	public ResponseJson findAll() {
 		return orderService.findAll();
 	}
+
 	@Override
 	@RequestMapping("/findByDate")
 	public ResponseJson findByDate() {
 		return orderService.findByDate();
 
 	}
+
 	@Override
 	@RequestMapping("/findCurrent")
 	public ResponseJson findCurrent() {
 		return orderService.findCurrent();
 	}
+
 	@Override
 	@PostMapping("/insert")
-	public ResponseJson insert(@RequestBody Order order) {
-		return orderService.insert(order);
+	public ResponseJson insert(@RequestBody OrderData orderData) {
+		return orderService.insert(orderData);
 	}
+
 	@Override
 	@PostMapping("/updateFlag")
 	public ResponseJson updateFlag(@RequestBody Order order) {

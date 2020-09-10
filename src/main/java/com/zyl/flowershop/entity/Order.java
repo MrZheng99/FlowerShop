@@ -1,27 +1,54 @@
 package com.zyl.flowershop.entity;
 
 public class Order {
-	private Integer oid;
+	private Long oid;
 	private String odate;
+	private String createDate;
+	private String payDate;
+	private String sendDate;
+
 	private String receiveDate;
+
 	private Double amount;
 	private Address address;
+	private Integer flag;
 
-	public Address getAddress() {
-		return address;
+	class OrderProgress {
+		public final Integer unpaid = 0; // "未付款"
+		public final Integer paid = 1; // "已付款"
+		public final Integer unshiped = 2;// "已发货"
+		public final Integer shiped = 3;// "已收货"
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
+	public String getCreateDate() {
+		return createDate;
 	}
 
-	private String status;
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
 
-	public Integer getOid() {
+	public String getPayDate() {
+		return payDate;
+	}
+
+	public void setPayDate(String payDate) {
+		this.payDate = payDate;
+	}
+
+	public String getSendDate() {
+		return sendDate;
+	}
+
+	public void setSendDate(String sendDate) {
+		this.sendDate = sendDate;
+	}
+
+	public Long getOid() {
 		return oid;
 	}
 
-	public void setOid(Integer oid) {
+	public void setOid(Long oid) {
 		this.oid = oid;
 	}
 
@@ -49,18 +76,27 @@ public class Order {
 		this.amount = amount;
 	}
 
-	public String getStatus() {
-		return status;
+	public Address getAddress() {
+		return address;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public Integer getFlag() {
+		return flag;
+	}
+
+	public void setFlag(Integer flag) {
+		this.flag = flag;
 	}
 
 	@Override
 	public String toString() {
-		return "Order [oid=" + oid + ", odate=" + odate + ", receiveDate=" + receiveDate + ", amount=" + amount
-				+ ", address=" + address + ", status=" + status + "]";
+		return "Order [oid=" + oid + ", odate=" + odate + ", createDate=" + createDate + ", payDate=" + payDate
+				+ ", sendDate=" + sendDate + ", receiveDate=" + receiveDate + ", amount=" + amount + ", address="
+				+ address + ", flag=" + flag + "]";
 	}
 
 	@Override
@@ -69,10 +105,13 @@ public class Order {
 		int result = 1;
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
+		result = prime * result + ((createDate == null) ? 0 : createDate.hashCode());
+		result = prime * result + ((flag == null) ? 0 : flag.hashCode());
 		result = prime * result + ((odate == null) ? 0 : odate.hashCode());
 		result = prime * result + ((oid == null) ? 0 : oid.hashCode());
+		result = prime * result + ((payDate == null) ? 0 : payDate.hashCode());
 		result = prime * result + ((receiveDate == null) ? 0 : receiveDate.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + ((sendDate == null) ? 0 : sendDate.hashCode());
 		return result;
 	}
 
@@ -95,6 +134,16 @@ public class Order {
 				return false;
 		} else if (!amount.equals(other.amount))
 			return false;
+		if (createDate == null) {
+			if (other.createDate != null)
+				return false;
+		} else if (!createDate.equals(other.createDate))
+			return false;
+		if (flag == null) {
+			if (other.flag != null)
+				return false;
+		} else if (!flag.equals(other.flag))
+			return false;
 		if (odate == null) {
 			if (other.odate != null)
 				return false;
@@ -105,15 +154,20 @@ public class Order {
 				return false;
 		} else if (!oid.equals(other.oid))
 			return false;
+		if (payDate == null) {
+			if (other.payDate != null)
+				return false;
+		} else if (!payDate.equals(other.payDate))
+			return false;
 		if (receiveDate == null) {
 			if (other.receiveDate != null)
 				return false;
 		} else if (!receiveDate.equals(other.receiveDate))
 			return false;
-		if (status == null) {
-			if (other.status != null)
+		if (sendDate == null) {
+			if (other.sendDate != null)
 				return false;
-		} else if (!status.equals(other.status))
+		} else if (!sendDate.equals(other.sendDate))
 			return false;
 		return true;
 	}

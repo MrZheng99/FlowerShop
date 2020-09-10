@@ -98,7 +98,8 @@ public class FlowerService implements IFlowerService {
 
 	@Override
 	public ResponseJson insert(MultipartFile[] files, String fname, String description, String flowerLan,
-			String deliveryDesc, Double price, String sale,String store, String intro, String pack, Integer sid, Integer tid) {
+			String deliveryDesc, Double price, String sale, Integer store, String intro, String pack, Integer sid,
+			Integer tid) {
 		List<String> listImage = new ArrayList<String>();
 		if (files.length > 0) {
 			try {
@@ -119,8 +120,8 @@ public class FlowerService implements IFlowerService {
 			flowerImg = String.join(",", listImage);
 		else
 			flowerImg = "images\\zanwu.jpg";
-		Flower flower = new Flower(fname, description, flowerLan, deliveryDesc, price, intro, pack, sale,store, sid, tid,
-				flowerImg);
+		Flower flower = new Flower(fname, description, flowerLan, deliveryDesc, price, intro, pack, sale, store, sid,
+				tid, flowerImg);
 		Integer row = flowerDao.insert(flower);
 		if (row > 0)
 			return new ResponseJson(200, "添加成功", row, true);

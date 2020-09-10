@@ -11,11 +11,15 @@ import org.springframework.stereotype.Service;
 import com.zyl.flowershop.entity.Cart;
 import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.service.ICartService;
+import com.zyl.flowershop.service.IOrderService;
 
 @Service
 public class CartService implements ICartService {
 	@Autowired
 	private RedisTemplate<String, Cart> redisTemplate;
+
+	@Autowired
+	private IOrderService orderService;
 
 	@Override
 	public ResponseJson add(Cart cart) {
@@ -30,7 +34,7 @@ public class CartService implements ICartService {
 		 */
 		redisTemplate.boundHashOps(String.valueOf(cart.getUid())).put(String.valueOf(cart.getFid()),
 				String.valueOf(cart.getNum()));
-		return null;
+		return new ResponseJson(200, "添加成功", null, true);
 	}
 
 	@Override
@@ -40,18 +44,18 @@ public class CartService implements ICartService {
 		for (Map.Entry<Object, Object> entry : map.entrySet()) {
 			listCart.add((Cart) entry.getValue());
 		}
-		System.out.println(listCart);
-		return null;
+		return new ResponseJson(200, "获取成功", listCart, true);
 	}
 
 	@Override
 	public ResponseJson delete(Cart cart) {
-		return null;
+		redisTemplate.boundHashOps(String.valueOf(cart.getUid())).delete(String.valueOf(cart.getFid()));
+		return new ResponseJson(200, "删除成功", null, true);
 	}
 
 	@Override
-	public ResponseJson update(Integer uid) {
-		return null;
+	public ResponseJson update(Cart cart) {
+		return add(cart);
 	}
 
 }

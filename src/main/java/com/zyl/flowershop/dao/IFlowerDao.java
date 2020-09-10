@@ -12,6 +12,8 @@ public interface IFlowerDao {
 
 	public List<Flower> find(Flower flower);
 
+	public Flower findPrice(Integer fid);
+
 	public Integer insert(Flower flower);
 
 	public Integer update(Flower flower);

@@ -10,6 +10,6 @@ public interface ICartService {
 
 	public ResponseJson delete(Cart cart);
 
-	public ResponseJson update(Integer uid);
+	public ResponseJson update(Cart cart);
 
 }

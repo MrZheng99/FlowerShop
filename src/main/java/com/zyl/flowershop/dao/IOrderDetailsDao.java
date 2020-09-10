@@ -9,4 +9,6 @@ import com.zyl.flowershop.entity.OrderDetails;
 @Repository
 public interface IOrderDetailsDao {
 	public List<OrderDetails> findByOid();
+
+	public Integer insert(List<OrderDetails> lisOrderDetails);
 }
