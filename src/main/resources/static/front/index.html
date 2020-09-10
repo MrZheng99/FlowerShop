@@ -36,10 +36,11 @@
 <body>
 	<!-- 顶部导航 -->
 	<div class="top-nav">
-		<div class="top-nav-wrapper">
+		<div class="top-nav-wrapper" id="login_info">
 			<ul class="top-nav-r">
 				<!--登陆状态信息显示start-->
-				<li class="menu login" id="LoginInfo"><a href="#"
+				<li class="menu login" id="LoginInfo" v-if="onlogin">{{loginName}}</li>
+				<li class="menu login" id="LoginInfo" v-else="onlogin"><a href="#"
 					rel="nofollow">你好，请登录</a><a href="#" rel="nofollow">注册</a></li>
 				<!--登陆状态信息显示end-->
 				<li class="menu"><a href="#" rel="nofollow" target="_blank">订单查询</a>
@@ -286,7 +287,7 @@
 </body>
 <script src="/zyl/back/js/vue.js" type="text/javascript"></script>
 <script src="/zyl/back/js/axios.js" type="text/javascript"></script>
-
+<script src="/zyl/front/js/checklogin.js" type="text/javascript"></script>
 <script>
 
  let vm = new Vue({

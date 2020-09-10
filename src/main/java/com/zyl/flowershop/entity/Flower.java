@@ -14,10 +14,20 @@ public class Flower {
 	private String deliveryDesc;
 	private Double price;
 	private String intro;// 简述
+	private String store;
 	private String pack;// 包装
+	public String getStore() {
+		return store;
+	}
+
+	public void setStore(String store) {
+		this.store = store;
+	}
+
 	private String sale;
 	private Integer sid;
 	private Integer tid;
+
 
 	private Double lprice; // 最低价
 	private Double hprice;// 最低价
@@ -29,7 +39,7 @@ public class Flower {
 	private String status;
 
 	public Flower(String fname, String description, String flowerLan, String deliveryDesc, Double price, String intro,
-			String pack, String sale, Integer sid, Integer tid, String flowerImg) {
+			String pack, String sale, String store, Integer sid, Integer tid, String flowerImg) {
 		this.fname = fname;
 		this.description = description;
 		this.flowerLan = flowerLan;
@@ -37,6 +47,7 @@ public class Flower {
 		this.price = price;
 		this.intro = intro;
 		this.pack = pack;
+		this.store = store;
 		this.sale = sale;
 		this.sid = sid;
 		this.tid = tid;
@@ -186,10 +197,13 @@ public class Flower {
 	@Override
 	public String toString() {
 		return "Flower [fid=" + fid + ", fname=" + fname + ", description=" + description + ", flowerLan=" + flowerLan
-				+ ", deliveryDesc=" + deliveryDesc + ", price=" + price + ", intro=" + intro + ", pack=" + pack
-				+ ", sale=" + sale + ", sid=" + sid + ", tid=" + tid + ", flowerImg=" + flowerImg + ", status=" + status
-				+ "]";
+				+ ", deliveryDesc=" + deliveryDesc + ", price=" + price + ", intro=" + intro + ", store=" + store
+				+ ", pack=" + pack + ", sale=" + sale + ", sid=" + sid + ", tid=" + tid + ", lprice=" + lprice
+				+ ", hprice=" + hprice + ", page=" + page + ", rows=" + rows + ", flowerImg=" + flowerImg + ", type="
+				+ type + ", series=" + series + ", status=" + status + "]";
 	}
+
+	
 
 	@Override
 	public int hashCode() {
@@ -201,13 +215,20 @@ public class Flower {
 		result = prime * result + ((flowerImg == null) ? 0 : flowerImg.hashCode());
 		result = prime * result + ((flowerLan == null) ? 0 : flowerLan.hashCode());
 		result = prime * result + ((fname == null) ? 0 : fname.hashCode());
+		result = prime * result + ((hprice == null) ? 0 : hprice.hashCode());
 		result = prime * result + ((intro == null) ? 0 : intro.hashCode());
+		result = prime * result + ((lprice == null) ? 0 : lprice.hashCode());
 		result = prime * result + ((pack == null) ? 0 : pack.hashCode());
+		result = prime * result + ((page == null) ? 0 : page.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
+		result = prime * result + ((rows == null) ? 0 : rows.hashCode());
 		result = prime * result + ((sale == null) ? 0 : sale.hashCode());
+		result = prime * result + ((series == null) ? 0 : series.hashCode());
 		result = prime * result + ((sid == null) ? 0 : sid.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + ((store == null) ? 0 : store.hashCode());
 		result = prime * result + ((tid == null) ? 0 : tid.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -250,25 +271,50 @@ public class Flower {
 				return false;
 		} else if (!fname.equals(other.fname))
 			return false;
+		if (hprice == null) {
+			if (other.hprice != null)
+				return false;
+		} else if (!hprice.equals(other.hprice))
+			return false;
 		if (intro == null) {
 			if (other.intro != null)
 				return false;
 		} else if (!intro.equals(other.intro))
+			return false;
+		if (lprice == null) {
+			if (other.lprice != null)
+				return false;
+		} else if (!lprice.equals(other.lprice))
 			return false;
 		if (pack == null) {
 			if (other.pack != null)
 				return false;
 		} else if (!pack.equals(other.pack))
 			return false;
+		if (page == null) {
+			if (other.page != null)
+				return false;
+		} else if (!page.equals(other.page))
+			return false;
 		if (price == null) {
 			if (other.price != null)
 				return false;
 		} else if (!price.equals(other.price))
 			return false;
+		if (rows == null) {
+			if (other.rows != null)
+				return false;
+		} else if (!rows.equals(other.rows))
+			return false;
 		if (sale == null) {
 			if (other.sale != null)
 				return false;
 		} else if (!sale.equals(other.sale))
+			return false;
+		if (series == null) {
+			if (other.series != null)
+				return false;
+		} else if (!series.equals(other.series))
 			return false;
 		if (sid == null) {
 			if (other.sid != null)
@@ -280,10 +326,20 @@ public class Flower {
 				return false;
 		} else if (!status.equals(other.status))
 			return false;
+		if (store == null) {
+			if (other.store != null)
+				return false;
+		} else if (!store.equals(other.store))
+			return false;
 		if (tid == null) {
 			if (other.tid != null)
 				return false;
 		} else if (!tid.equals(other.tid))
+			return false;
+		if (type == null) {
+			if (other.type != null)
+				return false;
+		} else if (!type.equals(other.type))
 			return false;
 		return true;
 	}

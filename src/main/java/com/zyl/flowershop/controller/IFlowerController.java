@@ -25,7 +25,7 @@ public interface IFlowerController {
 	 */
 	public Map<String, Object> uploadImage(MultipartFile file);
 
-	public ResponseJson insert(MultipartFile[] files, String fname, String description, String flowerLan,
-			String deliveryDesc, Double price, String sale, String intro, String pack, Integer sid, Integer tid);
+	public ResponseJson insert(MultipartFile[] files, String fname, String description, String flowerLan, String deliveryDesc,
+			Double price, String sale, String store, String intro, String pack, Integer sid, Integer tid);
 
 }

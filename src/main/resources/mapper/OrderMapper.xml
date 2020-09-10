@@ -2,7 +2,26 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zyl.flowershop.dao.OrderDao">
-	
+<mapper namespace="com.zyl.flowershop.dao.IOrderDao">
+	<select id="findCurrent" resultType="Order">
+	    select oid, odate, receiveDate, amount, o.aid, flag, o.status from tb_order o, tb_address a where o.aid = a.aid and `uid`= #{uid}
+	</select>
+	<select id="findAll" resultType="Order">
+	    select oid, odate, receiveDate, amount, aid, flag, status from tb_order
+	</select>
+	<!-- 每日订单总额 -->
+	<select id="findByDate" resultType="Order">
+	    select DATE_FORMAT(odate,'%Y-%m-%d') as odate, sum(amount) as amount from tb_order group by DATE_FORMAT(odate,'%Y-%m-%d')
+	</select>
+	<insert id="insert" parameterType="Order" flushCache="true">
+	    insert into tb_order (`odate`,`amount`,`aid`,`flag`,`status`)
+	    values (#{odate}, #{amount}, #{aid}, 0, 1);
+	</insert>
+	<!-- 确认收货后更新订单表 -->
+	<update id="updateFlag" parameterType="Order" flushCache="true">
+	    update tb_order set
+	    `receiveDate`=#{receiveDate},`flag`=#{flag}
+	    where `aid`=#{aid}
+	</update>
 
 </mapper>
