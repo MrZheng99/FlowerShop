@@ -84,7 +84,7 @@ create table if not exists tb_address(
 
 
 create table if not exists tb_order(
-	oid int(11) primary key auto_increment,
+	oid int(11) primary key,
 	odate date not null,
 	receiveDate date not null,
 	amount decimal(7,2) not null,
@@ -92,7 +92,7 @@ create table if not exists tb_order(
 	status char(1) not null,
 	constraint `fk_order_aid` foreign key(`aid`) references `tb_address`(`aid`)
 
-)auto_increment=101 engine=InnoDB default charset=utf8;
+)engine=InnoDB default charset=utf8;
 
 create table if not exists tb_order_details(
 	odid int(11) primary key auto_increment,
@@ -123,6 +123,17 @@ create table if not exists tb_advertisement(
 	adImg varchar(200) not null,
 	position varchar(20) not null, #广告位置
 	status char(1) not null
+)auto_increment=101 engine=InnoDB default charset=utf8;
+# 购物车表
+create table if not exists tb_cart(
+	cid int(11) primary key auto_increment,
+	fid int(11) not null,
+	uid int(11) not null,
+	num int(11) not null,
+	sid int(11) not null,
+	constraint `fk_cart_fid` foreign key(`fid`) references `tb_flower`(`fid`),
+	constraint `fk_cart_sid` foreign key(`fid`) references `tb_store`(`sid`),
+	constraint `fk_cart_uid` foreign key(`uid`) references `tb_user`(`uid`)
 )auto_increment=101 engine=InnoDB default charset=utf8;
 
 
