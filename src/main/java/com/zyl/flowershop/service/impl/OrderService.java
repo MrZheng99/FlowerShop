@@ -1,6 +1,8 @@
 package com.zyl.flowershop.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import com.zyl.flowershop.dao.IOrderDetailsDao;
 import com.zyl.flowershop.entity.Cart;
 import com.zyl.flowershop.entity.Flower;
 import com.zyl.flowershop.entity.Order;
-import com.zyl.flowershop.entity.OrderData;
 import com.zyl.flowershop.entity.OrderDetails;
 import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.service.IOrderService;
@@ -65,35 +66,16 @@ public class OrderService implements IOrderService {
 	}
 
 	@Override
-	public ResponseJson insert(OrderData orderData) {
+	public ResponseJson update(Order order) {
 		Integer row = 0;
-		Flower flower = null;
-		OrderDetails details;
-		List<OrderDetails> lisOrderDetails;
-		Long oid;
 		try {
-			Order order = orderData.getOrder();
-			oid = System.currentTimeMillis();
-			order.setOid(oid);
-			row = orderDao.insert(order);
-			if (row > 0) {
-				List<Cart> carts = orderData.getCarts();
-				lisOrderDetails = new ArrayList<OrderDetails>();
-				for (Cart cart : carts) {
-					flower = flowerDao.findPrice(cart.getFid());
-					details = new OrderDetails(String.valueOf(cart.getNum()), flower.getFname(), flower.getPrice(),
-							flower.getSale(), oid);
-					lisOrderDetails.add(details);
-				}
-				if (orderDetailsDao.insert(lisOrderDetails) > 0)
-					return new ResponseJson(200, "订单详情表插入成功", row, true);
-				return new ResponseJson(200, "订单详情表插入失败", -1, false);
-
-			}
-			return new ResponseJson(200, "订单插入失败", -1, false);
+			row = orderDao.update(order);
+			if (row > 0)
+				return new ResponseJson(200, "修改成功", row, true);
+			return new ResponseJson(200, "修改失败", -1, false);
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-			return new ResponseJson(500, "订单插入失败", -1, false);
+			return new ResponseJson(500, "修改失败", -1, false);
 		}
 	}
 
@@ -108,6 +90,44 @@ public class OrderService implements IOrderService {
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			return new ResponseJson(500, "修改失败", -1, false);
+		}
+	}
+
+	@Override
+	public ResponseJson insert(List<Cart> carts) {
+		Integer row = 0;
+		Double amount = 0d;
+		Flower flower = null;
+		OrderDetails details;
+		List<OrderDetails> lisOrderDetails;
+		Long oid;
+		try {
+			Order order = new Order();
+
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+			Date date = new Date(System.currentTimeMillis());
+			oid = System.currentTimeMillis();
+			lisOrderDetails = new ArrayList<OrderDetails>();
+			for (Cart cart : carts) {
+				flower = flowerDao.findPrice(cart.getFid());
+				details = new OrderDetails(String.valueOf(cart.getNum()), flower.getFname(), flower.getPrice(),
+						flower.getSale(), oid);
+				amount += cart.getNum() * flower.getPrice() * Double.valueOf(flower.getSale()) * 0.1;
+				lisOrderDetails.add(details);
+			}
+			order.setOid(oid);
+			order.setAmount(amount);
+			order.setCreateDate(formatter.format(date));
+			row = orderDao.insert(order);
+			if (row > 0) {
+				if (orderDetailsDao.insert(lisOrderDetails) > 0)
+					return new ResponseJson(200, "订单详情表插入成功", oid, true);
+				return new ResponseJson(200, "订单详情表插入失败", -1, false);
+			}
+			return new ResponseJson(200, "订单插入失败", -1, false);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return new ResponseJson(500, "订单插入失败", -1, false);
 		}
 	}
 

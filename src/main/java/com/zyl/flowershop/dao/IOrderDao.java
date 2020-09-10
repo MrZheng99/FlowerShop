@@ -9,12 +9,14 @@ import com.zyl.flowershop.entity.Order;
 @Repository
 public interface IOrderDao {
 	public List<Order> findCurrent();
-	
+
 	public List<Order> findAll();
-	
+
 	public List<Order> findByDate();
-	
+
 	public Integer insert(Order order);
-	
+
 	public Integer updateFlag(Order order);
+
+	public Integer update(Order order);
 }

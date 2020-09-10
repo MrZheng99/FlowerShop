@@ -23,5 +23,5 @@
 	    `receiveDate`=#{receiveDate},`flag`=#{flag}
 	    where `aid`=#{aid}
 	</update>
-
+	<!-- TODO:更新地址和电话 -->
 </mapper>

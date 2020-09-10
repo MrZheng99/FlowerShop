@@ -58,4 +58,12 @@ public class CartService implements ICartService {
 		return add(cart);
 	}
 
+	@Override
+	public ResponseJson order(List<Cart> carts) {
+		// 先清除缓存
+		for (Cart cart : carts)
+			delete(cart);
+		return orderService.insert(carts);
+	}
+
 }

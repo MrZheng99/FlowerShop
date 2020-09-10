@@ -80,8 +80,8 @@ create table if not exists tb_order(
 	payDate date null,#付款时间
 	sendDate date null,#发货时间
 	amount decimal(7,2) not null,
-	address varchar(255) not null,
-	tel varchar(255) not null,
+	address varchar(255) null,
+	tel varchar(255) null,
 	uid int(11) not null,
 	status char(1) not null,
 	constraint `tb_order_uid` foreign key(`uid`) references `tb_user`(`uid`)

@@ -1,5 +1,7 @@
 package com.zyl.flowershop.controller.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -7,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zyl.flowershop.controller.IOrderController;
+import com.zyl.flowershop.entity.Cart;
 import com.zyl.flowershop.entity.Order;
-import com.zyl.flowershop.entity.OrderData;
 import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.service.IOrderService;
 
@@ -39,8 +41,14 @@ public class OrderController implements IOrderController {
 
 	@Override
 	@PostMapping("/insert")
-	public ResponseJson insert(@RequestBody OrderData orderData) {
-		return orderService.insert(orderData);
+	public ResponseJson insert(@RequestBody List<Cart> carts) {
+		return orderService.insert(carts);
+	}
+
+	@Override
+	@PostMapping("/update")
+	public ResponseJson update(@RequestBody Order order) {
+		return orderService.update(order);
 	}
 
 	@Override

@@ -1,7 +1,9 @@
 package com.zyl.flowershop.service;
 
+import java.util.List;
+
+import com.zyl.flowershop.entity.Cart;
 import com.zyl.flowershop.entity.Order;
-import com.zyl.flowershop.entity.OrderData;
 import com.zyl.flowershop.entity.ResponseJson;
 
 public interface IOrderService {
@@ -15,5 +17,7 @@ public interface IOrderService {
 
 	public ResponseJson updateFlag(Order order);
 
-	ResponseJson insert(OrderData orderData);
+	public ResponseJson insert(List<Cart> carts);
+
+	public ResponseJson update(Order order);
 }

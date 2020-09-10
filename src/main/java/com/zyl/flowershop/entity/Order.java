@@ -2,11 +2,11 @@ package com.zyl.flowershop.entity;
 
 public class Order {
 	private Long oid;
-	private String odate;
+	private Integer uid;
+
 	private String createDate;
 	private String payDate;
 	private String sendDate;
-
 	private String receiveDate;
 
 	private Double amount;
@@ -18,6 +18,14 @@ public class Order {
 		public final Integer paid = 1; // "已付款"
 		public final Integer unshiped = 2;// "已发货"
 		public final Integer shiped = 3;// "已收货"
+	}
+
+	public Integer getUid() {
+		return uid;
+	}
+
+	public void setUid(Integer uid) {
+		this.uid = uid;
 	}
 
 	public String getCreateDate() {
@@ -50,14 +58,6 @@ public class Order {
 
 	public void setOid(Long oid) {
 		this.oid = oid;
-	}
-
-	public String getOdate() {
-		return odate;
-	}
-
-	public void setOdate(String odate) {
-		this.odate = odate;
 	}
 
 	public String getReceiveDate() {
@@ -94,7 +94,7 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [oid=" + oid + ", odate=" + odate + ", createDate=" + createDate + ", payDate=" + payDate
+		return "Order [oid=" + oid + ", uid=" + uid + ", createDate=" + createDate + ", payDate=" + payDate
 				+ ", sendDate=" + sendDate + ", receiveDate=" + receiveDate + ", amount=" + amount + ", address="
 				+ address + ", flag=" + flag + "]";
 	}
@@ -107,11 +107,11 @@ public class Order {
 		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
 		result = prime * result + ((createDate == null) ? 0 : createDate.hashCode());
 		result = prime * result + ((flag == null) ? 0 : flag.hashCode());
-		result = prime * result + ((odate == null) ? 0 : odate.hashCode());
 		result = prime * result + ((oid == null) ? 0 : oid.hashCode());
 		result = prime * result + ((payDate == null) ? 0 : payDate.hashCode());
 		result = prime * result + ((receiveDate == null) ? 0 : receiveDate.hashCode());
 		result = prime * result + ((sendDate == null) ? 0 : sendDate.hashCode());
+		result = prime * result + ((uid == null) ? 0 : uid.hashCode());
 		return result;
 	}
 
@@ -144,11 +144,6 @@ public class Order {
 				return false;
 		} else if (!flag.equals(other.flag))
 			return false;
-		if (odate == null) {
-			if (other.odate != null)
-				return false;
-		} else if (!odate.equals(other.odate))
-			return false;
 		if (oid == null) {
 			if (other.oid != null)
 				return false;
@@ -168,6 +163,11 @@ public class Order {
 			if (other.sendDate != null)
 				return false;
 		} else if (!sendDate.equals(other.sendDate))
+			return false;
+		if (uid == null) {
+			if (other.uid != null)
+				return false;
+		} else if (!uid.equals(other.uid))
 			return false;
 		return true;
 	}
