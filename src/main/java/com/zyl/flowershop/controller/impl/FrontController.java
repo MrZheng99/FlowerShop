@@ -16,4 +16,9 @@ public class FrontController implements IFrontController {
 		return new ModelAndView("/front/details.html");
 	}
 
+	@Override
+	@RequestMapping("/front/cart")
+	public ModelAndView cart() {
+		return new ModelAndView("/front/cart.html");
+	}
 }

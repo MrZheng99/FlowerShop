@@ -34,6 +34,11 @@ public class OrderController implements IOrderController {
 	}
 
 	@Override
+	public ResponseJson findByFlag(Order order) {
+		return orderService.findByFlag(order);
+	}
+
+	@Override
 	@RequestMapping("/findCurrent")
 	public ResponseJson findCurrent() {
 		return orderService.findCurrent();
@@ -55,5 +60,10 @@ public class OrderController implements IOrderController {
 	@PostMapping("/updateFlag")
 	public ResponseJson updateFlag(@RequestBody Order order) {
 		return orderService.updateFlag(order);
+	}
+
+	@Override
+	public ResponseJson updateAddrTel(Order order) {
+		return orderService.updateAddrTel(order);
 	}
 }

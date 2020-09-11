@@ -28,7 +28,7 @@
 				</li>
 
 				<!--购物车信息显示start-->
-				<li class="menu"><a href="#" rel="nofollow" target="_blank">
+				<li class="menu"><a href="../cart" rel="nofollow" target="_blank">
 						购物车 <span class="text-primary" id="gwcCount">(2)</span>
 				</a></li>
 				<!--购物车信息显示end-->
@@ -146,25 +146,18 @@
 						<div class="delivery-item sku-product" style="display: block;">
 							<span class="delivery-label">选择</span>
 							<div class="sku-list">
-								<a href="#">
-									<div class="sku-box active">
-										<img :src="'../'+flower.flowerImg[0]" alt=""><span
-											class="sku-name">一往情深</span><span class="icon icon-chosen"></span><i
-											class="sku-border-top"></i><i class="sku-border-right"></i><i
-											class="sku-border-bottom"></i> <i class="sku-border-left"></i>
-									</div>
-								</a>
+								<input v-model="num" type="number" value="1" min="1" v-bind:max="flower.store">
 							</div>
 						</div>
 					</div>
 					<div class="btn-group">
-						<a id="btnAddcart" class="btn-group-item btn-addcart" href=""><span
+						<a id="btnAddcart" @click="addCart" class="btn-group-item btn-addcart" href="javascript:void(0);"><span
 							class="icon icon-addcartbtn"></span>加入购物车</a> <a id="btnSoonbuy"
 							class="btn-group-item btn-soonbuy" href="">立即购买</a> <a
 							id="btnOtherarea" class="btn-group-item btn-addcart"
-							href="javascript:;" style="display: none;">查看该地区鲜花</a> <span
+							href="javascript:void(0);" style="display: none;">查看该地区鲜花</a> <span
 							id="btnSoldout" class="btn-group-item btn-invalid"
-							href="javascript:;" style="display: none;">售罄/下架</span>
+							href="javascript:void(0);" style="display: none;">售罄/下架</span>
 
 					</div>
 
@@ -319,6 +312,7 @@
 <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
 <script src="/zyl/back/js/vue.js" type="text/javascript"></script>
 <script src="/zyl/back/js/axios.js" type="text/javascript"></script>
+
 <script src="/zyl/front/js/mcity.js" type="text/javascript"></script>
 <script>
     let vm = new Vue({
@@ -328,7 +322,8 @@
             fid: -1,
             province: '',
             city: '',
-            area: ''
+            area: '',
+            num:1
         },
         methods: {
             //切换图片
@@ -363,6 +358,16 @@
                 let val = e.currentTarget.value;
                 console.log(this.city);
                 this.mCity(val);
+            },
+            addCart:function(){
+            	let that=this;
+            	 axios.post("/zyl/cart/add",{
+            		 uid:101,
+            		 fid:that.flower.fid,
+            		 num:that.num
+            	 },"json").then(res => {
+                     this.province = res.data;
+                 });
             }
 
         },

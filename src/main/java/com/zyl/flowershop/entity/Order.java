@@ -10,7 +10,7 @@ public class Order {
 	private String receiveDate;
 
 	private Double amount;
-	private Address address;
+	private String address;
 	private Integer flag;
 
 	class OrderProgress {
@@ -76,11 +76,11 @@ public class Order {
 		this.amount = amount;
 	}
 
-	public Address getAddress() {
+	public String getAddress() {
 		return address;
 	}
 
-	public void setAddress(Address address) {
+	public void setAddress(String address) {
 		this.address = address;
 	}
 

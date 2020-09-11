@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import com.zyl.flowershop.dao.IFlowerDao;
 import com.zyl.flowershop.entity.Cart;
+import com.zyl.flowershop.entity.CartItem;
 import com.zyl.flowershop.entity.ResponseJson;
+import com.zyl.flowershop.entity.User;
 import com.zyl.flowershop.service.ICartService;
 import com.zyl.flowershop.service.IOrderService;
 
@@ -20,6 +25,8 @@ public class CartService implements ICartService {
 
 	@Autowired
 	private IOrderService orderService;
+	@Autowired
+	private IFlowerDao flowerDao;
 
 	@Override
 	public ResponseJson add(Cart cart) {
@@ -38,13 +45,25 @@ public class CartService implements ICartService {
 	}
 
 	@Override
-	public ResponseJson find(Integer uid) {
-		Map<Object, Object> map = redisTemplate.boundHashOps(String.valueOf(uid)).entries();
-		List<Cart> listCart = new ArrayList<Cart>();
-		for (Map.Entry<Object, Object> entry : map.entrySet()) {
-			listCart.add((Cart) entry.getValue());
+	public ResponseJson find(HttpSession session) {
+		// User user = (User) session.getAttribute(SessionKey.CURRENT_USER);
+		User user = new User();
+		user.setUid(101);
+		if (user != null) {
+			String uid = String.valueOf(user.getUid());
+			Map<Object, Object> map = redisTemplate.boundHashOps(uid).entries();
+			List<Integer> fids = new ArrayList<Integer>();
+			for (Map.Entry<Object, Object> entry : map.entrySet()) {
+				fids.add(Integer.valueOf((String) entry.getKey()));
+			}
+			System.out.println(fids);
+			List<CartItem> listCartItem = flowerDao.findCartItems(fids);
+			for (CartItem item : listCartItem) {
+				item.setNum((String) map.get(String.valueOf(item.getFid())));
+			}
+			return new ResponseJson(200, "获取成功", listCartItem, true);
 		}
-		return new ResponseJson(200, "获取成功", listCart, true);
+		return new ResponseJson(200, "获取失败,未登录", null, true);
 	}
 
 	@Override

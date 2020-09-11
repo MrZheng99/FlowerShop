@@ -14,9 +14,13 @@ public interface IOrderDao {
 
 	public List<Order> findByDate();
 
+	public List<Order> findByFlag(Order order);
+
 	public Integer insert(Order order);
 
 	public Integer updateFlag(Order order);
+
+	public Integer updateAddrTel(Order order);
 
 	public Integer update(Order order);
 }

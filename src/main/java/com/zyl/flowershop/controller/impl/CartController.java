@@ -2,9 +2,10 @@ package com.zyl.flowershop.controller.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +30,9 @@ public class CartController implements ICartController {
 	}
 
 	@Override
-	@GetMapping("/find/{uid}")
-	public ResponseJson findByUid(@PathVariable Integer uid) {
-		return service.find(uid);
+	@GetMapping("/find")
+	public ResponseJson findByUid(HttpSession session) {
+		return service.find(session);
 	}
 
 	@Override

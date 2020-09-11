@@ -13,9 +13,13 @@ public interface IOrderController {
 
 	public ResponseJson findByDate();
 
+	public ResponseJson findByFlag(Order order);
+
 	public ResponseJson updateFlag(Order order);
 
 	public ResponseJson update(Order order);
+
+	public ResponseJson updateAddrTel(Order order);
 
 	public ResponseJson insert(List<Cart> carts);
 

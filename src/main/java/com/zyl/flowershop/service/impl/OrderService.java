@@ -54,6 +54,18 @@ public class OrderService implements IOrderService {
 	}
 
 	@Override
+	public ResponseJson findByFlag(Order order) {
+		List<Order> listOrder;
+		try {
+			listOrder = orderDao.findByFlag(order);
+			return new ResponseJson(200, "获取成功", listOrder, true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseJson(500, "获取失败", null, false);
+		}
+	}
+
+	@Override
 	public ResponseJson findCurrent() {
 		List<Order> listOrder;
 		try {
@@ -84,6 +96,20 @@ public class OrderService implements IOrderService {
 		Integer row = 0;
 		try {
 			row = orderDao.updateFlag(order);
+			if (row > 0)
+				return new ResponseJson(200, "修改成功", row, true);
+			return new ResponseJson(200, "修改失败", -1, false);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return new ResponseJson(500, "修改失败", -1, false);
+		}
+	}
+
+	@Override
+	public ResponseJson updateAddrTel(Order order) {
+		Integer row = 0;
+		try {
+			row = orderDao.updateAddrTel(order);
 			if (row > 0)
 				return new ResponseJson(200, "修改成功", row, true);
 			return new ResponseJson(200, "修改失败", -1, false);

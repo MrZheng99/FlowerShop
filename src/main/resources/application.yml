@@ -49,7 +49,6 @@ spring:
       host: localhost
       # Redis服务器连接端口
       port: 6379
-      password: 123456
 #mybatis的相关配置
 mybatis:
   #mapper配置文件
