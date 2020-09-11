@@ -129,8 +129,7 @@ public class OrderService implements IOrderService {
 		Long oid;
 		try {
 			Order order = new Order();
-
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date(System.currentTimeMillis());
 			oid = System.currentTimeMillis();
 			lisOrderDetails = new ArrayList<OrderDetails>();
@@ -143,8 +142,12 @@ public class OrderService implements IOrderService {
 			}
 			order.setOid(oid);
 			order.setAmount(amount);
+			order.setUid(carts.get(0).getUid());
 			order.setCreateDate(formatter.format(date));
+			System.out.println(order);
+
 			row = orderDao.insert(order);
+			System.out.println(lisOrderDetails);
 			if (row > 0) {
 				if (orderDetailsDao.insert(lisOrderDetails) > 0)
 					return new ResponseJson(200, "订单详情表插入成功", oid, true);

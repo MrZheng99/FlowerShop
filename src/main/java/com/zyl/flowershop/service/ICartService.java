@@ -8,14 +8,14 @@ import com.zyl.flowershop.entity.Cart;
 import com.zyl.flowershop.entity.ResponseJson;
 
 public interface ICartService {
-	public ResponseJson add(Cart cart);
+	public ResponseJson add(Cart cart, HttpSession session);
 
 	public ResponseJson find(HttpSession session);
 
-	public ResponseJson delete(Cart cart);
+	public ResponseJson delete(Cart cart, HttpSession session);
 
-	public ResponseJson update(Cart cart);
+	public ResponseJson update(Cart cart, HttpSession session);
 
-	public ResponseJson order(List<Cart> carts);
+	public ResponseJson order(List<Cart> carts, HttpSession session);
 
 }

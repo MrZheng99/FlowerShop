@@ -6,4 +6,7 @@ public interface IFrontController {
 	public ModelAndView detatils(Integer fid);
 
 	public ModelAndView cart();
+
+	public ModelAndView pay();
+
 }

@@ -28,9 +28,8 @@
 	</select>
 	<insert id="insert" parameterType="Order" flushCache="true">
 		insert into
-		tb_order (`odate`,`amount`,`aid`,`flag`,`status`)
-		values (#{odate},
-		#{amount}, #{aid}, 0, 1);
+		tb_order (`oid`,`createDate`,`amount`,`uid`,`flag`,`status`)
+		values (#{oid},#{createDate},#{amount},#{uid}, 0, 1);
 	</insert>
 	<!-- 更新订单表状态和时间 -->
 	<update id="updateFlag" parameterType="Order" flushCache="true">

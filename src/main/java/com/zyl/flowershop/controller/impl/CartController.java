@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zyl.flowershop.controller.ICartController;
@@ -25,8 +24,8 @@ public class CartController implements ICartController {
 
 	@Override
 	@PostMapping("/add")
-	public ResponseJson add(@RequestBody Cart cart) {
-		return service.add(cart);
+	public ResponseJson add(@RequestBody Cart cart, HttpSession session) {
+		return service.add(cart, session);
 	}
 
 	@Override
@@ -37,14 +36,14 @@ public class CartController implements ICartController {
 
 	@Override
 	@PostMapping("/update")
-	public ResponseJson update(@RequestBody Cart cart) {
-		return service.add(cart);
+	public ResponseJson update(@RequestBody Cart cart, HttpSession session) {
+		return service.update(cart, session);
 	}
 
 	@Override
 	@PostMapping("/delete")
-	public ResponseJson delete(@RequestBody Cart cart) {
-		return service.add(cart);
+	public ResponseJson delete(@RequestBody Cart cart, HttpSession session) {
+		return service.delete(cart, session);
 	}
 
 	/***
@@ -55,7 +54,7 @@ public class CartController implements ICartController {
 	 */
 	@Override
 	@PostMapping("/order")
-	public ResponseJson order(@RequestParam List<Cart> carts) {
-		return service.order(carts);
+	public ResponseJson order(@RequestBody List<Cart> carts, HttpSession session) {
+		return service.order(carts, session);
 	}
 }

@@ -9,10 +9,10 @@
 		where `od.oid`= #{oid} and status=1;
 	</select>
 	<insert id="insert" parameterType="OrderDetails">
-		insert into OrderDetails(`fname`,`num`,`price`,`sale`,`oid`,`status`) values
+		insert into tb_order_details(`fname`,`num`,`price`,`sale`,`oid`,`status`) values
 		<foreach collection="list" item="item" index="index"
 			separator=",">
-			(#{fname},#{num},#{price}, #{sale}, #{oid}, 1)
+			(#{item.fname},#{item.num},#{item.price}, #{item.sale}, #{item.oid}, 1)
 		</foreach>
 	</insert>
 </mapper>

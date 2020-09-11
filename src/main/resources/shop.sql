@@ -74,13 +74,14 @@ create table if not exists tb_address(
 
 
 create table if not exists tb_order(
-	oid int(11) primary key,
+	oid bigint primary key,
 	createDate date not null,#创建时间
 	receiveDate date null,#收货时间
 	payDate date null,#付款时间
 	sendDate date null,#发货时间
 	amount decimal(7,2) not null,
 	address varchar(255) null,
+	flag char(1) not null,
 	tel varchar(255) null,
 	uid int(11) not null,
 	status char(1) not null,
@@ -93,7 +94,7 @@ create table if not exists tb_order_details(
 	fname varchar(255) not null,
 	price decimal(7,2),
 	sale varchar(3),
-	oid int(11),
+	oid bigint,
 	constraint `fk_order_details_oid` foreign key(`oid`) references `tb_order`(`oid`),
 	status char(1) not null
 )auto_increment=101 engine=InnoDB default charset=utf8;
