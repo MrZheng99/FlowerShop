@@ -21,7 +21,7 @@ public interface IOrderService {
 
 	public ResponseJson updateFlag(Order order);
 
-	public ResponseJson findCurrent(Long oid, HttpSession session);
+	public ResponseJson findByUid(HttpSession session);
 
 	public ResponseJson update(Order order);
 

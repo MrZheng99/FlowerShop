@@ -77,15 +77,14 @@ public class OrderService implements IOrderService {
 	}
 
 	@Override
-	public ResponseJson findCurrent(Long oid, HttpSession session) {
+	public ResponseJson findByUid(HttpSession session) {
 		List<Order> listOrder;
 		try {
 			User user = (User) session.getAttribute(SessionKey.CURRENT_USER);
 			Order order = new Order();
-			order.setOid(oid);
 			order.setUid(user.getUid());
 			System.out.println(order);
-			listOrder = orderDao.findCurrent(order);
+			listOrder = orderDao.findByUid(order);
 			return new ResponseJson(200, "获取成功", listOrder, true);
 		} catch (Exception e) {
 			e.printStackTrace();

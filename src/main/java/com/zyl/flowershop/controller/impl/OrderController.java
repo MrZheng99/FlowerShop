@@ -57,9 +57,9 @@ public class OrderController implements IOrderController {
 	}
 
 	@Override
-	@RequestMapping("/findCurrent")
-	public ResponseJson findCurrent(@RequestParam("oid") Long oid, HttpSession session) {
-		return orderService.findCurrent(oid, session);
+	@RequestMapping("/findByUid")
+	public ResponseJson findByUid(HttpSession session) {
+		return orderService.findByUid( session);
 	}
 
 	@Override

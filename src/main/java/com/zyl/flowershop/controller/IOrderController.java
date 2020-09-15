@@ -11,7 +11,7 @@ import com.zyl.flowershop.entity.User;
 
 public interface IOrderController {
 
-	public ResponseJson findCurrent(Long oid, HttpSession session);
+	public ResponseJson findByUid(HttpSession session);
 
 	public ResponseJson findAll();
 
