@@ -33,22 +33,23 @@ var series_obj = $('#series_data').datagrid({
 		}, editor:{type: "combobox", options:{required: true,  valueField:"tno", textField:"tname", data:statusObj}}}
 	]],
 		toolbar:[
-			{text: '鲜花系列名:<input type="text" id="series"/>'
+			{text: '鲜花系列名:<input type="text" id="sname"/>'
             }, 
 			{
 			text: "添加",
 			iconCls: 'icon-add',
 			handler: function(){
-				var series = $("#series").val();
+				var sname = $("#sname").val();
 				
-			    if (series == null || series == ""){
+			    if (sname == null || sname == ""){
 					$.messager.show({title:'温馨提示',msg: '请输入您要添加的鲜花系列名...', timeout:2000, showType:'slide'});
 			    	return;
 			    }
 			    
 			    $.ajax({
-			    	url:"/zyl/series/insert",
-			    	data:{series:series},
+			    	url:"/zyl/flowerSeries/insert",
+			    	type:"post",
+			    	data:{sname:sname},
 			    	success:function(data){
 			    		if(data.success){
 							$.messager.show({title:'成功提示',msg: '鲜花系列添加成功...', timeout:2000, showType:'slide'});

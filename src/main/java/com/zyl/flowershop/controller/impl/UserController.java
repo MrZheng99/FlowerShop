@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.zyl.flowershop.controller.IUserController;
 import com.zyl.flowershop.entity.ResponseJson;
@@ -44,8 +45,20 @@ public class UserController implements IUserController {
 
 	@Override
 	@PostMapping("/update")
-	public ResponseJson update(@RequestBody User user) {
-		return userService.update(user);
+	public ResponseJson update(@RequestParam("pic") MultipartFile file,@RequestParam String sex,@RequestParam String uname,
+			@RequestParam Integer uid,HttpSession session) {
+		User user = new User();
+		user.setUid(uid);
+		user.setSex(sex);
+		user.setUname(uname);
+		System.out.println("user:"+user);
+		return userService.update(file, user, session);
+	}
+	
+	@Override
+	@PostMapping("/updateMajor")
+	public ResponseJson updateMajor(User user) {
+		return userService.updateMajor(user);
 	}
 
 	@Override

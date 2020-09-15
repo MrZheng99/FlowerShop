@@ -39,9 +39,9 @@
 		<div class="top-nav-wrapper" id="login_info">
 			<ul class="top-nav-r">
 				<!--登陆状态信息显示start-->
-				<li class="menu login" id="LoginInfo" v-if="onlogin">{{loginName}}</li>
-				<li class="menu login" id="LoginInfo" v-else="onlogin"><a href="#"
-					rel="nofollow">你好，请登录</a><a href="#" rel="nofollow">注册</a></li>
+				<li class="menu login" id="LoginInfo" v-if="onlogin"><a href="center.html">{{loginName}}</a></li>
+				<li class="menu login" id="LoginInfo" v-else="onlogin"><a href="../front"
+					rel="nofollow">你好，请登录</a><a href="../register" rel="nofollow">注册</a></li>
 				<!--登陆状态信息显示end-->
 				<li class="menu"><a href="#" rel="nofollow" target="_blank">订单查询</a>
 				</li>

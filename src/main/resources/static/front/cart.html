@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>购物车-花礼网</title>
+<meta name="description">
+<meta name="keywords">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit|ie-comp">
+<link type="text/css" rel="stylesheet" href="../front/css/public_2020.css">
+</head>
+<body class="cart-flow">
+<!-- 顶部导航 -->
+<div class="site-nav">
+  <div class="container">
+    <ul class="site-nav-l">
+      <li class="menu"> <a href="#" onclick="addfavorite();return false;"><span class="ico ico-star"></span>ZYL花城</a> </li>
+    </ul>
+    <ul class="site-nav-r" id="login_info">
+ 	 <li class="menu login" id="LoginInfo" v-if="onlogin"><em>{{loginName}}</em></li>
+	  <li class="menu login" id="LoginInfo" v-else="onlogin"><a href="../front"
+		rel="nofollow">你好，请登录</a><a href="../register" rel="nofollow">注册</a></li>
+      <li class="site-nav-pipe">|</li>
+      <li class="menu"> <a href="#">订单查询</a> </li>
+    </ul>
+  </div>
+</div>
+<!-- 顶部导航 End --> 
+<!-- 头部 -->
+<header> </header>
+<!-- 头部 End -->
+
+<div class="container"> 
+  <!-- 订单列表 -->
+  <div class="cart-panel">
+    <div class="hd">
+      <ul class="order-title">
+        <li class="selecter"></li>
+        <li class="product">商品名称</li>
+        <li class="market-price">市场价</li>
+        <li class="order-price">订购价</li>
+        <li class="num">数量</li>
+        <li class="operate">操作</li>
+      </ul>
+    </div>
+    <div class="bd">
+      <ul class="order-list" id="9012467">
+        <li class="selecter"> <i class="icon-select active"></i>
+          <input type="hidden" name="productCode" value="9012467">
+          <input type="hidden" name="class1" value="鲜花">
+          <input type="hidden" name="class2" value="">
+        </li>
+        <li class="img-box"><a href="#" target="_blank"><img src="../front/images/9012467.jpg"></a></li>
+        <li class="product"> <a href="#" target="_blank"> <span class="product-title" style="line-height:40px;">[鲜花]Best for You一戴安娜粉玫瑰11枝</span> <span class="feature"></span> </a> </li>
+        <li class="market-price"> <span class="price-sign">¥</span> <span class="price-num"> 189 </span> </li>
+        <li class="order-price"> <span class="price-sign">¥</span> <span class="price-num"> 148 </span>
+          <input type="hidden" name="jrPrice" value="240">
+        </li>
+        <li class="num">
+          <div class="input-num">
+           <a href="#" class="btn btn-default"><i class="ico ico-minus"></i></a>
+            <input type="text" class="form-control input-sm" name="cpsl" value="1" maxlength="3">
+            <a href="#" class="btn btn-default"><i class="ico ico-add"></i></a> </div>
+        </li>
+        <li class="operate"><a href="#" class="delBtn">删除</a><br>
+          <a href="#" class="collectBtn">移到我的收藏</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="set-bar">
+    <div class="set-info"> <a class="back" href="#" style="width:90px;"><span class="ico ico-back"></span>继续挑选</a>
+      <div class="set-stat"> 应付金额:
+        <div class="price"> <span class="price-sign">¥</span> <span class="price-num" id="totalMoney">148</span> </div>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-lg" type="button" id="jiesuan">去结算</button>
+  </div>
+  
+  <!-- 结算 End --> 
+  
+</div>
+<script type="text/javascript" src="../front/js/common.js"></script> 
+<script src="/zyl/back/js/vue.js" type="text/javascript"></script>
+<script src="/zyl/back/js/axios.js" type="text/javascript"></script>
+<script src="/zyl/front/js/checklogin.js" type="text/javascript"></script>
+
+<script>
+       $(function () {
+      
+            $(".order-list>.selecter").click(function () {
+                var $seleter = $(this).find("i");
+                $seleter.toggleClass("active");
+                count();
+                OperCart("update", "");
+            });
+			 $(".btn.btn-default").click(function () {
+                var $input = $(this).siblings("input");
+                var sl = 1;
+                try {
+                    sl = parseInt($input.val());
+                }
+                catch (ex) { sl = 1; }
+                if ($(this).find("i").hasClass("ico-minus")) {
+                    if (sl > 1) {
+                        $input.val(sl - 1);
+                        if (parseInt($input.val()) > 1) {
+                            $(this).removeClass("no");
+                        }
+                        else {
+                            $(this).removeClass("no").addClass("no");
+                        }
+                    }
+                } else if ($(this).find("i").hasClass("ico-add")) {
+                    if (sl < 99) {
+                        $input.val(sl + 1);
+                    }
+                    $(this).parents(".input-num").find("a").removeClass("no");
+                }
+                count();
+                OperCart("update", "");
+            });
+
+            $(".input-num input").change(function () {
+                OperCart("update", "");
+                count();
+            });
+            });
+			
+			</script>
+</body>
+</html>

@@ -35,7 +35,7 @@ public interface IUserDao {
 	/**
 	 * 会员注册
 	 * 
-	 * @param admin
+	 * @param user
 	 * @return
 	 */
 	public Integer insert(User user);
@@ -50,13 +50,20 @@ public interface IUserDao {
 	public Integer updatePwd(@Param("id") Integer id, @Param("opwd") String opwd, @Param("npwd") String npwd);
 
 	/**
-	 * 修改会员的电话，姓名，头像，邮箱，性别，重置密码....
+	 * 修改会员的姓名，头像，性别
 	 * 
 	 * @param admin
 	 * @return
 	 */
 	public Integer update(User user);
-
+	
+	/**
+	 * 修改会员的电话，邮箱
+	 * 
+	 * @param admin
+	 * @return
+	 */
+	public Integer updateMajor(User user);
 	/**
 	 * 总记录数
 	 * 

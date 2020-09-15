@@ -2,6 +2,8 @@ package com.zyl.flowershop.service;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.entity.User;
 
@@ -28,8 +30,16 @@ public interface IUserService {
 	 * @param op
 	 * @return
 	 */
-	public ResponseJson update(User user);
-
+	public ResponseJson update(MultipartFile file,User user, HttpSession session);
+	
+	/**
+	 * 用户修改关键信息
+	 * 
+	 * @param admin
+	 * @param op
+	 * @return
+	 */
+	public ResponseJson updateMajor(User user);
 	/**
 	 * 用户修改密码
 	 * 
