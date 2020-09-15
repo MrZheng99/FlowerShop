@@ -68,7 +68,21 @@
 			limit page,rows
 		</if>
 	</select>
-
+	<!-- 查看购物车的信息 -->
+	<select id="findCartItems" resultType="CartItem">
+		select fid,fname,intro,flowerImg,price,sale,store from tb_flower where
+		status=1 and
+		fid in
+		<foreach item="item" collection="list" separator="," open="("
+			close=")" index="">
+			#{item}
+		</foreach>
+	</select>
+	<!-- 生成订单时候需要使用 -->
+	<select id="findPrice" resultType="Flower">
+		select price,sale,fname from
+		tb_flower where fid=#{fid}
+	</select>
 	<insert id="insert" parameterType="Flower">
 		insert into
 		tb_flower(`fname`,`description`,`flowerLan`,`deliveryDesc`,`price`,`flowerImg`,`sale`,`intro`,`pack`,`store`,`sid`,`tid`,`status`)

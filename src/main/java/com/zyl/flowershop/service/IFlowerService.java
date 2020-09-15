@@ -16,11 +16,10 @@ public interface IFlowerService {
 
 	public ResponseJson update(Flower flower);
 
-	public	ResponseJson insert(MultipartFile[] files, String fname, String description, String flowerLan, String deliveryDesc,
-			Double price, String sale, String store, String intro, String pack, Integer sid, Integer tid);
-
 	public Map<String, Object> uploadImage(MultipartFile file);
 
-
+	public ResponseJson insert(MultipartFile[] files, String fname, String description, String flowerLan,
+			String deliveryDesc, Double price, String sale, Integer store, String intro, String pack, Integer sid,
+			Integer tid);
 
 }

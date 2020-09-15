@@ -15,10 +15,7 @@ file:
     uploadPath: \images\flower
   store: 
     path: ..\fileUpload\store\
-    uploadPath: \images\store  
-  user: 
-    path: ..\fileUpload\user\
-    uploadPath: \images\user        
+    uploadPath: \images\store    
 spring:
   #数据库连接配置
   datasource:
@@ -52,7 +49,6 @@ spring:
       host: localhost
       # Redis服务器连接端口
       port: 6379
-      password: 123456
 #mybatis的相关配置
 mybatis:
   #mapper配置文件

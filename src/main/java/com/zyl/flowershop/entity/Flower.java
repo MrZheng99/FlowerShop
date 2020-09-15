@@ -14,20 +14,12 @@ public class Flower {
 	private String deliveryDesc;
 	private Double price;
 	private String intro;// 简述
-	private String store;
+	private Integer store;
 	private String pack;// 包装
-	public String getStore() {
-		return store;
-	}
-
-	public void setStore(String store) {
-		this.store = store;
-	}
 
 	private String sale;
 	private Integer sid;
 	private Integer tid;
-
 
 	private Double lprice; // 最低价
 	private Double hprice;// 最低价
@@ -39,7 +31,7 @@ public class Flower {
 	private String status;
 
 	public Flower(String fname, String description, String flowerLan, String deliveryDesc, Double price, String intro,
-			String pack, String sale, String store, Integer sid, Integer tid, String flowerImg) {
+			String pack, String sale, Integer store, Integer sid, Integer tid, String flowerImg) {
 		this.fname = fname;
 		this.description = description;
 		this.flowerLan = flowerLan;
@@ -56,6 +48,14 @@ public class Flower {
 
 	public Flower() {
 
+	}
+
+	public Integer getStore() {
+		return store;
+	}
+
+	public void setStore(Integer store) {
+		this.store = store;
 	}
 
 	public Integer getPage() {
@@ -202,8 +202,6 @@ public class Flower {
 				+ ", hprice=" + hprice + ", page=" + page + ", rows=" + rows + ", flowerImg=" + flowerImg + ", type="
 				+ type + ", series=" + series + ", status=" + status + "]";
 	}
-
-	
 
 	@Override
 	public int hashCode() {

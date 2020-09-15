@@ -30,6 +30,7 @@ public class MWebMvcConfigurer implements WebMvcConfigurer {
 		admRegistry.addPathPatterns("/back/super");
 		admRegistry.addPathPatterns("/back/normal", "/back/super", "/adm/find", "/adm/findAll", "/adm/insert",
 				"/adm/update");
+
 	}
 
 }
