@@ -85,7 +85,7 @@ public class OrderService implements IOrderService {
 			order.setOid(oid);
 			order.setUid(user.getUid());
 			System.out.println(order);
-			listOrder = orderDao.findCurrent(order);
+			listOrder = orderDao.findByOid(order);
 			return new ResponseJson(200, "获取成功", listOrder, true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -133,6 +133,42 @@ public class OrderService implements IOrderService {
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			return new ResponseJson(500, "修改失败", -1, false);
+		}
+	}
+
+	@Override
+	public ResponseJson insertOne(Cart cart, User user) {
+		Integer row = 0;
+		Double amount = 0d;
+		Flower flower = null;
+		OrderDetails details;
+		List<OrderDetails> lisOrderDetails;
+		Long oid;
+		try {
+			Order order = new Order();
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date(System.currentTimeMillis());
+			oid = System.currentTimeMillis();
+			lisOrderDetails = new ArrayList<OrderDetails>();
+			flower = flowerDao.findPrice(cart.getFid());
+			details = new OrderDetails(String.valueOf(cart.getNum()), flower.getFname(), flower.getPrice(),
+					flower.getSale(), flower.getIntro(), flower.getFirstImg(), oid);
+			amount += cart.getNum() * flower.getPrice() * Double.valueOf(flower.getSale()) * 0.1;
+			lisOrderDetails.add(details);
+			order.setOid(oid);
+			order.setAmount(amount);
+			order.setUid(user.getUid());
+			order.setCreateDate(formatter.format(date));
+			row = orderDao.insert(order);
+			if (row > 0) {
+				if (orderDetailsDao.insert(lisOrderDetails) > 0)
+					return new ResponseJson(200, "订单详情表插入成功", oid, true);
+				return new ResponseJson(200, "订单详情表插入失败", -1, false);
+			}
+			return new ResponseJson(200, "订单插入失败", -1, false);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return new ResponseJson(500, "订单插入失败", -1, false);
 		}
 	}
 

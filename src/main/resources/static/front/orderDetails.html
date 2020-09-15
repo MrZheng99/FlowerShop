@@ -37,8 +37,18 @@
 			<!-- 收货人信息 -->
 			<div class="order-item" style="position: relative; margin-top: 24px;">
 				<h3 class="order-item-hd">收货人信息</h3>
+				<div class="order-item-content">
+					<div class="order-item-li">
+						<label class="order-item-title">现有地址</label> <input
+							class="order-item-input"  placeholder="请输入收货人姓名" type=""
+							v-model="allAddress"  maxlength="15" autocomplete="off">
+							<select @change="paddingAddr">
+								<option v-for="(addr,index) in allAddr" :value="index">{{addr.address+addr.tel}}</option>
+							</select>
+					</div>
+				</div>
 				<!-- 没有地址记录 -->
-				<div class="order-item-content" id="receiverAddress">
+				<div class="order-item-content">
 					<div class="order-item-li">
 						<label class="order-item-title">收货人</label> <input
 							class="order-item-input" placeholder="请输入收货人姓名" type="text"
@@ -103,10 +113,10 @@
 				<div class="order-item-footer-right">
 					<div class="order-item-footer-price">
 						共<span id="pro_count" class="pro-count" ></span>{{totalNum}}件商品，总商品金额： <span
-							id="pro_price" class="pro-price" >{{amount}}</span>
+							id="pro_price" class="pro-price" >{{totalAmount}}</span>
 					</div>
 					<div class="order-item-footer-pay">
-						应付：<span class="pay-price " id="payMoney">{{totalAmount}}</span>
+						应付：<span class="pay-price " id="payMoney">{{amount}}</span>
 						<button class="pay-btn" id="pay_btn" @click="pay">提交订单</button>
 					</div>
 				</div>
@@ -135,6 +145,7 @@ let vm=new Vue({
         city: '',
         area: '',
 		details:'',
+		allAddress:'',
 		amount:0,
 		oid:'',
 		totalNum:0,
@@ -174,6 +185,9 @@ let vm=new Vue({
          selectArea: function(e) {
              this.toArea = e.currentTarget.value;
          },
+         paddingAddr:function(){
+        	 
+         },
          pay:function(){
         	 let address = this.toProvince+ this.toCity+ this.toArea+ this.toDetails;
         	 axios.post("/zyl/order/updateReceiveInfo",{oid:this.oid,address:address,receivePerson:this.toName,tel:this.toMobile}).then(res=>{
@@ -192,7 +206,7 @@ let vm=new Vue({
 		let temp = location.href.split("/");
 		this.oid = temp[temp.length-1];
 		//获取总额
-		axios.post("/zyl/order/findCurrent",qs.stringify({oid:this.oid})).then(res=>{
+		axios.post("/zyl/order/findByOid",qs.stringify({oid:this.oid})).then(res=>{
 			this.amount=res.data.data[0].amount;
 			console.log(res);
 		});
@@ -200,9 +214,13 @@ let vm=new Vue({
 		axios.post("/zyl/orderDetails/findByOid",qs.stringify({oid:this.oid})).then(res=>{
 			this.details = res.data.data;
 			for(let i=0,len=this.details.length;i<len;i++){
-				this.totalAmount+=this.details[i].price;
+				this.totalAmount+=this.details[i].price*parseInt(this.details[i].num);
 				this.totalNum+=parseInt(this.details[i].num);
 			}
+		});
+		axios.post("/zyl/order/findCurrent",qs.stringify({oid:this.oid})).then(res=>{
+			this.amount=res.data.data[0].amount;
+			console.log(res);
 		});
 	},
 	created: function() {

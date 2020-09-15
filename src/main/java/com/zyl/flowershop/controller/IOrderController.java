@@ -10,7 +10,7 @@ import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.entity.User;
 
 public interface IOrderController {
-	public ResponseJson findCurrent(Long oid, HttpSession session);
+	public ResponseJson findByOid(Long oid, HttpSession session);
 
 	public ResponseJson findAll();
 
@@ -23,6 +23,8 @@ public interface IOrderController {
 	public ResponseJson update(Order order);
 
 	public ResponseJson insert(List<Cart> carts);
+
+	public ResponseJson insertOne(Cart cart, User user);
 
 	public String getPayPage(Long oid, User user);
 

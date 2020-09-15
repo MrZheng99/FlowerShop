@@ -19,6 +19,8 @@ public interface IOrderService {
 
 	public ResponseJson insert(List<Cart> carts);
 
+	public ResponseJson insertOne(Cart cart, User user);
+
 	public ResponseJson updateFlag(Order order);
 
 	public ResponseJson findCurrent(Long oid, HttpSession session);

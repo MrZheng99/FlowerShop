@@ -58,8 +58,8 @@ public class OrderController implements IOrderController {
 	}
 
 	@Override
-	@RequestMapping("/findCurrent")
-	public ResponseJson findCurrent(@RequestParam("oid") Long oid, HttpSession session) {
+	@RequestMapping("/findByOid")
+	public ResponseJson findByOid(@RequestParam("oid") Long oid, HttpSession session) {
 		return orderService.findCurrent(oid, session);
 	}
 
@@ -67,6 +67,12 @@ public class OrderController implements IOrderController {
 	@PostMapping("/insert")
 	public ResponseJson insert(@RequestBody List<Cart> carts) {
 		return orderService.insert(carts);
+	}
+
+	@Override
+	@PostMapping("/insertOne")
+	public ResponseJson insertOne(@RequestBody Cart cart, @SessionAttribute(name = SessionKey.CURRENT_USER) User user) {
+		return orderService.insertOne(cart, user);
 	}
 
 	@Override
