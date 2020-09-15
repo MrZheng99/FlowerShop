@@ -81,6 +81,8 @@ create table if not exists tb_order(
 	sendDate date null,#发货时间
 	amount decimal(7,2) not null,
 	address varchar(255) null,
+		receivePerson varchar(255) null,
+
 	flag char(1) not null,
 	tel varchar(255) null,
 	uid int(11) not null,
@@ -92,9 +94,11 @@ create table if not exists tb_order_details(
 	odid int(11) primary key auto_increment,
 	num varchar(10) not null,
 	fname varchar(255) not null,
-	price decimal(7,2),
+	price decimal(7,2) not null,
 	sale varchar(3),
-	oid bigint,
+	intro varchar(255),
+	flowerFirstImg varchar(255),
+	oid bigint not null,
 	constraint `fk_order_details_oid` foreign key(`oid`) references `tb_order`(`oid`),
 	status char(1) not null
 )auto_increment=101 engine=InnoDB default charset=utf8;

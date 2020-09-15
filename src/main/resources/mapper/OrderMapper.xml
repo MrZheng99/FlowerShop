@@ -3,14 +3,14 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zyl.flowershop.dao.IOrderDao">
-	<select id="findCurrent" resultType="Order">
+	<select id="findByUid" resultType="Order" parameterType="Order">
 		select
-		oid,createDate,payDate,sendDate, receiveDate, amount, address,tel, flag
+		createDate,payDate,sendDate, receiveDate, amount, address,receivePerson,tel, flag
 		from tb_order where `uid`= #{uid} and status=1;
 	</select>
 	<select id="findAll" resultType="Order">
 		select
-		createDate,payDate,sendDate, receiveDate, amount, address,tel, flag
+		createDate,payDate,sendDate, receiveDate, amount, address,receivePerson,tel, flag
 		from tb_order where status=1;
 	</select>
 	<!-- 每日订单总额 -->
@@ -20,11 +20,15 @@
 		from
 		tb_order group by DATE_FORMAT(odate,'%Y-%m-%d')
 	</select>
-	<select id="findByFlag" resultType="Order">
+	<select id="findByFlag" resultType="Order" parameterType="Order">
 		select
-		createDate,payDate,sendDate, receiveDate, amount, address,tel as
-		amount from
-		tb_order where flag=#{flag};
+		createDate,payDate,sendDate, receiveDate, amount,address,receivePerson,tel from
+		tb_order where flag=#{flag} and status=1;
+	</select>
+	<select id="findByOid" resultType="Order">
+		select
+		createDate,payDate,sendDate, receiveDate, amount,address,receivePerson,tel from
+		tb_order where oid=#{oid} and status=1;
 	</select>
 	<insert id="insert" parameterType="Order" flushCache="true">
 		insert into
@@ -50,13 +54,10 @@
 		</set>
 		where `oid`=#{oid}
 	</update>
-	<!--更新地址和电话 -->
-	<update id="updateAddrTel" parameterType="Order"
+	<!--更新地址和电话和收货人-->
+	<update id="updateReceiveInfo" parameterType="Order"
 		flushCache="true">
-		update tb_order set
-		`address`=#{address},`tel`=#{tel}
-		where
-		`oid`=#{oid}
+		update tb_order set `address`=#{address},`tel`=#{tel},`receivePerson`=#{receivePerson} where oid=#{oid} and uid=#{uid} and status=1;
 	</update>
 
 </mapper>

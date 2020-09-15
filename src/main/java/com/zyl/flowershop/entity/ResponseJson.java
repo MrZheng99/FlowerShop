@@ -37,6 +37,12 @@ public class ResponseJson {
 		this.success = success;
 	}
 
+	public ResponseJson(boolean success, String msg) {
+		this.msg = msg;
+		this.success = success;
+
+	}
+
 	public Integer getStatus() {
 		return status;
 	}

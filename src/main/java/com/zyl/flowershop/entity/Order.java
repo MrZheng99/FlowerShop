@@ -8,6 +8,16 @@ public class Order {
 	private String payDate;
 	private String sendDate;
 	private String receiveDate;
+	private String receivePerson;
+	private String tel;
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
 
 	private Double amount;
 	private String address;
@@ -26,6 +36,14 @@ public class Order {
 
 	public void setUid(Integer uid) {
 		this.uid = uid;
+	}
+
+	public String getReceivePerson() {
+		return receivePerson;
+	}
+
+	public void setReceivePerson(String receivePerson) {
+		this.receivePerson = receivePerson;
 	}
 
 	public String getCreateDate() {
@@ -95,8 +113,8 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Order [oid=" + oid + ", uid=" + uid + ", createDate=" + createDate + ", payDate=" + payDate
-				+ ", sendDate=" + sendDate + ", receiveDate=" + receiveDate + ", amount=" + amount + ", address="
-				+ address + ", flag=" + flag + "]";
+				+ ", sendDate=" + sendDate + ", receiveDate=" + receiveDate + ", receivePerson=" + receivePerson
+				+ ", tel=" + tel + ", amount=" + amount + ", address=" + address + ", flag=" + flag + "]";
 	}
 
 	@Override
@@ -110,7 +128,9 @@ public class Order {
 		result = prime * result + ((oid == null) ? 0 : oid.hashCode());
 		result = prime * result + ((payDate == null) ? 0 : payDate.hashCode());
 		result = prime * result + ((receiveDate == null) ? 0 : receiveDate.hashCode());
+		result = prime * result + ((receivePerson == null) ? 0 : receivePerson.hashCode());
 		result = prime * result + ((sendDate == null) ? 0 : sendDate.hashCode());
+		result = prime * result + ((tel == null) ? 0 : tel.hashCode());
 		result = prime * result + ((uid == null) ? 0 : uid.hashCode());
 		return result;
 	}
@@ -159,10 +179,20 @@ public class Order {
 				return false;
 		} else if (!receiveDate.equals(other.receiveDate))
 			return false;
+		if (receivePerson == null) {
+			if (other.receivePerson != null)
+				return false;
+		} else if (!receivePerson.equals(other.receivePerson))
+			return false;
 		if (sendDate == null) {
 			if (other.sendDate != null)
 				return false;
 		} else if (!sendDate.equals(other.sendDate))
+			return false;
+		if (tel == null) {
+			if (other.tel != null)
+				return false;
+		} else if (!tel.equals(other.tel))
 			return false;
 		if (uid == null) {
 			if (other.uid != null)
