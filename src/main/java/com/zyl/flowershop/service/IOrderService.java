@@ -7,7 +7,7 @@ import com.zyl.flowershop.entity.Order;
 import com.zyl.flowershop.entity.ResponseJson;
 
 public interface IOrderService {
-	public ResponseJson findCurrent();
+	public ResponseJson findCurrent(Integer integer);
 
 	public ResponseJson findAll();
 

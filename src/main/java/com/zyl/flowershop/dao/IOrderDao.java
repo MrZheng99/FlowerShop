@@ -8,7 +8,7 @@ import com.zyl.flowershop.entity.Order;
 
 @Repository
 public interface IOrderDao {
-	public List<Order> findCurrent();
+	public List<Order> findCurrent(Integer uid);
 
 	public List<Order> findAll();
 

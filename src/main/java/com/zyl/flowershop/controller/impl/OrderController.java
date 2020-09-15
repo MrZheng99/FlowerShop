@@ -2,6 +2,8 @@ package com.zyl.flowershop.controller.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +14,9 @@ import com.zyl.flowershop.controller.IOrderController;
 import com.zyl.flowershop.entity.Cart;
 import com.zyl.flowershop.entity.Order;
 import com.zyl.flowershop.entity.ResponseJson;
+import com.zyl.flowershop.entity.User;
 import com.zyl.flowershop.service.IOrderService;
+import com.zyl.flowershop.util.SessionKey;
 
 @RestController
 @RequestMapping("order")
@@ -40,8 +44,10 @@ public class OrderController implements IOrderController {
 
 	@Override
 	@RequestMapping("/findCurrent")
-	public ResponseJson findCurrent() {
-		return orderService.findCurrent();
+	public ResponseJson findCurrent(HttpSession session) {
+		Object obj = session.getAttribute(SessionKey.CURRENT_USER);
+		User user = (User)obj;
+		return orderService.findCurrent(user.getUid());
 	}
 
 	@Override

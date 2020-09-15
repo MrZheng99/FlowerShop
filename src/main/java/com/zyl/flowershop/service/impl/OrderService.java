@@ -66,10 +66,10 @@ public class OrderService implements IOrderService {
 	}
 
 	@Override
-	public ResponseJson findCurrent() {
+	public ResponseJson findCurrent(Integer uid) {
 		List<Order> listOrder;
 		try {
-			listOrder = orderDao.findCurrent();
+			listOrder = orderDao.findCurrent(uid);
 			return new ResponseJson(200, "获取成功", listOrder, true);
 		} catch (Exception e) {
 			e.printStackTrace();

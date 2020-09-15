@@ -53,18 +53,17 @@
             </div>
             
             <!-- 订单列表 -->
-            <div class="order-panel">
+            <div class="order-panel" v-for="ord in orders">
               <div class="hd">
                 <ul class="order-title">
                   <li class="number">订单编号</li>
                   <li class="consignee">收货人</li>
                   <li class="order-price">订单金额</li>
-                  <li class="date">配送时间</li>
+                  <li class="date">下单时间</li>
                   <li class="state">
                     <select class="form-control input-sm" id="zt" onchange="DoSelectZT()">
                       <option value="0" selected="selected">全部状态</option>
                       <option value="1">待付款</option>
-                      <option value="3">今日配送</option>
                       <option value="2">已完成</option>
                       <option value="4">待评价</option>
                       <option value="-1">已取消</option>
@@ -75,13 +74,20 @@
               </div>
               <div class="bd">
                 <ul class="order-list">
-                  <li class="img-box"> <a href="#"><img src="../front/images/9012332.jpg" width="50" height="56"></a> </li>
-                  <li class="number"><a href="#">307844284</a></li>
+                  <li class="img-box"> 
+                  <a href="#" v-if="ord.flag==0"><img src="../front/images/pay.jpg" width="50" height="56"></a> 
+                   <a href="#" v-if="ord.flag==1"><img src="../front/images/receive.jpg" width="50" height="56"></a> 
+                    </li>
+                  <li class="number"><a href="#">{{ord.oid}}</a></li>
                   <li class="consignee">yxx</li>
-                  <li class="order-price"> <span class="price-sign">¥</span> <span class="price-num">139</span> </li>
-                  <li class="date">2020-09-10</li>
-                  <li class="state">待付款</li>
-                  <li class="operate"> <a href="#">查看</a><span>|</span><a href="#"> 取消 </a> <a href="#" class="btn btn-primary btn-sm">付款</a> </li>
+                  <li class="order-price"> <span class="price-sign">¥</span> <span class="price-num">{{ord.amount}}</span> </li>
+                  <li class="date">{{ord.createDate}}</li>
+                  <li class="state" v-if="ord.flag==0">待付款</li>
+                  <li class="state" v-else>待签收</li>
+                  <li class="operate"> <button  data-toggle="modal" :data-target="'#detailsModal' + ord.oid">查看</button><span>|</span><a href="#"> 取消 </a>
+                   <a href="#" class="btn btn-primary btn-sm" v-if="ord.flag==0">付款</a> 
+                   <a href="#" class="btn btn-primary btn-sm" v-else>已付款</a> 
+                   </li>
                 </ul>
               </div>
               <div class="digg"> </div>
@@ -153,11 +159,37 @@
                   </li>
                   <li>
                     <label>邮箱</label>
-                    <div class="form-email form-group-item"><input type="text" id="inputemail" v-model="email"> <a class="form-bind" href="/Member/AccountSetting/Bind">验证邮箱</a> </div>
+                    <div class="form-email form-group-item"><input type="text" id="inputemail" v-model="email"> <a class="form-bind" href="javascript:void(0)" onclick=>验证邮箱</a> </div>
                   </li>
                 </ul>
                 <div class="form-btn-container">
                   <button id="form-submit" type="button" class="form-submit" @click="updateUser()">保存</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="modifyPwd">
+            <div class="title">
+              <h3>修改密码</h3>
+            </div>
+            <div class="main-form">
+              <form>
+                <ul class="form-group">
+                    <li>
+                    <label>旧密码</label>
+                    <div class=" "><input type="text" id="inputtel" style="width:200px;height:30px;" ></div>
+                  </li>
+                  <li>
+                    <label>新密码</label>
+                    <div class=" "><input type="text" id="inputtel" ></div>
+                  </li>
+                  <li>
+                    <label>确认密码</label>
+                    <div class=" "><input type="text" id="inputtel" ></div>
+                  </li>
+                  </ul>
+                <div class="form-btn-container">
+                  <button id="form-submit" type="button" class="form-submit" onclick="">修改密码</button>
                 </div>
               </form>
             </div>
@@ -184,7 +216,7 @@
                 </div>
                 <button class="btn btn-primary btn-lg" data-toggle="modal" :data-target="'#editModal' + addr.aid">
 					编辑
-			</button>
+			    </button>
 				<!-- 模态框（Modal） -->
 				<div class="modal fade" :id="'editModal'+addr.aid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
@@ -368,9 +400,10 @@
         <div class="hd"><b></b>个人中心</div>
         <ul class="bd">
           <li><a href="#myinfo" style="font-size:12px;" data-toggle="tab"><span class="ico ico-member1"></span>个人信息</a></li>
+           <li><a href="#modifyPwd" style="font-size:12px;" data-toggle="tab"><span class="ico ico-member1"></span>修改密码</a></li>
           <li><a href="#address" style="font-size:12px;" data-toggle="tab" onclick="findAddress()"><span class="ico ico-member1"></span>收货地址</a></li>
           <li class="hd"> <span class="ico ico-member1"></span>订单信息
-          <li ><a href="#order" style="font-size:12px;" data-toggle="tab"><span class="ico ico-member1"></span>我的订单</a></li>
+          <li ><a href="#order" style="font-size:12px;" data-toggle="tab" onclick="findOrder()"><span class="ico ico-member1"></span>我的订单</a></li>
           <li><a href="#assess" style="font-size:12px;" data-toggle="tab"><span class="ico ico-member1"></span>我的评价</a></li>
           </li>
           <li class="hd"> <span class="ico ico-member1"></span>客户服务

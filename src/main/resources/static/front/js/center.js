@@ -147,3 +147,18 @@ function findAddress(){
 		}
 	})
 }
+
+
+function findOrder(){
+	let order = new Vue({
+		el:"#order",
+		data:{
+			orders:[]
+		},
+		mounted:function(){
+			axios.get("/zyl/order/findCurrent").then(result =>{
+				this.orders = result.data.data;
+			});
+		}
+	})
+}

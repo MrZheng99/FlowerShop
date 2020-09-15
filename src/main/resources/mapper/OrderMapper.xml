@@ -5,8 +5,8 @@
 <mapper namespace="com.zyl.flowershop.dao.IOrderDao">
 	<select id="findCurrent" resultType="Order">
 		select
-		createDate,payDate,sendDate, receiveDate, amount, address,tel, flag
-		from tb_order where oid=#{oid} and `uid`= #{uid} and status=1;
+		oid,createDate,payDate,sendDate, receiveDate, amount, address,tel, flag
+		from tb_order where `uid`= #{uid} and status=1;
 	</select>
 	<select id="findAll" resultType="Order">
 		select

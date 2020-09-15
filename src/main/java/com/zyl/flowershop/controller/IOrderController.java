@@ -2,12 +2,14 @@ package com.zyl.flowershop.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.zyl.flowershop.entity.Cart;
 import com.zyl.flowershop.entity.Order;
 import com.zyl.flowershop.entity.ResponseJson;
 
 public interface IOrderController {
-	public ResponseJson findCurrent();
+	public ResponseJson findCurrent(HttpSession session);
 
 	public ResponseJson findAll();
 
@@ -22,5 +24,11 @@ public interface IOrderController {
 	public ResponseJson updateAddrTel(Order order);
 
 	public ResponseJson insert(List<Cart> carts);
+
+
+
+	
+
+	
 
 }
