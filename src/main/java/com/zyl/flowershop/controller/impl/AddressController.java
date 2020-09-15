@@ -55,4 +55,11 @@ public class AddressController implements IAddressController{
 		address.setUid(user.getUid());
 		return addressService.updateFlag(address);
 	}
+	
+	@Override
+	@PostMapping("/deleteByAid")
+	public ResponseJson deleteByAid(@RequestBody Address address) {
+		Integer aid = address.getAid();
+		return addressService.deleteByAid(aid);
+	}
 }

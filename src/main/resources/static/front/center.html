@@ -20,7 +20,7 @@
   <div class="container">
     <ul class="site-nav-r" id="login_info">
       <!--登陆状态信息显示start-->
- 	 <li class="menu login"><a href="center.html">{{loginName}}</a></li>
+ 	 <li class="menu login"><a href="center.html"></a></li>
       <li class="menu login"><a href="#" title="退出">退出</a></li>
       <!--登陆状态信息显示end-->
       <li class="site-nav-pipe">|</li>
@@ -130,13 +130,13 @@
                   <li>
                     <label>账号</label>
                     <div class="form-name form-group-item">
-                      <input id="inputAccount" type="text" v-model="account" maxlength="10" readonly="readonly" >
+                      <input id="inputAccount" type="text" :value="account" maxlength="10" readonly="readonly" >
                     </div>
                   </li>
                    <li>
                     <label>姓名</label>
                     <div class="form-name form-group-item">
-                      <input id="inputName" type="text" name="realname" maxlength="10" placeholder="请输入姓名">
+                      <input id="inputName" type="text" name="realname" maxlength="10" placeholder="请输入姓名" v-model="realName">
                       <p class="form-name-len"><span>3</span>/10</p>
                     </div>
                   </li>
@@ -147,13 +147,13 @@
                   </li>
                   <li>
                     <label>手机</label>
-                    <div class="form-tel form-group-item"><input type="text" id="inputtel"> <a class="form-bind" href="/Member/AccountSetting/Bind">更换手机</a> </div>
+                    <div class="form-tel form-group-item"><input type="text" id="inputtel" v-model="tel"> <a class="form-bind" href="/Member/AccountSetting/Bind">更换手机</a> </div>
                   </li>
                   <li>
                   </li>
                   <li>
                     <label>邮箱</label>
-                    <div class="form-email form-group-item"><input type="text" id="inputemail"> <a class="form-bind" href="/Member/AccountSetting/Bind">验证邮箱</a> </div>
+                    <div class="form-email form-group-item"><input type="text" id="inputemail" v-model="email"> <a class="form-bind" href="/Member/AccountSetting/Bind">验证邮箱</a> </div>
                   </li>
                 </ul>
                 <div class="form-btn-container">
@@ -168,7 +168,7 @@
             </div>
             <div class="address-wrap" >
               <div class="address-info" v-for="addr in addressInfo">
-                <button type="button" class="close" onclick="if(confirm('确认删除吗？')){AddressOper('2617259','del')}"><span>×</span></button>
+                <button type="button" class="close" @click="deleteAddress(addr.aid)"><span>×</span></button>
                 <h5>yxx</h5>
                 <ul class="address-list">
                   <li><b>收货人：</b>{{addr.nickName}}</li>
@@ -367,8 +367,8 @@
       <div class="box-border">
         <div class="hd"><b></b>个人中心</div>
         <ul class="bd">
-          <li><a href="#myinfo" style="font-size:12px;" data-toggle="tab" onclick="userInfo()"><span class="ico ico-member1"></span>个人信息</a></li>
-          <li><a href="#address" style="font-size:12px;" data-toggle="tab"><span class="ico ico-member1"></span>收货地址</a></li>
+          <li><a href="#myinfo" style="font-size:12px;" data-toggle="tab"><span class="ico ico-member1"></span>个人信息</a></li>
+          <li><a href="#address" style="font-size:12px;" data-toggle="tab" onclick="findAddress()"><span class="ico ico-member1"></span>收货地址</a></li>
           <li class="hd"> <span class="ico ico-member1"></span>订单信息
           <li ><a href="#order" style="font-size:12px;" data-toggle="tab"><span class="ico ico-member1"></span>我的订单</a></li>
           <li><a href="#assess" style="font-size:12px;" data-toggle="tab"><span class="ico ico-member1"></span>我的评价</a></li>
@@ -387,7 +387,6 @@
 <script src="/zyl/front/js/axios.js" type="text/javascript"></script>
 
 <script src="/zyl/back/js/vue.js" type="text/javascript"></script>
-<script src="/zyl/front/js/checklogin.js" type="text/javascript"></script>
 <script src="/zyl/front/js/center.js" type="text/javascript"></script>
 <script type="text/javascript" src="/zyl/back/js/showpic.js"></script>
 <script type="text/javascript" src="/zyl/back/js/ajaxfileupload.js"></script>
@@ -395,28 +394,35 @@
 let user = new Vue({
 	el:"#myinfo",
 	data:{
-		account:"",
+		account: "匿名",
+		uid: "",
 		email:"",
 		tel:"",
-		uname:"",
+		realName:"",
 		sex:"",
 		headImg:""
 	},
 	mounted:function(){
-			this.account = login.$data.loginName;
-			console.info(this.account);
+		axios.get("/zyl/user/findCurrent").then(result =>{
+			if(result.data.success){
+				this.account = result.data.data.account;
+				this.uid = result.data.data.uid;
+				this.email = result.data.data.email;
+				this.tel = result.data.data.tel;
+				this.realName = result.data.data.uname;
+				this.sex = result.data.data.sex;
+				if(this.sex == "女"){
+					$("#woman").attr("checked","true");
+				}else{
+					$("#man").attr("checked","true");
+				}
+				this.headImg= result.data.data.headImg;
+				if(this.headImg== "" || this.headImg == null){
+					this.headImg="images/timg.jpg";
+				}
+			}
 
-			this.sex = login.$data.sex;
-			if(this.sex == "女"){
-				$("#woman").attr("checked","true");
-			}else{
-				$("#man").attr("checked","true");
-			}
-			this.headImg= login.$data.headImg;
-			if(this.headImg== "" || this.headImg == null){
-				this.headImg="images/timg.jpg";
-			}
-			this.uid=login.$data.loginId;		
+		})		
 	},
 	methods:{
 		updateUser:function(){
@@ -431,7 +437,7 @@ let user = new Vue({
 				data : {
 					uname:this.uname,
 					sex:this.sex,
-					uid:this.uid
+					uid:this.uid,
 				},
 				success : function(data) {
 					if (data.success) {

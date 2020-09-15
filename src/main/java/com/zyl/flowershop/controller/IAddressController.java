@@ -14,5 +14,7 @@ public interface IAddressController {
 
 	public ResponseJson updateFlag(Address address, HttpSession session);
 
+	public ResponseJson deleteByAid(Address address);
+
 
 }

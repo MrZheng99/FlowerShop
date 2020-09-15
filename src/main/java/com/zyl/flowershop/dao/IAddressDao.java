@@ -20,5 +20,7 @@ public interface IAddressDao {
 	public Integer update(Address address);
 	
 	public Integer updateFlag(Address address);
+	
+	public Integer deleteByAid(Integer aid);
 
 }

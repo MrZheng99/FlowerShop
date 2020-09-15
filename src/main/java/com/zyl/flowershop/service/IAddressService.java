@@ -11,4 +11,6 @@ public interface IAddressService {
 	public ResponseJson update(Address address);
 
 	public ResponseJson updateFlag(Address address);
+	
+	public ResponseJson deleteByAid(Integer aid);
 }

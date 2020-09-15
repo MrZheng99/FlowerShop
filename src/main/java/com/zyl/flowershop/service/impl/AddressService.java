@@ -66,4 +66,18 @@ public class AddressService implements IAddressService{
 			return new ResponseJson(500, "修改默认地址失败", -1, false);
 		}
 	}
+	
+	@Override
+	public ResponseJson deleteByAid(Integer aid) {
+		Integer row = 0;
+		try {
+		row= addressDao.deleteByAid(aid);
+		if(row>0)
+			return new ResponseJson(200, "删除地址成功", row, true);
+		return new ResponseJson(200, "删除地址失败", row, false);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return new ResponseJson(500, "删除地址失败", -1, false);
+		}	
+	}
 }

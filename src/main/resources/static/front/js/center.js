@@ -8,6 +8,21 @@ function findAddress(){
 	        area: ''
 	    },
 		methods:{
+			deleteAddress:function(aid){
+				if(confirm("确认删除该地址信息吗？")){
+					axios.post("/zyl/address/deleteByAid",{aid:aid}).then(result=>{
+						if(result.data.success){
+							alert("地址删除成功!");
+							axios.get("/zyl/address/findCurrent").then(result =>{
+								this.addressInfo = result.data.data;
+							})							
+						}else{
+							alert("删除地址失败，请稍后重试。。");
+						}
+					})
+				}else{
+				}
+			},
 			addAddress:function(){
 				var province = $("#province").val();
 				var city = $("#city").val();

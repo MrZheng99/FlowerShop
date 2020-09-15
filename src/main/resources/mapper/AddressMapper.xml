@@ -43,6 +43,9 @@
 	
 	<update id="updateFlag" flushCache="true" parameterType="Address">
 	   	update `tb_address` set `flag`=( case when `aid`=#{aid} then 1 else 0 end) where uid=#{uid} and status=1;
-	   
 	</update>
+	
+	<delete id="deleteByAid" flushCache="true" >
+	    delete from `tb_address` where `aid`=#{aid}
+	</delete>
 </mapper>
