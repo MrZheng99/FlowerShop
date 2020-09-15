@@ -10,19 +10,18 @@ import com.zyl.flowershop.entity.OrderDetails;
 import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.service.IOrderDetailsService;
 
-
 @Service
 public class OrderDetailsService implements IOrderDetailsService {
 	@Autowired
 	IOrderDetailsDao orderDetailsDao;
-	
+
 	@Override
-	public ResponseJson findByOid() {
+	public ResponseJson findByOid(Long oid) {
 		List<OrderDetails> listOrderDetails;
 		try {
-			listOrderDetails =orderDetailsDao.findByOid();
+			listOrderDetails = orderDetailsDao.findByOid(oid);
 			return new ResponseJson(200, "获取成功", listOrderDetails, true);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseJson(500, "获取失败", null, false);
 		}

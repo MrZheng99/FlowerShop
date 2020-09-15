@@ -358,4 +358,10 @@ public class Flower {
 		this.pack = pack;
 	}
 
+	public String getFirstImg() {
+		if (this.flowerImg != null)
+			return this.flowerImg.split(",")[0];
+		return null;
+	}
+
 }

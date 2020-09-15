@@ -4,15 +4,15 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zyl.flowershop.dao.IOrderDetailsDao">
 	<select id="findByOid" resultType="OrderDetails">
-		select  odid, num, fname, price, sale
-		from tb_order_details od, tb_order o
-		where `od.oid`= #{oid} and status=1;
+		select  odid, num, fname, price,sale, intro,flowerFirstImg 
+		from tb_order_details od 
+		where `oid`= #{oid} and status=1;
 	</select>
 	<insert id="insert" parameterType="OrderDetails">
-		insert into tb_order_details(`fname`,`num`,`price`,`sale`,`oid`,`status`) values
+		insert into tb_order_details(`fname`,`num`,`price`,`sale`,`intro`,`flowerFirstImg`,`oid`,`status`) values
 		<foreach collection="list" item="item" index="index"
 			separator=",">
-			(#{item.fname},#{item.num},#{item.price}, #{item.sale}, #{item.oid}, 1)
+			(#{item.fname},#{item.num},#{item.price},#{item.sale}, #{item.intro},#{item.flowerFirstImg}, #{item.oid}, 1)
 		</foreach>
 	</insert>
 </mapper>

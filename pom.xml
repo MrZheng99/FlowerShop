@@ -71,6 +71,12 @@
 			<artifactId>spring-boot-starter-redis</artifactId>
 			<version>1.4.1.RELEASE</version>
 		</dependency>
+		<!-- 沙箱支付 -->
+		<dependency>
+			<groupId>com.alipay.sdk</groupId>
+			<artifactId>alipay-sdk-java</artifactId>
+			<version>4.9.9</version>
+		</dependency>
 	</dependencies>
 
 	<build>
