@@ -32,6 +32,7 @@ public interface IAdminService {
 	public ResponseJson login(Admin admin, HttpSession session);
 
 
+	
 
 	
 }

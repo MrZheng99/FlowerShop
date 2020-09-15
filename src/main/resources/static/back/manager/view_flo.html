@@ -138,9 +138,10 @@ function editFlower(){
 		width:1100,
 	    height:600,
 	    closed:false,
+	    closable:false,
 	    cache:false,
 	    resizable:true,
-	    iconCls:"icon-add",
+	    iconCls:"icon-edit",
 	    modal:true,
 	    href:"manager/view_flo_details.html",
 	    buttons:[{
@@ -162,6 +163,7 @@ function editFlower(){
 	       $("#pack").val(row.pack);
 	       $("#flowerLan").val(row.flowerLan);
 	       $("#intro").val(row.intro)
+	       $("#store").val(row.store)
 	       $("#editor2").val(row.description)
 	       var pic = row.flowerImg.split(",");
 	       var str = "";

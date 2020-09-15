@@ -77,15 +77,31 @@ public class OrderService implements IOrderService {
 	}
 
 	@Override
-	public ResponseJson findCurrent(Long oid, HttpSession session) {
+	public ResponseJson findByOid(Long oid, HttpSession session) {
+		User user = (User) session.getAttribute(SessionKey.CURRENT_USER);
+		Order order;
+		try {
+			Order temp = new Order();
+			temp.setOid(oid);
+			temp.setUid(user.getUid());
+			order = orderDao.findByOid(temp);
+			return new ResponseJson(200, "获取成功", order, true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseJson(500, "获取失败", null, false);
+		}
+	}
+
+	@Override
+	public ResponseJson findByUid(HttpSession session) {
 		List<Order> listOrder;
 		try {
 			User user = (User) session.getAttribute(SessionKey.CURRENT_USER);
 			Order order = new Order();
-			order.setOid(oid);
 			order.setUid(user.getUid());
 			System.out.println(order);
-			listOrder = orderDao.findByOid(order);
+
+			listOrder = orderDao.findByUid(order);
 			return new ResponseJson(200, "获取成功", listOrder, true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -219,7 +235,10 @@ public class OrderService implements IOrderService {
 	public String getPayPage(Long oid, User user) {
 		// 更新订单的收货信息
 		try {
-			Order order = orderDao.findByOid(oid);
+			Order temp = new Order();
+			temp.setUid(user.getUid());
+			temp.setOid(oid);
+			Order order = orderDao.findByOid(temp);
 			DecimalFormat df = new DecimalFormat("#.00");// 一定要两位精度的金额
 			// 构建客户端
 			System.out.println(alipayConfig.appId);

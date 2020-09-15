@@ -39,11 +39,11 @@
 				<h3 class="order-item-hd">收货人信息</h3>
 				<div class="order-item-content">
 					<div class="order-item-li">
-						<label class="order-item-title">现有地址</label> <input
-							class="order-item-input"  placeholder="请输入收货人姓名" type=""
-							v-model="allAddress"  maxlength="15" autocomplete="off">
-							<select @change="paddingAddr">
-								<option v-for="(addr,index) in allAddr" :value="index">{{addr.address+addr.tel}}</option>
+						<label class="order-item-title">现有地址</label> 
+							
+							<select class="order-item-input" @change="paddingAddr($event)">
+							<option value="-1">请选择</option>
+								<option v-for="(addr,index) in allAddr" :value="index">{{addr.nickName+"-"+addr.tel+"-"+addr.city+addr.details}}</option>
 							</select>
 					</div>
 				</div>
@@ -145,7 +145,7 @@ let vm=new Vue({
         city: '',
         area: '',
 		details:'',
-		allAddress:'',
+		allAddr:'',
 		amount:0,
 		oid:'',
 		totalNum:0,
@@ -185,8 +185,43 @@ let vm=new Vue({
          selectArea: function(e) {
              this.toArea = e.currentTarget.value;
          },
-         paddingAddr:function(){
-        	 
+         paddingAddr:function(e){
+        	 if(e.target.value==-1){            	 
+             	this.toMobile='';
+             	this.toName='';
+                this.toProvince ='';
+             	this.mProvince("请选择");
+                this.toCity = '';
+             	this.mCity("请选择");
+             	this.toArea='';
+             	//渲染完在选择
+                 setTimeout(function(){
+                 	 $("#province").val("请选择");
+                      $("#city").val("请选择");
+                      $("#area").val("请选择");
+                 },300);
+             	this.toDetails="";
+             	return;
+        	 }
+        		 
+        	let item= this.allAddr[e.target.value];
+        	this.toMobile=item.tel;
+        	this.toName=item.nickName;
+        	let temp=item.city.split("-");
+            this.toProvince =temp[0];
+        	this.mProvince(temp[0]);
+            this.toCity = temp[1];
+        	this.mCity(temp[1]);
+        	if(temp.length>2){
+        		this.toArea=temp[2]
+        	}
+        	//渲染完在选择
+            setTimeout(function(){
+            	 $("#province").val(temp[0]);
+                 $("#city").val(temp[1]);
+                 $("#area").val(temp[2]);
+            },300);
+        	this.toDetails=item.details;
          },
          pay:function(){
         	 let address = this.toProvince+ this.toCity+ this.toArea+ this.toDetails;
@@ -206,9 +241,8 @@ let vm=new Vue({
 		let temp = location.href.split("/");
 		this.oid = temp[temp.length-1];
 		//获取总额
-		axios.post("/zyl/order/findByOid",qs.stringify({oid:this.oid})).then(res=>{
-			this.amount=res.data.data[0].amount;
-			console.log(res);
+		axios.get("/zyl/order/findByOid/"+this.oid).then(res=>{
+			this.amount=res.data.data.amount;
 		});
 		//获取所有订单内的所有商品
 		axios.post("/zyl/orderDetails/findByOid",qs.stringify({oid:this.oid})).then(res=>{
@@ -218,8 +252,9 @@ let vm=new Vue({
 				this.totalNum+=parseInt(this.details[i].num);
 			}
 		});
-		axios.post("/zyl/order/findCurrent",qs.stringify({oid:this.oid})).then(res=>{
-			this.amount=res.data.data[0].amount;
+		//获取地址
+		axios.get("/zyl/address/findCurrent").then(res=>{
+			this.allAddr=res.data.data;
 			console.log(res);
 		});
 	},

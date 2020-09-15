@@ -20,17 +20,21 @@
 				<form action="" class="jqtransform" id="floDetailsForm">
 					<table class="form_table pt15 pb15" width="100%" border="0" cellpadding="0" cellspacing="0">			
 						<tr>
-							<td class="td_right">鲜花类型：</td>
+							<td class="td_right" width="100px">鲜花类型：</td>
 							<td>
 								<select class="select" name="tno" id="floType">
 								
 								</select>
 							</td>
-							<td class="td_right">鲜花系列：</td>
+							<td class="td_right" width="100px">鲜花系列：</td>
 							<td>
-								<select class="select" name="sno" id="floSeries">
+								<select class="select" name="sno" id="floSeries" width="200px">
 								
 								</select>
+							</td>
+							<td class="td_right" width="100px">折扣：</td>
+							<td>
+								<input type="text" id="sale" name="sale" class="input-text lh30" size="20" >
 							</td>
 						</tr>
 						<tr>
@@ -39,35 +43,32 @@
 								<input type="text" id="fname" name="fname" class="input-text lh30" size="40" placeholder="请输入鲜花名称">
 							</td>
 							<td class="td_right">价格：</td>
-							<td>
-								<input type="text" id="price" name="price" class="input-text lh30" size="40">
+							<td width="200px">
+								<input type="text" id="price" name="price" class="input-text lh30" size="40" >
 							</td>					
+							<td class="td_right">库存：</td>
+							<td>
+								<input type="text" id="store" name="store" class="input-text lh30" size="20" value="20">
+							</td>
 						</tr>
-						<tr>
-							<td class="td_right">折扣：</td>
-							<td>
-								<input type="text" id="sale" name="sale" class="input-text lh30" size="40" >
-							</td>					
-			            	<td class="td_right">包装：</td>
-							<td>
-								<input type="text" id="pack" name="pack" class="input-text lh30" size="80" >
-							</td>						
-						</tr>
-						<tr>
-						<td class="td_right">配送说明：</td>
-							<td>
-								<input type="text" id="deliveryDesc" name="deliveryDesc" class="input-text lh30" size="40" value="顺丰配送">
-							</td>	
-	
-							<td class="td_right">花语：</td>
-							<td>
-								<input type="text" id="flowerLan" name="flowerLan" class="input-text lh30" size="80" >
-							</td>						
-						</tr>
-						<tr>
+						<tr>				
 							<td class="td_right">简述：</td>
 							<td>
 								<input type="text" id="intro" name="intro" class="input-text lh30" size="40" >
+							</td>
+							<td class="td_right">花语：</td>
+							<td width="200px">
+								<input type="text" id="flowerLan" name="flowerLan" class="input-text lh30" size="40" >
+							</td>						
+							<td class="td_right">配送说明：</td>
+							<td>
+								<input type="text" id="deliveryDesc" name="deliveryDesc" class="input-text lh30" size="20" value="顺丰配送">
+							</td>					
+						</tr>
+						<tr>
+			            	<td class="td_right">包装：</td>
+							<td>
+								<input type="text" id="pack" name="pack" class="input-text lh30" size="50" >
 							</td>							
 						</tr>	
 						<tr>

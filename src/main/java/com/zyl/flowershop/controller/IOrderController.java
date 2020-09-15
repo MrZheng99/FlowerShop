@@ -10,13 +10,16 @@ import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.entity.User;
 
 public interface IOrderController {
-	public ResponseJson findByOid(Long oid, HttpSession session);
+
+	public ResponseJson findByUid(HttpSession session);
 
 	public ResponseJson findAll();
 
 	public ResponseJson findByDate();
 
 	public ResponseJson findByFlag(Order order);
+
+	public ResponseJson findByOid(Long oid, HttpSession session);
 
 	public ResponseJson updateFlag(Order order);
 

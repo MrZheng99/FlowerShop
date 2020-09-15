@@ -2,7 +2,50 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zyl.flowershop.dao.AddressDao">
+<mapper namespace="com.zyl.flowershop.dao.IAddressDao">
+	<select id="findCurrent" resultType="Address">
+	    select aid,city,details,flag,tel,label,nickName from tb_address
+	    where `uid`=#{uid} and `status`=1 
+	</select>
 	
-
+	<insert id="insert" parameterType="Address">
+	    insert into tb_address(`city`, `details`, `flag`, `tel`, `label`, `nickName`, `uid`, `status`)
+	    values (#{city}, #{details}, 0, #{tel}, #{label}, #{nickName}, #{uid}, 1)
+	</insert>
+	
+	<update id="update" parameterType="Address" flushCache="true">
+	    update tb_address 
+	    <set>
+	       	<if test="city != null and city !='' ">
+				city=#{city},
+			</if>
+			<if test="details != null and details !='' ">
+				details=#{details},
+			</if>
+			<if test="tel != null and tel !='' ">
+				tel=#{tel},
+			</if>
+			<if test="label != null and label !='' ">
+				label=#{label},
+			</if>
+			<if test="nickName != null and nickName !='' ">
+				nickName=#{nickName},
+			</if>
+			<if test="uid != null and uid !='' ">
+				uid=#{uid},
+			</if>
+			<if test="status != null and status !='' ">
+				status=#{status},
+			</if>
+	    </set>
+	    where `aid`=#{aid}
+	</update>
+	
+	<update id="updateFlag" flushCache="true" parameterType="Address">
+	   	update `tb_address` set `flag`=( case when `aid`=#{aid} then 1 else 0 end) where uid=#{uid} and status=1;
+	</update>
+	
+	<delete id="deleteByAid" flushCache="true" >
+	    delete from `tb_address` where `aid`=#{aid}
+	</delete>
 </mapper>

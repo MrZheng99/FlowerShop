@@ -27,16 +27,22 @@ var user_obj = $('#user_data').datagrid({
 		{field:'uname',title:'会员名称',width:100,align:'center', formatter:function(val, row, index){
 			if(val == "" || val == null){
 				return "不明";
+			}else{
+				return val;
 			}
 		}}, 
 		{field:'sex',title:'性别',width:40,align:'center', formatter:function(val, row, index){
 			if(val == "" || val == null){
 				return "不明";
+			}else{
+				return val;
 			}
 		}}, 
 		{field:'tel',title:'会员电话',width:100,align:'center', formatter:function(val, row, index){
 			if(val == "" || val == null){
 				return "不明";
+			}else{
+				return val;
 			}
 		}}, 
 		{field:'email',title:'会员邮箱',width:100,align:'center'},

@@ -9,13 +9,13 @@ import com.zyl.flowershop.entity.Order;
 @Repository
 public interface IOrderDao {
 
+	public List<Order> findByUid(Order order);
+
 	public List<Order> findAll();
 
 	public List<Order> findByDate();
 
 	public List<Order> findByFlag(Order order);
-
-	public Order findByOid(Long oid);
 
 	public Integer insert(Order order);
 
@@ -25,6 +25,6 @@ public interface IOrderDao {
 
 	public Integer update(Order order);
 
-	public List<Order> findByOid(Order order);
+	public Order findByOid(Order order);
 
 }

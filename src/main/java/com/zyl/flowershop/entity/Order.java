@@ -11,14 +11,6 @@ public class Order {
 	private String receivePerson;
 	private String tel;
 
-	public String getTel() {
-		return tel;
-	}
-
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
-
 	private Double amount;
 	private String address;
 	private Integer flag;
@@ -28,6 +20,21 @@ public class Order {
 		public final Integer paid = 1; // "已付款"
 		public final Integer unshiped = 2;// "已发货"
 		public final Integer shiped = 3;// "已收货"
+	}
+
+	public Order() {
+	}
+
+	public Order(Long oid) {
+		this.oid = oid;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
 	}
 
 	public Integer getUid() {

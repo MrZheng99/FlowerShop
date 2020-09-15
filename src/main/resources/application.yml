@@ -16,6 +16,9 @@ file:
   store: 
     path: ..\fileUpload\store\
     uploadPath: \images\store    
+  user: 
+    path: ..\fileUpload\user\
+    uploadPath: \images\user  
 spring:
   #数据库连接配置
   datasource:

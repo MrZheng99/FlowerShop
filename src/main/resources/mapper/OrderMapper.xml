@@ -3,6 +3,12 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zyl.flowershop.dao.IOrderDao">
+
+	<select id="findByUid" resultType="Order" parameterType="Order">
+		select
+		createDate,payDate,sendDate, receiveDate, amount, address,receivePerson,tel, flag
+		from tb_order where `uid`= #{uid} and status=1;
+	</select>
 	<select id="findAll" resultType="Order">
 		select
 		createDate,payDate,sendDate, receiveDate, amount, address,receivePerson,tel, flag

@@ -65,15 +65,6 @@
 	<update id="update" parameterType="User" flushCache="true">
 		update tb_user
 		<set>
-			<if test="pwd != null and pwd !='' ">
-				pwd=#{pwd},
-			</if>
-			<if test="email != null and email !='' ">
-				email=#{email},
-			</if>
-			<if test="tel != null and tel !='' ">
-				tel=#{tel},
-			</if>
 			<if test="headImg != null and headImg !='' ">
 				headImg=#{headImg},
 			</if>
@@ -84,7 +75,20 @@
 				uname=#{uname},
 			</if>
 			<if test="status != null and status !='' ">
-				status=#{status},
+				status=#{status}
+			</if>
+		</set>
+		where `uid` = #{uid};
+	</update>
+	
+	<update id="updateMajor" parameterType="User" flushCache="true">
+	   update tb_user
+	   	<set>
+			<if test="email != null and email !='' ">
+				email=#{email},
+			</if>
+			<if test="tel != null and tel !='' ">
+				tel=#{tel}
 			</if>
 		</set>
 		where `uid` = #{uid};

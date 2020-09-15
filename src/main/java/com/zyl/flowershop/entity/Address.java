@@ -9,6 +9,15 @@ public class Address {
 	private String label;// 标签 比如学校
 	private String nickName;// 订单上的昵称
 	private Integer uid;// 用户id
+	private String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public Integer getAid() {
 		return aid;
@@ -77,7 +86,7 @@ public class Address {
 	@Override
 	public String toString() {
 		return "Address [aid=" + aid + ", city=" + city + ", details=" + details + ", flag=" + flag + ", tel=" + tel
-				+ ", label=" + label + ", nickName=" + nickName + ", uid=" + uid + "]";
+				+ ", label=" + label + ", nickName=" + nickName + ", uid=" + uid + ", status=" + status + "]";
 	}
 
 	@Override

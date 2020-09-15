@@ -17,13 +17,15 @@ public interface IOrderService {
 
 	public ResponseJson findByFlag(Order order);
 
+	public ResponseJson findByOid(Long oid, HttpSession session);
+
+	public ResponseJson findByUid(HttpSession session);
+
 	public ResponseJson insert(List<Cart> carts);
 
 	public ResponseJson insertOne(Cart cart, User user);
 
 	public ResponseJson updateFlag(Order order);
-
-	public ResponseJson findCurrent(Long oid, HttpSession session);
 
 	public ResponseJson update(Order order);
 

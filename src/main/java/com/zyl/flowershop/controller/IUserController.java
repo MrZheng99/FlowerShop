@@ -2,6 +2,8 @@ package com.zyl.flowershop.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.entity.User;
 
@@ -23,14 +25,21 @@ public interface IUserController {
 	public ResponseJson find(User user);
 
 	/**
-	 * 修改管理员
+	 * 修改信息
 	 * 
 	 * @param admin
 	 * @param op
 	 * @return
 	 */
-	public ResponseJson update(User user);
-
+	public 	ResponseJson update(MultipartFile file, String sex, String uname, Integer uid, HttpSession session);
+	/**
+	 * 修改重要信息
+	 * 
+	 * @param admin
+	 * @param op
+	 * @return
+	 */
+	public ResponseJson updateMajor(User user);
 	/**
 	 * 修改密码
 	 * 
@@ -52,5 +61,7 @@ public interface IUserController {
 	public ResponseJson insert(String verifyCode, String pwd, HttpSession session);
 
 	public ResponseJson findCurrent(HttpSession session);
+
+
 
 }
