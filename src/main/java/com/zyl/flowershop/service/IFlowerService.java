@@ -22,4 +22,5 @@ public interface IFlowerService {
 			String deliveryDesc, Double price, String sale, Integer store, String intro, String pack, Integer sid,
 			Integer tid);
 
+	public ResponseJson findIdAndName();
 }

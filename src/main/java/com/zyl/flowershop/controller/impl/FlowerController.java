@@ -62,4 +62,10 @@ public class FlowerController implements IFlowerController {
 	public Map<String, Object> uploadImage(@RequestParam("upload") MultipartFile file) {
 		return flowerService.uploadImage(file);
 	}
+	
+	@Override
+	@RequestMapping("/findIdAndName")
+	public ResponseJson findIdAndName() {
+		return flowerService.findIdAndName();
+	}
 }

@@ -50,6 +50,12 @@ public class OrderController implements IOrderController {
 		return orderService.findByDate();
 
 	}
+	
+	@Override
+	@RequestMapping("/findDefault")
+	public ResponseJson findDefault() {
+		return orderService.findDefault();
+	}
 
 	@Override
 	public ResponseJson findByFlag(Order order) {

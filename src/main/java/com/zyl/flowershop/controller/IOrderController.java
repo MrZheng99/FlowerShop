@@ -17,6 +17,8 @@ public interface IOrderController {
 
 	public ResponseJson findByDate();
 
+	public ResponseJson findDefault();
+
 	public ResponseJson findByFlag(Order order);
 
 	public ResponseJson updateFlag(Order order);

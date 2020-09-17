@@ -63,6 +63,18 @@ public class OrderService implements IOrderService {
 			return new ResponseJson(500, "获取失败", null, false);
 		}
 	}
+	
+	@Override
+	public ResponseJson findDefault() {
+		List<Order> listOrder;
+		try {
+			listOrder = orderDao.findDefault();
+			return new ResponseJson(200, "获取成功", listOrder, true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseJson(500, "获取失败", null, false);
+		}
+	}
 
 	@Override
 	public ResponseJson findByFlag(Order order) {

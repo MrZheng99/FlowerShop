@@ -11,6 +11,60 @@ public class Order {
 	private String receivePerson;
 	private String tel;
 
+
+	private Double amount;
+	private String address;
+	private Integer flag;
+
+	private String tname;
+	private Integer sales;
+	
+	public Order(Long oid, Integer uid, String createDate, String payDate, String sendDate, String receiveDate,
+			String receivePerson, String tel, Double amount, String address, Integer flag, String tname,
+			Integer sales) {
+		super();
+		this.oid = oid;
+		this.uid = uid;
+		this.createDate = createDate;
+		this.payDate = payDate;
+		this.sendDate = sendDate;
+		this.receiveDate = receiveDate;
+		this.receivePerson = receivePerson;
+		this.tel = tel;
+		this.amount = amount;
+		this.address = address;
+		this.flag = flag;
+		this.tname = tname;
+		this.sales = sales;
+	}
+
+
+/*
+	public Integer getSales() {
+		return sales;
+	}
+
+
+
+	public void setSales(Integer sales) {
+		this.sales = sales;
+	}
+*/
+
+
+	public Order() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getTname() {
+		return tname;
+	}
+
+	public void setTname(String tname) {
+		this.tname = tname;
+	}
+
 	public String getTel() {
 		return tel;
 	}
@@ -18,10 +72,6 @@ public class Order {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-
-	private Double amount;
-	private String address;
-	private Integer flag;
 
 	class OrderProgress {
 		public final Integer unpaid = 0; // "未付款"
@@ -114,7 +164,8 @@ public class Order {
 	public String toString() {
 		return "Order [oid=" + oid + ", uid=" + uid + ", createDate=" + createDate + ", payDate=" + payDate
 				+ ", sendDate=" + sendDate + ", receiveDate=" + receiveDate + ", receivePerson=" + receivePerson
-				+ ", tel=" + tel + ", amount=" + amount + ", address=" + address + ", flag=" + flag + "]";
+				+ ", tel=" + tel + ", amount=" + amount + ", address=" + address + ", flag=" + flag + ", tname=" + tname
+				+ ", sales=" + sales + "]";
 	}
 
 	@Override
@@ -129,8 +180,10 @@ public class Order {
 		result = prime * result + ((payDate == null) ? 0 : payDate.hashCode());
 		result = prime * result + ((receiveDate == null) ? 0 : receiveDate.hashCode());
 		result = prime * result + ((receivePerson == null) ? 0 : receivePerson.hashCode());
+		result = prime * result + ((sales == null) ? 0 : sales.hashCode());
 		result = prime * result + ((sendDate == null) ? 0 : sendDate.hashCode());
 		result = prime * result + ((tel == null) ? 0 : tel.hashCode());
+		result = prime * result + ((tname == null) ? 0 : tname.hashCode());
 		result = prime * result + ((uid == null) ? 0 : uid.hashCode());
 		return result;
 	}
@@ -184,6 +237,11 @@ public class Order {
 				return false;
 		} else if (!receivePerson.equals(other.receivePerson))
 			return false;
+		if (sales == null) {
+			if (other.sales != null)
+				return false;
+		} else if (!sales.equals(other.sales))
+			return false;
 		if (sendDate == null) {
 			if (other.sendDate != null)
 				return false;
@@ -193,6 +251,11 @@ public class Order {
 			if (other.tel != null)
 				return false;
 		} else if (!tel.equals(other.tel))
+			return false;
+		if (tname == null) {
+			if (other.tname != null)
+				return false;
+		} else if (!tname.equals(other.tname))
 			return false;
 		if (uid == null) {
 			if (other.uid != null)

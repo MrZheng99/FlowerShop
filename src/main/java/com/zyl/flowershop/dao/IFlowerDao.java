@@ -21,4 +21,5 @@ public interface IFlowerDao {
 
 	public Integer update(Flower flower);
 
+	public List<Flower> findIdAndName();
 }

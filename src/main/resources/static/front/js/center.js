@@ -153,12 +153,21 @@ function findOrder(){
 	let order = new Vue({
 		el:"#order",
 		data:{
-			orders:[]
+			orders:[],
+			ordertails:[]
 		},
 		mounted:function(){
-			axios.get("/zyl/order/findCurrent").then(result =>{
+			axios.get("/zyl/order/findByUid").then(result =>{
 				this.orders = result.data.data;
 			});
+		},
+		methods:{
+			viewDetails:function(oid){
+				console.info(oid);
+				axios.post("/zyl/orderDetails/findByOid",qs.stringify({oid:oid})).then(result =>{
+					this.ordertails = result.data.data;
+				})
+			}
 		}
 	})
 }

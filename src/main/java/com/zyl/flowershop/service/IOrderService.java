@@ -29,4 +29,6 @@ public interface IOrderService {
 
 	public ResponseJson updateReceiveInfo(Order order, User user);
 
+	public ResponseJson findDefault();
+
 }

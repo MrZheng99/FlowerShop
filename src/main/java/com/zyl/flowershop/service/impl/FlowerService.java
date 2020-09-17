@@ -127,5 +127,17 @@ public class FlowerService implements IFlowerService {
 			return new ResponseJson(200, "添加成功", row, true);
 		return new ResponseJson(200, "添加失败", null, false);
 	}
+	
+	@Override
+	public ResponseJson findIdAndName() {
+		List<Flower> listFlower;
+		try {
+			listFlower = flowerDao.findIdAndName();
+			return new ResponseJson(200, "获取成功", listFlower, true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseJson(500, "获取失败", null, false);
+		}
+	}
 
 }

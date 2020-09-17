@@ -28,5 +28,7 @@ public interface IFlowerController {
 	public ResponseJson insert(MultipartFile[] files, String fname, String description, String flowerLan,
 			String deliveryDesc, Double price, String sale, Integer store, String intro, String pack, Integer sid,
 			Integer tid);
+	
+	public ResponseJson findIdAndName();
 
 }

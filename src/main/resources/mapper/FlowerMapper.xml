@@ -83,6 +83,10 @@
 		select price,sale,intro,fname,flowerImg from
 		tb_flower where fid=#{fid}
 	</select>
+	<!-- 查询鲜花id及名称 -->
+	<select id="findIdAndName" resultType="Flower">
+		select fid, fname from tb_flower 
+	</select>
 	<insert id="insert" parameterType="Flower">
 		insert into
 		tb_flower(`fname`,`description`,`flowerLan`,`deliveryDesc`,`price`,`flowerImg`,`sale`,`intro`,`pack`,`store`,`sid`,`tid`,`status`)

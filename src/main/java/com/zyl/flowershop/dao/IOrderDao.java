@@ -27,4 +27,5 @@ public interface IOrderDao {
 
 	public Integer update(Order order);
 
+	public List<Order> findDefault();
 }

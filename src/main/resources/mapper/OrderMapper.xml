@@ -5,20 +5,13 @@
 <mapper namespace="com.zyl.flowershop.dao.IOrderDao">
 	<select id="findByUid" resultType="Order" parameterType="Order">
 		select
-		createDate,payDate,sendDate, receiveDate, amount, address,receivePerson,tel, flag
+		oid,createDate,payDate,sendDate, receiveDate, amount, address,receivePerson,tel, flag
 		from tb_order where `uid`= #{uid} and status=1;
 	</select>
 	<select id="findAll" resultType="Order">
 		select
 		createDate,payDate,sendDate, receiveDate, amount, address,receivePerson,tel, flag
 		from tb_order where status=1;
-	</select>
-	<!-- 每日订单总额 -->
-	<select id="findByDate" resultType="Order">
-		select
-		DATE_FORMAT(odate,'%Y-%m-%d') as createDate, sum(amount) as amount
-		from
-		tb_order group by DATE_FORMAT(odate,'%Y-%m-%d')
 	</select>
 	<select id="findByFlag" resultType="Order" parameterType="Order">
 		select
@@ -59,5 +52,19 @@
 		flushCache="true">
 		update tb_order set `address`=#{address},`tel`=#{tel},`receivePerson`=#{receivePerson} where oid=#{oid} and uid=#{uid} and status=1;
 	</update>
+	
+    <!-- 每日订单总额 -->
+	<select id="findByDate" resultType="Order">
+		select
+		DATE_FORMAT(createDate,'%Y-%m-%d') as createDate, sum(amount) as amount
+		from
+		tb_order group by DATE_FORMAT(createDate,'%Y-%m-%d')
+	</select>
+	
+	<select id="findDefault" resultType="Order">
+	    select * from(select sum(o.amount) as amount ,t.tname,sum(od.num) as sales from tb_flower as f,tb_type as t, tb_order as o 
+	     LEFT JOIN tb_order_details as od ON o.oid = od.oid where f.tid =t.tid and o.flag!=0 and
+	     YEAR(`createdate`) = YEAR(now()) GROUP BY tname) s order by amount desc 
+	</select>
 
 </mapper>
