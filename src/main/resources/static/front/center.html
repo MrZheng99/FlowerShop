@@ -87,7 +87,7 @@
                   <li class="operate"> 
                   <a href="#"> 取消 </a>
                    <a :href="'orderDetails/ '+ord.oid" target="_blank"  class="btn btn-primary btn-sm" v-if="ord.flag==0">付款</a> 
-                   <a href="#" class="btn btn-primary btn-sm" v-else>已付款</a> 
+                   <a :href="'viewOrderDetails/'+ord.oid" target="_blank" class="btn btn-primary btn-sm" v-else>已付款</a> 
                    </li>
                 </ul>
               </div>
