@@ -400,6 +400,13 @@ function getAmountLineOption(data) {
                 color: 'rgba(0, 180, 0, 0.5)'
             })
             m = index+2;
+        }else if(index==0){
+            pieces.push({
+                gt: 0,
+                lt: 2,
+                color: 'rgba(0, 180, 0, 0.5)'
+            })
+            m = 2;           	
         }
 
     });
@@ -413,18 +420,10 @@ function getAmountLineOption(data) {
             type: 'value',
             boundaryGap: [0, '30%']
         },
-        visualMap: {
-            type: 'piecewise',
-            show: false,
-            dimension: 0,
-            seriesIndex: 0,
-            pieces:pieces
-        },
         series: [
             {
                 type: 'line',
                 smooth: 0.6,
-                symbol: 'none',
                 lineStyle: {
                     color: 'green',
                     width: 5
@@ -486,24 +485,17 @@ function getSalesLineOption(data,flag) {
     option = {
         xAxis: {
             type: 'category',
-            boundaryGap: true
+            boundaryGap: true,
         },
         yAxis: {
             type: 'value',
             boundaryGap: [0, '30%']
         },
-        visualMap: {
-            type: 'piecewise',
-            show: false,
-            dimension: 0,
-            seriesIndex: 0,
-            pieces:pieces
-        },
+
         series: [
             {
                 type: 'line',
                 smooth: 0.6,
-                symbol: 'none',
                 lineStyle: {
                     color: 'green',
                     width: 5

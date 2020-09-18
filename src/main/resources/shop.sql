@@ -81,7 +81,7 @@ create table if not exists tb_order(
 	sendDate date null,#发货时间
 	amount decimal(7,2) not null,
 	address varchar(255) null,
-		receivePerson varchar(255) null,
+	receivePerson varchar(255) null,
 
 	flag char(1) not null,
 	tel varchar(255) null,

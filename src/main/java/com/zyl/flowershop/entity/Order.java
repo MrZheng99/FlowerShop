@@ -30,6 +30,12 @@ public class Order {
 	private Integer fid;
 	private Integer tid;
 	
+	class OrderProgress {
+		public final Integer unpaid = 0; // "未付款"
+		public final Integer paid = 1; // "已付款"
+		public final Integer unshiped = 2;// "已发货"
+		public final Integer shiped = 3;// "已收货"
+	}
 
 	public Order(Long oid, Integer uid, String createDate, String payDate, String sendDate, String receiveDate,
 			String receivePerson, String tel, Double amount, String address, Integer flag, String tname, Integer sales,
@@ -188,13 +194,6 @@ public class Order {
 
 	public void setTel(String tel) {
 		this.tel = tel;
-	}
-
-	class OrderProgress {
-		public final Integer unpaid = 0; // "未付款"
-		public final Integer paid = 1; // "已付款"
-		public final Integer unshiped = 2;// "已发货"
-		public final Integer shiped = 3;// "已收货"
 	}
 
 	public Integer getUid() {
