@@ -141,19 +141,18 @@
 							</select> <select id="area">
 								<option :value="a.name" v-for="a in area">{{a.name}}</option>
 							</select>
-
 						</div>
-						<div class="delivery-item sku-product" style="display: block;">
+						<div class="delivery-item" style="display: block;">
 							<span class="delivery-label">选择</span>
-							<div class="sku-list">
+							<div class="deliItem">
 								<input v-model="num" type="number" value="1" min="1" v-bind:max="flower.store">
 							</div>
 						</div>
 					</div>
 					<div class="btn-group">
 						<a id="btnAddcart" @click="addCart" class="btn-group-item btn-addcart" href="javascript:void(0);"><span
-							class="icon icon-addcartbtn"></span>加入购物车</a> <a id="btnSoonbuy"
-							class="btn-group-item btn-soonbuy" href="">立即购买</a> <a
+							class="icon icon-addcartbtn"></span>加入购物车</a> <a @click="buy"
+							class="btn-group-item btn-soonbuy"  href="javascript:void(0);">立即购买</a> <a
 							id="btnOtherarea" class="btn-group-item btn-addcart"
 							href="javascript:void(0);" style="display: none;">查看该地区鲜花</a> <span
 							id="btnSoldout" class="btn-group-item btn-invalid"
@@ -359,7 +358,7 @@
                 this.mCity(val);
             },
             addCart:function(){
-            	let that=this;
+            	 let that=this;
             	 axios.post("/zyl/cart/add",{
             		 uid:101,
             		 fid:that.flower.fid,
@@ -367,6 +366,16 @@
             	 },"json").then(res => {
                      this.province = res.data;
                  });
+            },
+            buy:function(){
+            	axios.post("/zyl/order/insertOne",JSON.stringify({fid:this.fid,num:this.num}), {
+      			  headers: {
+      			    'Content-Type': 'application/json;charset=UTF-8'
+      			  }
+      			}).then(res =>{
+             		console.log(res);
+  					location.href="../orderDetails/"+res.data.data;
+      			});
             }
 
         },

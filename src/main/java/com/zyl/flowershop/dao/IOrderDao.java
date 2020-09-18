@@ -15,8 +15,6 @@ public interface IOrderDao {
 
 	public List<Order> findByFlag(Order order);
 
-	public Order findByOid(Long oid);
-
 	public Integer insert(Order order);
 
 	public Integer updateFlag(Order order);
@@ -50,5 +48,7 @@ public interface IOrderDao {
 
 	//指定时间和鲜花
 	public List<Order> findByFlowerAndTime(Order order);
+
+	public Order findByOid(Order order);
 
 }

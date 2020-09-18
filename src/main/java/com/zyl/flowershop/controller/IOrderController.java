@@ -23,11 +23,15 @@ public interface IOrderController {
 
 	public ResponseJson findByFlag(Order order);
 
+	public ResponseJson findByOid(Long oid, HttpSession session);
+
 	public ResponseJson updateFlag(Order order);
 
 	public ResponseJson update(Order order);
 
 	public ResponseJson insert(List<Cart> carts);
+
+	public ResponseJson insertOne(Cart cart, User user);
 
 	public String getPayPage(Long oid, User user);
 

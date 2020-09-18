@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -30,6 +29,7 @@ import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.entity.User;
 import com.zyl.flowershop.service.IOrderService;
 import com.zyl.flowershop.util.SessionKey;
+
 @RestController
 @RequestMapping("order")
 public class OrderController implements IOrderController {
@@ -70,15 +70,26 @@ public class OrderController implements IOrderController {
 	}
 
 	@Override
+	@RequestMapping("/findByOid/{oid}")
+	public ResponseJson findByOid(@PathVariable Long oid, HttpSession session) {
+		return orderService.findByOid(oid, session);
+	}
+
 	@RequestMapping("/findByUid")
 	public ResponseJson findByUid(HttpSession session) {
-		return orderService.findByUid( session);
+		return orderService.findByUid(session);
 	}
 
 	@Override
 	@PostMapping("/insert")
 	public ResponseJson insert(@RequestBody List<Cart> carts) {
 		return orderService.insert(carts);
+	}
+
+	@Override
+	@PostMapping("/insertOne")
+	public ResponseJson insertOne(@RequestBody Cart cart, @SessionAttribute(name = SessionKey.CURRENT_USER) User user) {
+		return orderService.insertOne(cart, user);
 	}
 
 	@Override
@@ -96,14 +107,15 @@ public class OrderController implements IOrderController {
 	@Override
 	@PostMapping("/updateReceiveInfo")
 	public ResponseJson updateReceiveInfo(@RequestBody Order order,
-			@SessionAttribute(name = SessionKey.CURRENT_USER) User user) {
+			@SessionAttribute(value = SessionKey.CURRENT_USER) User user) {
+		System.out.println(user);
 		return orderService.updateReceiveInfo(order, user);
 	}
 
 	@Override
 	@GetMapping("/getPayPage/{oid}")
 	public String getPayPage(@PathVariable Long oid, @SessionAttribute(name = SessionKey.CURRENT_USER) User user) {
-
+		System.out.println(user);
 		System.out.println(oid);
 		return orderService.getPayPage(oid, user);
 	}
@@ -161,7 +173,7 @@ public class OrderController implements IOrderController {
 		order.setPayDate(formatter.format(date));
 		order.setFlag(1);
 		updateFlag(order);
-		return "redirect:/front/index";
+		return "/front/index.html";
 	}
 
 }
