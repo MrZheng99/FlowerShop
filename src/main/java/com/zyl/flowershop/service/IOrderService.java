@@ -31,4 +31,5 @@ public interface IOrderService {
 
 	public ResponseJson findDefault();
 
+	public ResponseJson findTypeTime(Order order);
 }

@@ -56,9 +56,16 @@ public class OrderController implements IOrderController {
 	public ResponseJson findDefault() {
 		return orderService.findDefault();
 	}
+	
+	@Override
+	@RequestMapping("/findTypeTime")
+	public ResponseJson findTypeTime(@RequestBody Order order) {
+		System.out.println(order);
+		return orderService.findTypeTime(order);
+	}
 
 	@Override
-	public ResponseJson findByFlag(Order order) {
+	public ResponseJson findByFlag(@RequestBody Order order) {
 		return orderService.findByFlag(order);
 	}
 

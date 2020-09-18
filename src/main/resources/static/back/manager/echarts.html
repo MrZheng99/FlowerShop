@@ -8,7 +8,7 @@
 <div style="text-align: center;width: 100%;margin-bottom: 30px;margin-top: 30px;">
     <label><input type="radio"  name="type" value="1" checked>类别</label>
     <label ><input type="radio" name="type" value="0"  >商品</label>
-    <select id="fid">
+    <select id="fname">
 
     </select>
     <select id="tname">
@@ -76,13 +76,13 @@
         $("#day").html(str);
     }
     function searchGoods(){
-        $("#fid").html("");
+        $("#fname").html("");
         $.get("/zyl/flower/findIdAndName", function(data){
-            let content = "<option value='0'>全部商品</option>";
+            let content = "<option value='无'>全部商品</option>";
             for(let item of data.data){
-                content += /*html*/`<option value="${item.fid}">${item.fname}</option>`;
+                content += /*html*/`<option value="${item.fname}">${item.fname}</option>`;
             }
-            $("#fid").html($(content));
+            $("#fname").html($(content));
         })
     }
     function refresh() {
@@ -97,11 +97,14 @@
             let mdate =  $("input[name='mdate1']:checked").val();
             if(mdate=="year"){
                 y = $("#year").val();
+                m = null;
+                d = null;
                 flag="YEAR";
             }else{
                 if(mdate=="month"){
                     y = $("#year").val();
                     m = $("#month").val();
+                    d = null;
                     flag="MONTH";
 
                 }
@@ -115,9 +118,9 @@
         }
 
         $.ajax({
-        	    type:"post",url:"/zyl/flower/findDefault",
+        	    type:"post",url:"/zyl/order/findTypeTime",
                 contentType:"application/json",
-                data:JSON.stringify({y:y,m:m,d:d,tid:$("#tname").val(),fid:$("#fid").val(),assignType:assignType,assignDate:assignDate}),
+                data:JSON.stringify({y:y,m:m,d:d,tid:$("#tname").val(),fname:$("#fname").val(),assignType:assignType,assignDate:assignDate}),
                 dataType:"json",
                 success:function (data) {
                     let sales_all=0;
@@ -141,7 +144,7 @@
                         //**折线图 随时间变化而变化
                         // 指定商品，指定时间
                         //指定商品，不指定时间
-                        if($("#fid").val()!=0){
+                        if($("#fname").val()!="无"){
                             amount.setOption(getAmountLineOption(data.data));
                             sales.setOption(getSalesLineOption(data.data,"good"));
 
@@ -185,7 +188,7 @@
 var amount = echarts.init(document.getElementById('amount'));
 var sales = echarts.init(document.getElementById('sales'));
 
-$.get("/zyl/flower/findByDate",function (data) {
+$.get("/zyl/order/findDefault",function (data) {
     amount.setOption(getAmountBinOption(data.data));
     sales.setOption(getSalesBinOption(data.data));
 });
@@ -196,13 +199,13 @@ function getAmountBarOption(data,flag) {
     if(flag=="tname"){
         $.each(data,function (index,item) {
             opData.push(
-                { name: item.fname,value:item.amount}
+                { name: item.tname,value:item.amount}
             );
-            xdata.push(item.fname);
+            xdata.push(item.tname);
 
         });
       legend=  {
-            data:opData.fname
+            data:opData.tname
         };
     }else if(flag=="good"){
         $.each(data,function (index,item) {
@@ -242,13 +245,12 @@ function getSalesBarOption(data,flag) {
     if(flag=="type"){
         $.each(data,function (index,item) {
             opData.push(
-                { name: item.fname,value:item.sales}
+                { name: item.tname,value:item.sales}
             );
-            xdata.push(item.fname);
-
+            xdata.push(item.tname);
         });
         legend=  {
-            data:opData.fname
+            data:opData.tname
         };
     }else if(flag=="good"){
         $.each(data,function (index,item) {
@@ -256,7 +258,6 @@ function getSalesBarOption(data,flag) {
                 { name: item.fname,value:item.sales}
             );
             xdata.push(item.fname);
-
         });
         legend=  {
             data:opData.fname
@@ -452,6 +453,13 @@ function getSalesLineOption(data,flag) {
                     color: 'rgba(0, 180, 0, 0.5)'
                 })
                 m = index+2;
+            }else if(index==0){
+                pieces.push({
+                    gt: 0,
+                    lt: 2,
+                    color: 'rgba(0, 180, 0, 0.5)'
+                })
+                m = 2;           	
             }
 
         });
@@ -471,9 +479,10 @@ function getSalesLineOption(data,flag) {
 
         });
     }
+    
     opData.sort(compare("sales",1));
 
-    console.log(pieces);
+    console.info(opData);
     option = {
         xAxis: {
             type: 'category',

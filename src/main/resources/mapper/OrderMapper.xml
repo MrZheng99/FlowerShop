@@ -58,13 +58,54 @@
 		select
 		DATE_FORMAT(createDate,'%Y-%m-%d') as createDate, sum(amount) as amount
 		from
-		tb_order group by DATE_FORMAT(createDate,'%Y-%m-%d')
+		tb_order group by createDate
 	</select>
-	
+	<!-- 默认按年查找 -->
 	<select id="findDefault" resultType="Order">
-	    select * from(select sum(o.amount) as amount ,t.tname,sum(od.num) as sales from tb_flower as f,tb_type as t, tb_order as o 
-	     LEFT JOIN tb_order_details as od ON o.oid = od.oid where f.tid =t.tid and o.flag!=0 and
+	    select * from(select sum(o.amount) as amount ,t.tname,sum(od.num) as sales from tb_type as t, tb_order as o 
+	     LEFT JOIN tb_order_details as od ON o.oid = od.oid where o.flag!=0 and
 	     YEAR(`createdate`) = YEAR(now()) GROUP BY tname) s order by amount desc 
 	</select>
-
+	<!-- 指定时间，不指定类型  -->
+	<select id="findTypeTime" resultType="Order">
+	    select * from(select sum(o.amount) as amount ,t.tname,sum(od.num) as sales from tb_type as t, tb_order as o 
+	     LEFT JOIN tb_order_details as od ON o.oid = od.oid where o.flag!=0 and
+	    (ISNULL(#{d}) or DAY(`createdate`) = #{d}) and (ISNULL(#{m}) or MONTH(`createdate`) = #{m}) and YEAR(`createdate`) = #{y} GROUP BY tname) s order by amount desc 
+	</select>
+    <!-- 指定类型，不指定时间 -->	
+	<select id="findByType" resultType="Order">
+	    select * from(select sum(o.amount) as amount ,t.tname,sum(od.num) as sales,YEAR(`createdate`) y,MONTH(`createdate`) m ,DAY(`createdate`) d from tb_type as t, tb_order as o 
+	     LEFT JOIN tb_order_details as od ON o.oid = od.oid where o.flag!=0 and
+	     t.tid = #{tid} GROUP BY tname,y,m,d) s order by amount desc 
+	</select>
+	<!-- 指定类型和时间 -->		
+	<select id="findByTimeAndType" resultType="Order">
+	    select * from(select sum(o.amount) as amount ,t.tname,sum(od.num) as sales,YEAR(`createdate`) y,MONTH(`createdate`) m ,DAY(`createdate`) d from tb_type as t, tb_order as o 
+	     LEFT JOIN tb_order_details as od ON o.oid = od.oid where o.flag!=0 and
+	    (ISNULL(#{d}) or DAY(`createdate`) = #{d}) and (ISNULL(#{m}) or MONTH(`createdate`) = #{m}) and YEAR(`createdate`) = #{y} and t.tid = #{tid} GROUP BY tname,y,m,d) s order by amount desc 
+	</select>
+	<!-- 不指定鲜花，不指定时间 -->
+	<select id="findFlowerSales" resultType="Order">
+	    select * from(select sum(o.amount) as amount ,od.fname,sum(od.num) as sales from tb_type as t, tb_order as o 
+	     LEFT JOIN tb_order_details as od ON o.oid = od.oid where o.flag!=0 
+	     GROUP BY fname) s order by amount desc 
+	</select>
+	<!-- 指定时间，不指定鲜花 -->
+	<select id="findFlowerTime" resultType="Order">
+	    select * from(select sum(o.amount) as amount ,od.fname,sum(od.num) as sales from tb_type as t, tb_order as o 
+	     LEFT JOIN tb_order_details as od ON o.oid = od.oid where o.flag!=0 and
+	    (ISNULL(#{d}) or DAY(`createdate`) = #{d}) and (ISNULL(#{m}) or MONTH(`createdate`) = #{m}) and YEAR(`createdate`) = #{y} GROUP BY fname) s order by amount desc 
+	</select>
+	<!-- 指定鲜花，不指定时间 -->
+	<select id="findByFlower" resultType="Order">
+	    select * from(select sum(o.amount) as amount ,od.fname,sum(od.num) as sales,YEAR(`createdate`) as  y,MONTH(`createdate`) as m ,DAY(`createdate`) as d from tb_order as o 
+	     LEFT JOIN tb_order_details as od ON o.oid = od.oid where o.flag!=0 and
+	     od.fname = #{fname} GROUP BY fname,y,m,d) s order by amount desc 
+	</select>
+	<!-- 指定时间和鲜花 -->
+	<select id="findByFlowerAndTime" resultType="Order">
+	    select * from(select sum(o.amount) as amount ,od.fname,sum(od.num) as sales,YEAR(`createdate`) y,MONTH(`createdate`) m ,DAY(`createdate`) d from tb_type as t, tb_order as o 
+	     LEFT JOIN tb_order_details as od ON o.oid = od.oid where o.flag!=0 and od.fname = #{fname} and
+	    (ISNULL(#{d}) or DAY(`createdate`) = #{d}) and (ISNULL(#{m}) or MONTH(`createdate`) = #{m}) and YEAR(`createdate`) = #{y} GROUP BY fname,y,m,d) s order by amount desc 
+	</select>			
 </mapper>

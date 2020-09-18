@@ -18,10 +18,23 @@ public class Order {
 
 	private String tname;
 	private Integer sales;
+	private String fname;
 	
+	private String y; //年
+	private String m; //月
+	private String d; //日
+
+	private boolean assignDate;
+	private boolean assignType;
+	
+	private Integer fid;
+	private Integer tid;
+	
+
 	public Order(Long oid, Integer uid, String createDate, String payDate, String sendDate, String receiveDate,
-			String receivePerson, String tel, Double amount, String address, Integer flag, String tname,
-			Integer sales) {
+			String receivePerson, String tel, Double amount, String address, Integer flag, String tname, Integer sales,
+			String fname, String y, String m, String d, boolean assignDate, boolean assignType, Integer fid,
+			Integer tid) {
 		super();
 		this.oid = oid;
 		this.uid = uid;
@@ -36,10 +49,114 @@ public class Order {
 		this.flag = flag;
 		this.tname = tname;
 		this.sales = sales;
+		this.fname = fname;
+		this.y = y;
+		this.m = m;
+		this.d = d;
+		this.assignDate = assignDate;
+		this.assignType = assignType;
+		this.fid = fid;
+		this.tid = tid;
 	}
 
 
-/*
+
+	public Integer getFid() {
+		return fid;
+	}
+
+
+
+	public void setFid(Integer fid) {
+		this.fid = fid;
+	}
+
+
+
+	public Integer getTid() {
+		return tid;
+	}
+
+
+
+	public void setTid(Integer tid) {
+		this.tid = tid;
+	}
+
+
+
+	public boolean isAssignDate() {
+		return assignDate;
+	}
+
+
+
+	public void setAssignDate(boolean assignDate) {
+		this.assignDate = assignDate;
+	}
+
+
+
+	public boolean isAssignType() {
+		return assignType;
+	}
+
+
+
+	public void setAssignType(boolean assignType) {
+		this.assignType = assignType;
+	}
+
+
+
+	public String getY() {
+		return y;
+	}
+
+
+
+	public void setY(String y) {
+		this.y = y;
+	}
+
+
+
+	public String getM() {
+		return m;
+	}
+
+
+
+	public void setM(String m) {
+		this.m = m;
+	}
+
+
+
+	public String getD() {
+		return d;
+	}
+
+
+
+	public void setD(String d) {
+		this.d = d;
+	}
+
+
+
+	public String getFname() {
+		return fname;
+	}
+
+
+
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+
+
+
 	public Integer getSales() {
 		return sales;
 	}
@@ -49,7 +166,7 @@ public class Order {
 	public void setSales(Integer sales) {
 		this.sales = sales;
 	}
-*/
+
 
 
 	public Order() {
@@ -165,7 +282,8 @@ public class Order {
 		return "Order [oid=" + oid + ", uid=" + uid + ", createDate=" + createDate + ", payDate=" + payDate
 				+ ", sendDate=" + sendDate + ", receiveDate=" + receiveDate + ", receivePerson=" + receivePerson
 				+ ", tel=" + tel + ", amount=" + amount + ", address=" + address + ", flag=" + flag + ", tname=" + tname
-				+ ", sales=" + sales + "]";
+				+ ", sales=" + sales + ", fname=" + fname + ", y=" + y + ", m=" + m + ", d=" + d + ", assignDate="
+				+ assignDate + ", assignType=" + assignType + ", fid=" + fid + ", tid=" + tid + "]";
 	}
 
 	@Override
@@ -174,8 +292,14 @@ public class Order {
 		int result = 1;
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
+		result = prime * result + (assignDate ? 1231 : 1237);
+		result = prime * result + (assignType ? 1231 : 1237);
 		result = prime * result + ((createDate == null) ? 0 : createDate.hashCode());
+		result = prime * result + ((d == null) ? 0 : d.hashCode());
+		result = prime * result + ((fid == null) ? 0 : fid.hashCode());
 		result = prime * result + ((flag == null) ? 0 : flag.hashCode());
+		result = prime * result + ((fname == null) ? 0 : fname.hashCode());
+		result = prime * result + ((m == null) ? 0 : m.hashCode());
 		result = prime * result + ((oid == null) ? 0 : oid.hashCode());
 		result = prime * result + ((payDate == null) ? 0 : payDate.hashCode());
 		result = prime * result + ((receiveDate == null) ? 0 : receiveDate.hashCode());
@@ -183,8 +307,10 @@ public class Order {
 		result = prime * result + ((sales == null) ? 0 : sales.hashCode());
 		result = prime * result + ((sendDate == null) ? 0 : sendDate.hashCode());
 		result = prime * result + ((tel == null) ? 0 : tel.hashCode());
+		result = prime * result + ((tid == null) ? 0 : tid.hashCode());
 		result = prime * result + ((tname == null) ? 0 : tname.hashCode());
 		result = prime * result + ((uid == null) ? 0 : uid.hashCode());
+		result = prime * result + ((y == null) ? 0 : y.hashCode());
 		return result;
 	}
 
@@ -207,15 +333,39 @@ public class Order {
 				return false;
 		} else if (!amount.equals(other.amount))
 			return false;
+		if (assignDate != other.assignDate)
+			return false;
+		if (assignType != other.assignType)
+			return false;
 		if (createDate == null) {
 			if (other.createDate != null)
 				return false;
 		} else if (!createDate.equals(other.createDate))
 			return false;
+		if (d == null) {
+			if (other.d != null)
+				return false;
+		} else if (!d.equals(other.d))
+			return false;
+		if (fid == null) {
+			if (other.fid != null)
+				return false;
+		} else if (!fid.equals(other.fid))
+			return false;
 		if (flag == null) {
 			if (other.flag != null)
 				return false;
 		} else if (!flag.equals(other.flag))
+			return false;
+		if (fname == null) {
+			if (other.fname != null)
+				return false;
+		} else if (!fname.equals(other.fname))
+			return false;
+		if (m == null) {
+			if (other.m != null)
+				return false;
+		} else if (!m.equals(other.m))
 			return false;
 		if (oid == null) {
 			if (other.oid != null)
@@ -252,6 +402,11 @@ public class Order {
 				return false;
 		} else if (!tel.equals(other.tel))
 			return false;
+		if (tid == null) {
+			if (other.tid != null)
+				return false;
+		} else if (!tid.equals(other.tid))
+			return false;
 		if (tname == null) {
 			if (other.tname != null)
 				return false;
@@ -261,6 +416,11 @@ public class Order {
 			if (other.uid != null)
 				return false;
 		} else if (!uid.equals(other.uid))
+			return false;
+		if (y == null) {
+			if (other.y != null)
+				return false;
+		} else if (!y.equals(other.y))
 			return false;
 		return true;
 	}

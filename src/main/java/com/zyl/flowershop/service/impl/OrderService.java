@@ -75,6 +75,54 @@ public class OrderService implements IOrderService {
 			return new ResponseJson(500, "获取失败", null, false);
 		}
 	}
+	
+	@Override
+	public ResponseJson findTypeTime(Order order) {
+		List<Order> listOrder;
+		try {
+			if(order.isAssignDate()) { //按日期
+				if(order.isAssignType()) {//有日期 按类型
+					if(order.getTid() == 0) {//有日期 按类型但未指定类型
+						System.out.println("有日期 按类型但未指定类型");
+						listOrder = orderDao.findTypeTime(order);
+					}else{//有日期 按类型 有鲜花类型输入
+						System.out.println("有日期 按类型 有鲜花类型输入");
+						listOrder = orderDao.findByTimeAndType(order);
+					}
+				}else {//有日期 按鲜花名称
+					if("无".equals(order.getFname() )) {//有日期 按鲜花名称但未指定鲜花名称
+						System.out.println("有日期 按鲜花名称但未指定鲜花名称");
+						listOrder = orderDao.findFlowerTime(order);
+					}else{//有日期 按鲜花名称 有鲜花名称输入
+						System.out.println("有日期 按鲜花名称 有鲜花名称输入");
+						listOrder = orderDao.findByFlowerAndTime(order);
+					}
+				}
+			}else {//不按日期
+				if(order.isAssignType()) {//无日期 按类型
+					if(order.getTid() == 0) {//无日期 按类型但未指定鲜花类型
+						System.out.println("无日期 按类型但未指定鲜花类型");
+						listOrder = orderDao.findDefault();
+					}else{//无日期按类型 有鲜花类型输入
+						System.out.println("无日期按类型 有鲜花类型输入");
+						listOrder = orderDao.findByType(order);
+					}
+				}else {//无日期 按鲜花名称
+					if("无".equals(order.getFname() ) ) {//无日期 按鲜花名称但未指定鲜花名称
+						System.out.println("无日期 按鲜花名称但未指定鲜花名称");
+						listOrder = orderDao.findFlowerSales();
+					}else{//无日期 按鲜花名称 指定鲜花名称
+						System.out.println("无日期 按鲜花名称 指定鲜花名称");
+						listOrder = orderDao.findByFlower(order);
+					}
+				}
+			}
+			return new ResponseJson(200, "获取成功", listOrder, true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseJson(500, "获取失败", null, false);
+		}
+	}
 
 	@Override
 	public ResponseJson findByFlag(Order order) {
