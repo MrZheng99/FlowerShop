@@ -13,6 +13,8 @@ public interface IFlowerDao {
 
 	public List<Flower> find(Flower flower);
 
+	public List<Flower> findByFid(Flower flower);
+
 	public List<CartItem> findCartItems(List<Integer> fid);
 
 	public Flower findPrice(Integer fid);

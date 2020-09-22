@@ -90,7 +90,7 @@ public class OrderService implements IOrderService {
 						listOrder = orderDao.findByTimeAndType(order);
 					}
 				}else {//有日期 按鲜花名称
-					if("无".equals(order.getFname() )) {//有日期 按鲜花名称但未指定鲜花名称
+					if(order.getFid() == 0) {//有日期 按鲜花名称但未指定鲜花名称
 						System.out.println("有日期 按鲜花名称但未指定鲜花名称");
 						listOrder = orderDao.findFlowerTime(order);
 					}else{//有日期 按鲜花名称 有鲜花名称输入
@@ -108,7 +108,7 @@ public class OrderService implements IOrderService {
 						listOrder = orderDao.findByType(order);
 					}
 				}else {//无日期 按鲜花名称
-					if("无".equals(order.getFname() ) ) {//无日期 按鲜花名称但未指定鲜花名称
+					if(order.getFid() == 0) {//无日期 按鲜花名称但未指定鲜花名称
 						System.out.println("无日期 按鲜花名称但未指定鲜花名称");
 						listOrder = orderDao.findFlowerSales();
 					}else{//无日期 按鲜花名称 指定鲜花名称
@@ -228,7 +228,7 @@ public class OrderService implements IOrderService {
 			lisOrderDetails = new ArrayList<OrderDetails>();
 			flower = flowerDao.findPrice(cart.getFid());
 			details = new OrderDetails(String.valueOf(cart.getNum()), flower.getFname(), flower.getPrice(),
-					flower.getSale(), flower.getIntro(), flower.getFirstImg(), oid);
+					flower.getSale(), flower.getIntro(), flower.getFirstImg(),cart.getFid(), oid);
 			amount += cart.getNum() * flower.getPrice() * Double.valueOf(flower.getSale()) * 0.1;
 			lisOrderDetails.add(details);
 			order.setOid(oid);
@@ -265,7 +265,7 @@ public class OrderService implements IOrderService {
 			for (Cart cart : carts) {
 				flower = flowerDao.findPrice(cart.getFid());
 				details = new OrderDetails(String.valueOf(cart.getNum()), flower.getFname(), flower.getPrice(),
-						flower.getSale(), flower.getIntro(), flower.getFirstImg(), oid);
+						flower.getSale(), flower.getIntro(), flower.getFirstImg(),cart.getFid(), oid);
 				amount += cart.getNum() * flower.getPrice() * Double.valueOf(flower.getSale()) * 0.1;
 				lisOrderDetails.add(details);
 				System.out.println(details);

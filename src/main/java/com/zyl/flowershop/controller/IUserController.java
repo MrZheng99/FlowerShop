@@ -48,7 +48,7 @@ public interface IUserController {
 	 * @param id   管理员id
 	 * @return
 	 */
-	public ResponseJson updatePwd(String opwd, String npwd, Integer id);
+	public ResponseJson updatePwd(String opwd, String npwd, Integer uid);
 
 	/**
 	 * 用户注册

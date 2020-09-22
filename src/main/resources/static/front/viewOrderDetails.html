@@ -8,9 +8,10 @@
 <meta name="keywords">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="renderer" content="webkit|ie-comp">
-<link rel="stylesheet" type="text/css"
-	href="/zyl/front/css/orderDetails.css">
-
+<link rel="stylesheet" type="text/css" href="/zyl/front/css/orderDetails.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body class="cart-flow">
 	<!-- 顶部导航 -->
@@ -38,73 +39,90 @@
 			<div class="order-item" style="position: relative; margin-top: 24px;">
 				<h3 class="order-item-hd">收货人信息</h3>
 				<div class="order-item-content">
-					<div class="order-item-li">
-						<label class="order-item-title">现有地址</label> 
-							
-							<select class="order-item-input" @change="paddingAddr($event)">
-							<option value="-1">请选择</option>
-								<option v-for="(addr,index) in allAddr" :value="index">{{addr.nickName+"-"+addr.tel+"-"+addr.city+addr.details}}</option>
-							</select>
-					</div>
 				</div>
 				<!-- 没有地址记录 -->
 				<div class="order-item-content">
 					<div class="order-item-li">
-						<label class="order-item-title">收货人</label> <input
-							class="order-item-input" placeholder="请输入收货人姓名" type="text"
-							v-model="toName"  maxlength="15" autocomplete="off">
+						<label class="order-item-title">收货人</label> 
+						<input class="order-item-input" type="text" readonly="readonly" :value="receivePerson">
 					</div>
 					<div class="order-item-li">
-						<label class="order-item-title">手机号码</label> <input
-							class="order-item-input" placeholder="请输入收货人手机号码" type="text"
-							v-model="toMobile"  maxlength="11" autocomplete="off">
+						<label class="order-item-title">手机号码</label> 
+						<input class="order-item-input" type="text" readonly="readonly" :value="tel">
 					</div>
 					<div class="order-item-li">
-						<label class="order-item-title">所在地区</label><select
-								@change="selectProvince($event)" id="province">
-								<option :value="prov.name" v-for="prov in province">{{prov.name}}
-								</option>
-							</select> <select id="city" @change="selectCity($event)">
-								<option :value="c.name" v-for="c in city">{{c.name}}</option>
-							</select> <select id="area" @change="selectArea($event)">
-								<option :value="a.name" v-for="a in area">{{a.name}}</option>
-							</select>
-								<div id="address" style="display: none"></div>
-							
-					</div>
-					<div class="order-item-li">
-						<label class="order-item-title">详细地址</label>
-						<div class="order-item-input-box">
-							<input placeholder="请输入收货人详细地址" type="text"
-								v-model="toDetails" maxlength="50" autocomplete="120"
->						</div>
+						<label class="order-item-title">收货地址</label>
+						<div id="address" style="display: none"></div>
+						<input class="order-item-input" type="text" readonly="readonly" :value="address" >	
 					</div>
 				</div>
 			</div>
 		
 		<!-- 核对购物清单 -->
 		<div class="order-item order-item-border-bottom order-item-line">
-			<h3 class="order-item-hd">核对购物清单</h3>
+			<h3 class="order-item-hd">购物清单</h3>
 			<div class="order-item-product-list">
 				<div class="order-item-product-li" v-for="detail in details">
-					<a href="" target="_blank"
-						style="display: inline-block; width: 100%; height: 100%;">
-						<div class="order-item-product-pic">
-							<img :src="'../'+detail.flowerFirstImg" :alt="detail.fname">
-						</div>
-						<div class="order-item-product-info">
-							<p class="order-item-product-name">{{detail.fname}}</p>
-							<div>
-								<span class="order-item-product-price">{{detail.price}}</span> <span
-									class="order-item-product-count">x&nbsp;{{detail.num}}</span>
+				<div class="order-item-product-pic">
+					<img :src="'../'+detail.flowerFirstImg" :alt="detail.fname">
+				</div>
+				<div class="order-item-product-info">
+					<p class="order-item-product-name">{{detail.fname}}</p>
+					<div>
+						<span class="order-item-product-price">{{detail.price}}</span> <span
+							class="order-item-product-count">x&nbsp;{{detail.num}}</span>
+					</div>
+                <button class="btn btn-primary btn-lg" data-toggle="modal" :data-target="'#commentModal' + detail.fid">
+					评价
+			    </button>		
+	           <div class="modal fade" :id="'commentModal' + detail.fid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+								<h4 class="modal-title" id="myModalLabel">
+									{{detail.fname}}评价
+								</h4>
 							</div>
-						</div>
-					</a>
+							<div class="modal-body">
+							<div class="wrapper">
+								<!-- 打分结果  -->
+								<!-- <span id="result"></span> -->
+								<ul id="star" style="height:50px;" @click="showStar()">
+								<li>★</li>
+								<li>★</li>
+								<li>★</li>
+								<li>★</li>
+								<li>★</li>
+								</ul>
+								<div id="star_word">一般</div>
+								<input id="star_level" style="display:none;">
+						    </div> 
+							<li>评价:<input type="textarea" id="commentsOf" style="width:95%;font-size:16px;height:120px;rows=8;cols=50;"></li>
+							  	<button type="button" class="btn btn-primary" @click="clickImg(detail.fid)">
+									上传图片
+								</button>
+							   <input type="file" id="pics" name="pics" class="input-text lh30" size="40" multiple="multiple" onchange="setComImagePreviews(this,'showPics')" accept="image/gif, image/jpeg, image/jpg, image/png" style="display:none">
+							    <div id="showPics">
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" @click="insertComment(detail.fid)">
+									提交评价
+								</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">退出
+								</button>								
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal -->
+				</div>					
+				</div>
 				</div>
 			</div>
 			<div class="order-item-footer">
 				<div class="order-item-footer-left">
-
 					<div class="order-item-footer-receiver">
 						<span id="receiver_name" class="receiver-name"></span> <span
 							id="receiver_tel"></span>
@@ -116,22 +134,141 @@
 							id="pro_price" class="pro-price" >{{totalAmount}}</span>
 					</div>
 					<div class="order-item-footer-pay">
-						应付：<span class="pay-price " id="payMoney">{{amount}}</span>
-						<button class="pay-btn" id="pay_btn" @click="pay">提交订单</button>
+						实付：<span class="pay-price " id="payMoney">{{amount}}</span>
 					</div>
 				</div>
 			</div>
 		</div>
 		</div>
 	</section>
+	
+	<div id="orderDetails_editor" style="width:75%;">
+	</div>
 </body>
 <script type="text/javascript"
 	src="//api.map.baidu.com/api?v=2.0&ak=Fn0BvD3aGemRSpKuVLa6wn9AWWc01EsX"></script><script type="text/javascript" src="/zyl/back/js/vue.js"></script>
 <script type="text/javascript" src="/zyl/front/js/qs.js"></script>
-<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-
 <script src="/zyl/back/js/axios.js" type="text/javascript"></script>
+<script type="text/javascript" src="/zyl/back/js/showpic.js"></script>
+<script type="text/javascript" src="/zyl/back/js/ajaxfileupload.js"></script>
 <script type="text/javascript">
+	let vm=new Vue({
+		el:"#orderDetails",
+		data:{
+			receivePerson:'',
+			details:'',
+			address:'',
+			amount:0,
+			oid:'',
+			totalNum:0,
+			totalAmount:0,
+			tel:'',
+		},
+		methods:{
+			clickImg:function(fid){
+				$("#pics").click();
+			},
+			showStar:function(){
+				  var star = document.getElementById("star");
+			      var starliArr = star.getElementsByTagName("li");
+			      var starword = document.getElementById("star_word");
+			      var word = [ '很不满意','不满意', '一般', '基本满意', '非常满意'];
+			      //用for循环对li进行遍历
+			      for (var i = 0; i < starliArr.length; i++) {
+			          starliArr[i].index = i;
+			          starliArr[i].onclick = function () {
+			              starword.style.display = "block";
+			              starword.innerHTML = word[this.index];
+			              //先把星星的属性清空
+			              for (var j = 0; j < starliArr.length; j++) {
+			                  starliArr[j].className = '';
+			              }
+			              //点亮星星
+			              for (var j = 0; j <= this.index; j++) {
+			                  starliArr[j].className = 'act';
+			              }
+						$("#star_level").val(j);
+			          }
+			      }
+			},
+			insertComment:function(ffid){
+				var commentDetails = $("#commentsOf").val();
+				var level  = $("#star_level").val();
+				
+				$.ajaxFileUpload({
+					url : "/zyl/comments/insert",
+					secureuri : false,
+					fileElementId : "pics",
+					dataType : "json",
+					data : {
+						level:level,
+						details:commentDetails,
+						fid:ffid,
+					},
+					success : function(data) {
+						if (data.success) {
+							alert("评论成功...");
+						} else {
+							alert("评论失败，请稍后重试...");
+						}
+					},
+					error : function(data, status, e) {
+						alert("评论失败...\n" + e);
+					}
+				});
+			}
+		},
+		mounted:function(){
+			//获取orderID
+			let temp = location.href.split("/");
+			this.oid = temp[temp.length-1];
+			//获取总额
+			axios.get("/zyl/order/findByOid/"+this.oid).then(res=>{
+				this.amount=res.data.data.amount;
+				this.address = res.data.data.address;
+				this.receivePerson = res.data.data.receivePerson;
+				this.tel = res.data.data.tel;
+			});
+			//获取所有订单内的所有商品
+			axios.post("/zyl/orderDetails/findByOid",qs.stringify({oid:this.oid})).then(result=>{
+				this.details = result.data.data;
+				console.info(this.details[0].fid);
+				for(let i=0,len=this.details.length;i<len;i++){
+					this.totalAmount+=this.details[i].price*parseInt(this.details[i].num);
+					this.totalNum+=parseInt(this.details[i].num);
+				}
+			});
+		}
+	})
+
 
 </script>
+<style type="text/css">
+#star{
+	overflow:hidden;
+	list-style:disc;
+}
+#star li{
+float:left;
+width:20px;
+height:20px;
+margin:2px;
+display:inline;
+color:#999;
+font:bold 18px arial;
+cursor:pointer
+}
+#star .act{
+color:#c00
+}
+#star_word{
+width:80px;
+height:30px;
+line-height:30px;
+border:1px solid #ccc;
+margin:10px;
+text-align:center;
+display:none
+}
+</style>
 </html>

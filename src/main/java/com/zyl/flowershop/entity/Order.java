@@ -27,6 +27,7 @@ public class Order {
 	private boolean assignType;
 	
 	private Integer tid;
+	private Integer fid;
 	
 	class OrderProgress {
 		public final Integer unpaid = 0; // "未付款"
@@ -35,9 +36,20 @@ public class Order {
 		public final Integer shiped = 3;// "已收货"
 	}
 
+	
+	public Integer getFid() {
+		return fid;
+	}
+
+
+
+	public void setFid(Integer fid) {
+		this.fid = fid;
+	}
+
 	public Order(Long oid, Integer uid, String createDate, String payDate, String sendDate, String receiveDate,
 			String receivePerson, String tel, Double amount, String address, Integer flag, String tname, Integer sales,
-			String fname, String y, String m, String d, boolean assignDate, boolean assignType,Integer tid) {
+			String fname, String y, String m, String d, boolean assignDate, boolean assignType,Integer tid,Integer fid) {
 		super();
 		this.oid = oid;
 		this.uid = uid;
@@ -59,6 +71,7 @@ public class Order {
 		this.assignDate = assignDate;
 		this.assignType = assignType;
 		this.tid = tid;
+		this.fid = fid;
 	}
 
 
@@ -266,7 +279,7 @@ public class Order {
 				+ ", sendDate=" + sendDate + ", receiveDate=" + receiveDate + ", receivePerson=" + receivePerson
 				+ ", tel=" + tel + ", amount=" + amount + ", address=" + address + ", flag=" + flag + ", tname=" + tname
 				+ ", sales=" + sales + ", fname=" + fname + ", y=" + y + ", m=" + m + ", d=" + d + ", assignDate="
-				+ assignDate + ", assignType=" + assignType + ", tid=" + tid + "]";
+				+ assignDate + ", assignType=" + assignType + ", tid=" + tid + ", fid=" + fid + "]";
 	}
 
 	@Override
@@ -279,6 +292,7 @@ public class Order {
 		result = prime * result + (assignType ? 1231 : 1237);
 		result = prime * result + ((createDate == null) ? 0 : createDate.hashCode());
 		result = prime * result + ((d == null) ? 0 : d.hashCode());
+		result = prime * result + ((fid == null) ? 0 : fid.hashCode());
 		result = prime * result + ((flag == null) ? 0 : flag.hashCode());
 		result = prime * result + ((fname == null) ? 0 : fname.hashCode());
 		result = prime * result + ((m == null) ? 0 : m.hashCode());
@@ -328,6 +342,11 @@ public class Order {
 			if (other.d != null)
 				return false;
 		} else if (!d.equals(other.d))
+			return false;
+		if (fid == null) {
+			if (other.fid != null)
+				return false;
+		} else if (!fid.equals(other.fid))
 			return false;
 		if (flag == null) {
 			if (other.flag != null)

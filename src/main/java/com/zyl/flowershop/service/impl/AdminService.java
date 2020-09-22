@@ -69,7 +69,6 @@ public class AdminService implements IAdminService {
 			admin.setHeadImg(path + fileName);
 			rs.put("fileName", fileName);
 			rs.put("upload", path + fileName);
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -115,7 +114,7 @@ public class AdminService implements IAdminService {
 	public ResponseJson updatePwd(String opwd, String npwd, Integer aid) {
 		Integer row = adminDao.updatePwd(aid, opwd, npwd);
 		if (row > 0)
-			return new ResponseJson(200, "添加密码成功", null, true);
+			return new ResponseJson(200, "修改密码成功", null, true);
 		return new ResponseJson(200, "修改密码失败", null, false);
 	}
 

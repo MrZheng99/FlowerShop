@@ -11,7 +11,7 @@
 	</select>
 	<select id="findAll" resultType="Order">
 		select
-		createDate,payDate,sendDate, receiveDate, amount, address,receivePerson,tel, flag
+		oid,createDate,payDate,sendDate, receiveDate, amount, address,receivePerson,tel, flag
 		from tb_order where status=1;
 	</select>
 	<select id="findByFlag" resultType="Order" parameterType="Order">
@@ -44,6 +44,9 @@
 			</if>
 			<if test="flag != null and flag !='' ">
 				`flag`=#{flag},
+			</if>
+			<if test="status != null and status != ''">
+			    `status`=#{status}
 			</if>
 		</set>
 		where `oid`=#{oid}
@@ -101,12 +104,12 @@
 	<select id="findByFlower" resultType="Order">
 	    select * from(select sum(o.amount) as amount ,od.fname,sum(od.num) as sales,YEAR(`createdate`) as  y,MONTH(`createdate`) as m ,DAY(`createdate`) as d from tb_order as o 
 	     LEFT JOIN tb_order_details as od ON o.oid = od.oid where o.flag!=0 and
-	     od.fname = #{fname} GROUP BY fname,y,m,d) s order by amount desc 
+	     od.fid = #{fid} GROUP BY fname,y,m,d) s order by amount desc 
 	</select>
 	<!-- 指定时间和鲜花 -->
 	<select id="findByFlowerAndTime" resultType="Order">
 	    select * from(select sum(o.amount) as amount ,od.fname,sum(od.num) as sales,YEAR(`createdate`) y,MONTH(`createdate`) m ,DAY(`createdate`) d from tb_type as t, tb_order as o 
-	     LEFT JOIN tb_order_details as od ON o.oid = od.oid where o.flag!=0 and od.fname = #{fname} and
+	     LEFT JOIN tb_order_details as od ON o.oid = od.oid where o.flag!=0 and od.fid = #{fid} and
 	    (ISNULL(#{d}) or DAY(`createdate`) = #{d}) and (ISNULL(#{m}) or MONTH(`createdate`) = #{m}) and YEAR(`createdate`) = #{y} GROUP BY fname,y,m,d) s order by amount desc 
 	</select>			
 </mapper>

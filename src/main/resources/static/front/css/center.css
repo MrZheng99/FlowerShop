@@ -1,3 +1,17 @@
+
+.error-span {
+    float: left;
+    width: 90%;
+    height: 18px;
+    margin: 2px 5% 2px 5%;
+    text-align: left;
+    color: red;
+    font-size: 12px;
+    margin-left:60px;
+}
+
+
+
 .main-form {
   width: 364px;
   margin: 50px auto;
@@ -51,7 +65,7 @@
   height: 100%;
   vertical-align: top;
 }
-.main-form .form-group-item input[type=text] {
+.main-form .form-group-item input {
   width: 100%;
   height: 100%;
   padding: 0 12px;
@@ -62,16 +76,16 @@
   font-size: 12px;
   color: #232628;
 }
-.main-form .form-group-item input[type=text]::-webkit-input-placeholder {
+.main-form .form-group-item input::-webkit-input-placeholder {
   color: #B4BABF;
 }
-.main-form .form-group-item input[type=text]::-moz-placeholder {
+.main-form .form-group-item input::-moz-placeholder {
   color: #B4BABF;
 }
-.main-form .form-group-item input[type=text]:-moz-placeholder {
+.main-form .form-group-item input:-moz-placeholder {
   color: #B4BABF;
 }
-.main-form .form-group-item input[type=text]:-ms-input-placeholder {
+.main-form .form-group-item input:-ms-input-placeholder {
   color: #B4BABF;
 }
 .main-form .form-group .form-name {
@@ -986,27 +1000,7 @@
      text-align: left;
   }
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  .label{
+  	width:100px;
+  	float:right;
+  }

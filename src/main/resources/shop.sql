@@ -99,6 +99,7 @@ create table if not exists tb_order_details(
 	intro varchar(255),
 	flowerFirstImg varchar(255),
 	oid bigint not null,
+	fid int(11) not null,
 	constraint `fk_order_details_oid` foreign key(`oid`) references `tb_order`(`oid`),
 	status char(1) not null
 )auto_increment=101 engine=InnoDB default charset=utf8;
@@ -107,6 +108,7 @@ create table if not exists tb_comments(
 	cid int(11) primary key auto_increment,
 	cdate date not null,
 	level char(1) not null,#星级评价
+	comImg varchar(200) not null, #评论图片 
 	details text not null,
 	uid int(11) not null,
 	fid int(11) not null,

@@ -94,7 +94,6 @@ function findAddress(){
 				}
 				
 				axios.post("/zyl/address/update",{city:cityinfo, details:details, nickName:nickName, tel:tel, label:label,aid:aid,status:1}).then(result=>{
-					console.info(result);
 					if(result.data.success){
 						alert("修改成功");				
 						axios.get("/zyl/address/findCurrent").then(result =>{
@@ -148,6 +147,33 @@ function findAddress(){
 	})
 }
 
+function modifyPwd(){
+	let modifyPassword= new Vue({
+		el:"#modifyPwd",
+		data:{
+			uid:'',
+		},
+		methods:{
+			updatePwd:function(){
+				
+				this.uid = user.$data.uid;
+				
+				var opwd = hex_md5($("#pre_password").val());
+				var npwd = hex_md5($("#password").val());
+
+				axios.post("/zyl/user/updatePwd",qs.stringify({opwd:opwd, npwd:npwd,uid:this.uid})).then(result =>{
+					if(result.data.success){
+		        		alert("修改密码成功");
+		        	}else{
+		        		alert("修改密码失败");
+		        	}
+				})
+			}
+		}
+	    
+	})
+	
+}
 
 function findOrder(){
 	let order = new Vue({

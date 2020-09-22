@@ -85,7 +85,6 @@ public class UserService implements IUserService {
 		try {
 			fileName = uploadImg.uploadImage(file, uploadPath);
 			user.setHeadImg(path + fileName);
-			System.out.println(user);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -115,7 +114,7 @@ public class UserService implements IUserService {
 	public ResponseJson updatePwd(Integer id, String opwd, String npwd) {
 		Integer row = userDao.updatePwd(id, opwd, npwd);
 		if (row > 0)
-			return new ResponseJson(200, "修改密码成功", null, true);
+			return new ResponseJson(200, "修改密码成功", row, true);
 		return new ResponseJson(200, "修改密码失败", null, false);
 	}
 

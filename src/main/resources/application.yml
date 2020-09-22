@@ -19,6 +19,9 @@ file:
   user: 
     path: ..\fileUpload\user\
     uploadPath: \images\user  
+  comments: 
+    path: ..\fileUpload\comments\
+    uploadPath: \images\comments    
 spring:
   #数据库连接配置
   datasource:

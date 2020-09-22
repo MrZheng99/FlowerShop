@@ -51,12 +51,19 @@ public class FlowerService implements IFlowerService {
 			return new ResponseJson(500, "获取失败", null, false);
 		}
 	}
-
+	
 	@Override
 	public ResponseJson find(Integer fid) {
-		Flower flower = new Flower();
-		flower.setFid(fid);
-		return find(flower);
+		List<Flower> listFlower;
+		try {
+			Flower flower = new Flower();
+			flower.setFid(fid);
+			listFlower = flowerDao.findByFid(flower);
+			return new ResponseJson(200, "获取成功", listFlower, true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseJson(500, "获取失败", null, false);
+		}
 	}
 
 	@Override

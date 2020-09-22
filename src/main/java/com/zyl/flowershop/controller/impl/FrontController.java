@@ -28,4 +28,10 @@ public class FrontController implements IFrontController {
 		return new ModelAndView("/front/orderDetails.html");
 
 	}
+	
+	@Override
+	@RequestMapping("/front/viewOrderDetails/{oid}")
+	public ModelAndView viewDetails() {
+		return new ModelAndView("/front/viewOrderDetails.html");
+	}
 }

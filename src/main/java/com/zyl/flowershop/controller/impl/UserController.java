@@ -63,8 +63,9 @@ public class UserController implements IUserController {
 
 	@Override
 	@PostMapping("/updatePwd")
-	public ResponseJson updatePwd(@RequestParam String opwd, @RequestParam String npwd, @RequestParam Integer id) {
-		return userService.updatePwd(id, opwd, npwd);
+	public ResponseJson updatePwd(@RequestParam String opwd, @RequestParam String npwd, @RequestParam Integer uid) {
+		System.out.println(uid);
+		return userService.updatePwd(uid, opwd, npwd);
 	}
 
 	@Override

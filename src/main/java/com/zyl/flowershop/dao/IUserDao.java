@@ -47,7 +47,7 @@ public interface IUserDao {
 	 * @param pwd
 	 * @return
 	 */
-	public Integer updatePwd(@Param("id") Integer id, @Param("opwd") String opwd, @Param("npwd") String npwd);
+	public Integer updatePwd(@Param("uid") Integer uid, @Param("opwd") String opwd, @Param("npwd") String npwd);
 
 	/**
 	 * 修改会员的姓名，头像，性别

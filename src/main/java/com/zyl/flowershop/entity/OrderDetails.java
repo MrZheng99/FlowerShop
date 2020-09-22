@@ -9,11 +9,21 @@ public class OrderDetails {
 	private Long oid;
 	private String sale;
 	private String flowerFirstImg;
+	
+	private Integer fid;
 
 	public OrderDetails() {
 	}
 
-	public OrderDetails(String num, String fname, Double price, String sale, String intro, String flowerFirstImg,
+	public Integer getFid() {
+		return fid;
+	}
+
+	public void setFid(Integer fid) {
+		this.fid = fid;
+	}
+
+	public OrderDetails(String num, String fname, Double price, String sale, String intro, String flowerFirstImg,Integer fid,
 			Long oid) {
 		super();
 
@@ -24,6 +34,7 @@ public class OrderDetails {
 
 		this.flowerFirstImg = flowerFirstImg;
 		this.intro = intro;
+		this.fid = fid;
 		this.oid = oid;
 	}
 
@@ -94,13 +105,15 @@ public class OrderDetails {
 	@Override
 	public String toString() {
 		return "OrderDetails [odid=" + odid + ", num=" + num + ", fname=" + fname + ", price=" + price + ", intro="
-				+ intro + ", oid=" + oid + ", sale=" + sale + ", flowerFirstImg=" + flowerFirstImg + "]";
+				+ intro + ", oid=" + oid + ", sale=" + sale + ", flowerFirstImg=" + flowerFirstImg + ", fid=" + fid
+				+ "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((fid == null) ? 0 : fid.hashCode());
 		result = prime * result + ((flowerFirstImg == null) ? 0 : flowerFirstImg.hashCode());
 		result = prime * result + ((fname == null) ? 0 : fname.hashCode());
 		result = prime * result + ((intro == null) ? 0 : intro.hashCode());
@@ -121,6 +134,11 @@ public class OrderDetails {
 		if (getClass() != obj.getClass())
 			return false;
 		OrderDetails other = (OrderDetails) obj;
+		if (fid == null) {
+			if (other.fid != null)
+				return false;
+		} else if (!fid.equals(other.fid))
+			return false;
 		if (flowerFirstImg == null) {
 			if (other.flowerFirstImg != null)
 				return false;

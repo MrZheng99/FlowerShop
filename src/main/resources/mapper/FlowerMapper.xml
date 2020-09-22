@@ -68,6 +68,13 @@
 			limit page,rows
 		</if>
 	</select>
+	
+	<select id="findByFid" resultMap="flowerInfo">
+	 	select
+		fid,fname,f.description,flowerLan,flowerImg,deliveryDesc,price,sale,intro,pack,store,f.status,f.tid,f.sid,
+		tname, sname
+		from tb_flower f,tb_type t, tb_series s where `fid`= #{fid} and t.tid = f.tid and s.sid = f.sid;
+	</select>
 	<!-- 查看购物车的信息 -->
 	<select id="findCartItems" resultType="CartItem">
 		select fid,fname,intro,flowerImg,price,sale,store from tb_flower where

@@ -8,5 +8,7 @@ public interface IFrontController {
 	public ModelAndView cart();
 
 	public ModelAndView pay();
+	
+	public ModelAndView viewDetails();
 
 }

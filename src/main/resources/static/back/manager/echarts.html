@@ -78,9 +78,9 @@
     function searchGoods(){
         $("#fname").html("");
         $.get("/zyl/flower/findIdAndName", function(data){
-            let content = "<option value='无'>全部商品</option>";
+            let content = "<option value='0'>全部商品</option>";
             for(let item of data.data){
-                content += /*html*/`<option value="${item.fname}">${item.fname}</option>`;
+                content += /*html*/`<option value="${item.fid}">${item.fname}</option>`;
             }
             $("#fname").html($(content));
         })
@@ -120,7 +120,7 @@
         $.ajax({
         	    type:"post",url:"/zyl/order/findTypeTime",
                 contentType:"application/json",
-                data:JSON.stringify({y:y,m:m,d:d,tid:$("#tname").val(),fname:$("#fname").val(),assignType:assignType,assignDate:assignDate}),
+                data:JSON.stringify({y:y,m:m,d:d,tid:$("#tname").val(),fid:$("#fname").val(),assignType:assignType,assignDate:assignDate}),
                 dataType:"json",
                 success:function (data) {
                     let sales_all=0;
@@ -390,9 +390,16 @@ function getAmountLineOption(data) {
     let pieces = [];
     let m = 0;
     $.each(data,function (index,item) {
-        opData.push(
-            [item.y+"-"+item.m+"-"+item.d,item.amount]
-        );
+    	if(item.y== null){
+            opData.push(
+                    [" - - ",item.amount]
+                );
+    	}else{
+            opData.push(
+                    [item.y+"-"+item.m+"-"+item.d,item.amount]
+                );
+    	}
+
         if(index>m&&index%2==1){
             pieces.push({
                 gt: index,
@@ -424,6 +431,9 @@ function getAmountLineOption(data) {
             {
                 type: 'line',
                 smooth: 0.6,
+                itemStyle : { 
+            	        normal: {label : {show: true}}
+                 },
                 lineStyle: {
                     color: 'green',
                     width: 5
@@ -442,9 +452,15 @@ function getSalesLineOption(data,flag) {
     let m = 0;
     if(flag=="good"){
         $.each(data,function (index,item) {
-            opData.push(
-                [item.y+"-"+item.m+"-"+item.d,item.sales]
-            );
+        	if(item.y== null){
+                opData.push(
+                        [" - - ",item.amount]
+                    );
+        	}else{
+                opData.push(
+                        [item.y+"-"+item.m+"-"+item.d,item.amount]
+                    );
+        	}
             if(index>m&&index%2==1){
                 pieces.push({
                     gt: index,
@@ -496,6 +512,9 @@ function getSalesLineOption(data,flag) {
             {
                 type: 'line',
                 smooth: 0.6,
+                itemStyle : { 
+                	    normal: {label : {show: true}}
+                },
                 lineStyle: {
                     color: 'green',
                     width: 5
