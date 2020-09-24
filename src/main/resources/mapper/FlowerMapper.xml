@@ -58,11 +58,12 @@
 				and status=#{status}
 			</if>
 			<if test="tid != null and tid != ''">
-				and f.tid=#{tid}
+				and f.tid=#{tid} 
 			</if>
 			<if test="sid != null and sid != ''">
 				and f.sid=#{sid}
 			</if>
+			and f.tid = t.tid and f.sid = s.sid
 		</where>
 		<if test="page != null and page != '' and rows!=null and rows!=''">
 			limit page,rows
