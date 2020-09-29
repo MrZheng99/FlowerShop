@@ -71,16 +71,16 @@
 								<input type="text" id="pack" name="pack" class="input-text lh30" size="50" >
 							</td>							
 						</tr>	
-						<tr>
+		<!-- 				<tr>
 							<td class="td_right">图片：</td>
 							<td width="200px">
 								<input type="file" id="pics" name="pics" class="input-text lh30" size="40" multiple="multiple" onchange="setFloImagePreviews(this,'showPics')" accept="image/gif, image/jpeg, image/jpg, image/png">
 							</td>
-							<td colspan="3" align="left">
+							 <td colspan="3" align="left">
 								<div id="showPics">
 								</div>
-							</td>
-						</tr>
+							</td> 
+						</tr> -->
 						<tr>
 							<td class="td_right">具体描述：</td>
 							<td colspan="3">
@@ -141,13 +141,12 @@ function modifyFloInfo(){
 	$.ajaxFileUpload({
 		url:"/zyl/flower/update",
 	    secureuri:false,
-	    fileElementId:"pics",
 	    dataType:"json",
 	    data:{tid:tid, sid:sid, fname:fname, price:price, sale:sale, deliveryDesc:deliveryDesc, flowerLan:flowerLan, description:description},
 	    success:function(data,status){
             if(data.success){
 	    		$("#addNewsForm")[0].reset();
-	    		$("#showPics").html("");
+	    		//$("#showPics").html("");
 	    		CKEDITOR.instances.editor2.setData("");
 	    		alert("鲜花信息修改成功...");
 	    	}else{

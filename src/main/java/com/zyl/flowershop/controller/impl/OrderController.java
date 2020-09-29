@@ -11,12 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.alipay.api.AlipayApiException;
@@ -30,7 +31,7 @@ import com.zyl.flowershop.entity.User;
 import com.zyl.flowershop.service.IOrderService;
 import com.zyl.flowershop.util.SessionKey;
 
-@RestController
+@Controller
 @RequestMapping("order")
 public class OrderController implements IOrderController {
 	@Autowired
@@ -39,25 +40,29 @@ public class OrderController implements IOrderController {
 	private AliPayConfig alipayConfig;
 
 	@Override
+	@ResponseBody
 	@RequestMapping("/findAll")
 	public ResponseJson findAll() {
 		return orderService.findAll();
 	}
 
 	@Override
+	@ResponseBody
 	@RequestMapping("/findByDate")
 	public ResponseJson findByDate() {
 		return orderService.findByDate();
 
 	}
-	
+
 	@Override
+	@ResponseBody
 	@RequestMapping("/findDefault")
 	public ResponseJson findDefault() {
 		return orderService.findDefault();
 	}
-	
+
 	@Override
+	@ResponseBody
 	@RequestMapping("/findTypeTime")
 	public ResponseJson findTypeTime(@RequestBody Order order) {
 		System.out.println(order);
@@ -70,41 +75,49 @@ public class OrderController implements IOrderController {
 	}
 
 	@Override
+	@ResponseBody
 	@RequestMapping("/findByOid/{oid}")
 	public ResponseJson findByOid(@PathVariable Long oid, HttpSession session) {
 		return orderService.findByOid(oid, session);
 	}
 
 	@RequestMapping("/findByUid")
+	@ResponseBody
+
 	public ResponseJson findByUid(HttpSession session) {
 		return orderService.findByUid(session);
 	}
 
 	@Override
+	@ResponseBody
 	@PostMapping("/insert")
 	public ResponseJson insert(@RequestBody List<Cart> carts) {
 		return orderService.insert(carts);
 	}
 
 	@Override
+	@ResponseBody
 	@PostMapping("/insertOne")
 	public ResponseJson insertOne(@RequestBody Cart cart, @SessionAttribute(name = SessionKey.CURRENT_USER) User user) {
 		return orderService.insertOne(cart, user);
 	}
 
 	@Override
+	@ResponseBody
 	@PostMapping("/update")
 	public ResponseJson update(@RequestBody Order order) {
 		return orderService.update(order);
 	}
 
 	@Override
+	@ResponseBody
 	@PostMapping("/updateFlag")
 	public ResponseJson updateFlag(@RequestBody Order order) {
 		return orderService.updateFlag(order);
 	}
 
 	@Override
+	@ResponseBody
 	@PostMapping("/updateReceiveInfo")
 	public ResponseJson updateReceiveInfo(@RequestBody Order order,
 			@SessionAttribute(value = SessionKey.CURRENT_USER) User user) {
@@ -113,6 +126,7 @@ public class OrderController implements IOrderController {
 	}
 
 	@Override
+	@ResponseBody
 	@GetMapping("/getPayPage/{oid}")
 	public String getPayPage(@PathVariable Long oid, @SessionAttribute(name = SessionKey.CURRENT_USER) User user) {
 		System.out.println(user);
@@ -129,6 +143,7 @@ public class OrderController implements IOrderController {
 	 * @throws AlipayApiException
 	 */
 	@SuppressWarnings("unused")
+	@ResponseBody
 	@PostMapping("/pay/notify")
 	private ResponseJson aliPayNotify(HttpServletRequest request, String out_trade_no, String trade_no,
 			String trade_status) throws AlipayApiException {

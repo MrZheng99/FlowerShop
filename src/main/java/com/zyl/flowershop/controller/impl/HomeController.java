@@ -3,11 +3,12 @@ package com.zyl.flowershop.controller.impl;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.zyl.flowershop.controller.IHomeController;
@@ -17,7 +18,7 @@ import com.zyl.flowershop.entity.User;
 import com.zyl.flowershop.service.impl.AdminService;
 import com.zyl.flowershop.service.impl.UserService;
 
-@RestController
+@Controller
 public class HomeController implements IHomeController {
 	@Autowired
 	AdminService adminService;
@@ -65,12 +66,14 @@ public class HomeController implements IHomeController {
 	}
 
 	@Override
+	@ResponseBody
 	@PostMapping("/back/login")
 	public ResponseJson loginBack(@RequestBody Admin admin, HttpSession session) {
 		return adminService.login(admin, session);
 	}
 
 	@Override
+	@ResponseBody
 	@PostMapping("/front/login/{code}")
 	public ResponseJson loginFront(@RequestBody User user, @PathVariable String code, HttpSession session) {
 		return userService.login(user, code, session);

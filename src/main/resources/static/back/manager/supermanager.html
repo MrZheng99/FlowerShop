@@ -68,6 +68,11 @@
                     <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="manager/change_pwd.html" iframe="0">修改密码</a></li>
                 </ul>
             </div> 
+            <div title="在线客服" data-options="iconCls:'icon-user'" style="padding:5px;">  	
+    			<ul class="easyui-tree wu-side-tree">
+                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="manager/service.html" iframe="0">在线客服</a></li>
+                </ul>
+            </div> 
         </div>
     </div>	
     <!-- end of sidebar -->    
@@ -102,12 +107,15 @@
 				aname: "",
 				status: 0,
 				level:"",
+				aid:"",
 				headImg:""
 			},
 			mounted:function(){
 				axios.get("../adm/findCurrent").then(result=> {
 					if(result.data.success){ //已登录
 						this.aname =  result.data.data.aname;
+					    this.aid = result.data.data.aid;
+
 					    this.role = result.data.data.role;
 					    this.headImg = result.data.data.headImg;
 					}  else{

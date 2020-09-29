@@ -64,4 +64,6 @@ public interface IAdminDao {
 	 */
 	public Integer totalNum();
 
+	public Admin findById(Integer aid);
+
 }

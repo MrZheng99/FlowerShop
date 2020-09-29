@@ -10,6 +10,10 @@
 		select
 		uid,account,uname,sex,email,tel,headImg,status from tb_user;
 	</select>
+	<select id="findById" resultType="User">
+		select
+		uid,account,uname,sex,email,tel,headImg,status from tb_user where status=1 and uid=#{uid};
+	</select>
 	<select id="find" resultType="User">
 		select
 		uid,account,uname,sex,email,tel,headImg,status from tb_user
