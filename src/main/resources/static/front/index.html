@@ -301,7 +301,6 @@
 		},
 		mounted: function(){//页面渲染完成后执行的方法
 			axios.post("/zyl/flowerType/find").then(result =>{
-				console.info(result);
 				this.types = result.data.data
 			})
 			axios.post("/zyl/flower/findAll").then(res =>{
