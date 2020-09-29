@@ -18,6 +18,10 @@
 		tb_adm where
 		account=#{account} and pwd=#{pwd} and role=#{role} and status=1;
 	</select>
+	<select id="findById" parameterType="int"
+		resultType="Admin">
+		select aid,account,aname,tel,headImg,role from tb_adm where status=1 and aid=#{aid};
+	</select>
 	<select id="find" parameterType="int" resultType="Admin">
 		select
 		aid,account,aname,tel,headImg,role,status from tb_adm

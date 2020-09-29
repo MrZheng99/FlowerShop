@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.lucene.document.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import com.zyl.flowershop.dao.IFlowerDao;
 import com.zyl.flowershop.entity.Flower;
 import com.zyl.flowershop.entity.ResponseJson;
 import com.zyl.flowershop.service.IFlowerService;
+import com.zyl.flowershop.util.LucenceUtil;
 import com.zyl.flowershop.util.UploadImg;
 
 @Service
@@ -51,7 +53,7 @@ public class FlowerService implements IFlowerService {
 			return new ResponseJson(500, "获取失败", null, false);
 		}
 	}
-	
+
 	@Override
 	public ResponseJson find(Integer fid) {
 		List<Flower> listFlower;
@@ -134,7 +136,7 @@ public class FlowerService implements IFlowerService {
 			return new ResponseJson(200, "添加成功", row, true);
 		return new ResponseJson(200, "添加失败", null, false);
 	}
-	
+
 	@Override
 	public ResponseJson findIdAndName() {
 		List<Flower> listFlower;
@@ -144,6 +146,71 @@ public class FlowerService implements IFlowerService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseJson(500, "获取失败", null, false);
+		}
+	}
+
+	/**
+	 * lucence分词搜索
+	 * 
+	 * @param goodsName
+	 * @param pageNum
+	 * @return
+	 */
+	@Override
+	public ResponseJson myLucence(String goodsName, Integer pageNum) {
+		initLu();
+		List<Document> docs;
+		if (pageNum == null) {
+			docs = lu.search(new String[] { "id", "name", "description", "price", "images" }, goodsName, 8, 0, 100);
+		} else {
+			docs = lu.search(new String[] { "id", "name", "description", "price", "images" }, goodsName, 8, pageNum,
+					100);
+		}
+		if (docs.size() <= 0) {
+			return new ResponseJson(200, "暂无结果", null, false);
+		}
+		// 取值
+		Flower flower = null;
+		List<Flower> listFlowers = new ArrayList<>();
+		for (Document doc : docs) {
+			flower = new Flower();
+			flower.setFid(Integer.valueOf(doc.get("id")));
+			flower.setFname(doc.get("name"));
+			flower.setPrice(Double.valueOf(doc.get("price")));
+			flower.setFlowerImg(doc.get("images"));
+			listFlowers.add(flower);
+		}
+		return new ResponseJson(200, "数据获取成功", listFlowers, true);
+	}
+
+	/**
+	 * 获取记录总条数
+	 * 
+	 * @param name
+	 * @return
+	 */
+	@Override
+	public ResponseJson myLucenceNumber(String name) {
+		initLu();
+		return new ResponseJson(200, null,
+				lu.getNumByName(new String[] { "id", "name", "description", "price", "images" }, name, 100), true);
+	}
+
+	/**
+	 * 先查询字典是否初始化 如果没有则初始化
+	 */
+	public static LucenceUtil lu = null;
+
+	private synchronized void initLu() {
+		if (lu == null) {
+			lu = new LucenceUtil("Goods", "id", new String[] { "name", "description", "price", "images" });
+			// 查询数据库所有商品
+			List<Flower> rs = flowerDao.findAll();
+			// 清空字典
+			lu.deleteAll();
+			// 添加
+			lu.add(Flower.class, rs);
+			System.out.println("初始化库");
 		}
 	}
 

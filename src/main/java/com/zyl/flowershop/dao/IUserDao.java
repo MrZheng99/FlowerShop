@@ -56,7 +56,7 @@ public interface IUserDao {
 	 * @return
 	 */
 	public Integer update(User user);
-	
+
 	/**
 	 * 修改会员的电话，邮箱
 	 * 
@@ -64,10 +64,13 @@ public interface IUserDao {
 	 * @return
 	 */
 	public Integer updateMajor(User user);
+
 	/**
 	 * 总记录数
 	 * 
 	 * @return
 	 */
 	public Integer totalNum();
+
+	public User findById(Integer uid);
 }

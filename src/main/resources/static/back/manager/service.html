@@ -1,0 +1,61 @@
+<script>
+let modal=new Vue({
+	el:"#service",
+	data:{
+		messageText:"老子发消息",
+		chat:{}
+	},
+	methods:{
+		sendMsg: function() {
+	            if (this.messageText != '') {
+	            	alert(this.messageText);
+	            	this.chat.socket.send(JSON.stringify({"uid":101,"msg":this.messageText}));
+	            	this.messageText = '';
+	            }
+	     },
+		chatInitialize: function() {
+	            if (window.location.protocol == 'http:') {
+	            	this.chatConnect('ws://' + window.location.host + '/zyl/chat/websocket/0/'+login.$data.aid);
+	            } else {
+	            	this.chatConnect('wss://' + window.location.host + '/zyl/chat/websocket/0/'+login.$data.aid);
+	            }
+	    },
+	    chatConnect:function(host) {
+	            if ('WebSocket' in window) {
+	                this.chat.socket = new WebSocket(host);
+	            } else if ('MozWebSocket' in window) {
+	            	 this.chat.socket = new MozWebSocket(host);
+	            } else {
+	            	console.log('Error: WebSocket is not supported by this browser.');
+	                return;
+	            }
+	           this.chat.socket.onopen = function () {
+	                console.log('Info: WebSocket connection opened.');
+	            };
+	            this.chat.socket.onclose = function () {
+             console.log('Info: WebSocket closed.');
+	            };
+	            this.chat.socket.onmessage = function (message) {
+	            	console.log(message.data);
+	            };
+	        }
+	        
+	},
+	mounted:function(){
+		let that=this;
+		setTimeout(function(){
+			that.chatInitialize();
+
+		},0);
+	}
+})
+</script>
+
+<div id="service" >
+	<div class="form-group">
+		<textarea class="form-control" v-model="messageText"></textarea>
+	</div>
+	<button type="button" class="btn btn-primary" @click="sendMsg">发送</button>
+</div>
+
+<!-- modal End -->

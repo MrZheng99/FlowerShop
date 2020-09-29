@@ -24,4 +24,8 @@ public interface IFlowerService {
 
 	public ResponseJson findIdAndName();
 
+	ResponseJson myLucenceNumber(String name);
+
+	ResponseJson myLucence(String goodsName, Integer pageNum);
+
 }
