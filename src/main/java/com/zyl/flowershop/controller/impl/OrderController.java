@@ -70,6 +70,8 @@ public class OrderController implements IOrderController {
 	}
 
 	@Override
+	@ResponseBody
+	@RequestMapping("/findByFlag")
 	public ResponseJson findByFlag(@RequestBody Order order) {
 		return orderService.findByFlag(order);
 	}

@@ -6,6 +6,7 @@
 </div>
 <script>
 var statusObj = [{tno:0, tname:"冻结"}, {tno:1, tname:"恢复"}];
+var flagObj = [{fno:2, fname:"发货"}];
 var order_editRow = undefined;
 var order_op;
 var order_flag;
@@ -25,15 +26,26 @@ var order_obj = $('#order_data').datagrid({
 	},
 	columns:[[
 		{field:'oid',title:'订单编号',width:50,align:'center'},
-		{field:'createDate',title:'下单日期',width:50,align:'center'},
-		{field:'payDate',title:'付款日期',width:50,align:'center'},
-		{field:'sendDate',title:'发货日期',width:50,align:'center'},
-		{field:'receiveDate',title:'收货日期',width:50,align:'center'},
-		{field:'amount',title:'订单总额',width:50,align:'center'},
-		{field:'address',title:'地址',width:50,align:'center'},
-		{field:'receivePerson',title:'收货人',width:50,align:'center'},
-		{field:'tel',title:'联系电话',width:50,align:'center'},
-		{field:'status',title:'类型状态',width:50,align:'center', formatter:function(val, row, index){
+		{field:'createDate',title:'下单日期',width:40,align:'center'},
+		{field:'payDate',title:'付款日期',width:40,align:'center'},
+		{field:'sendDate',title:'发货日期',width:40,align:'center'},
+		{field:'receiveDate',title:'收货日期',width:40,align:'center'},
+		{field:'amount',title:'订单总额',width:20,align:'center'},
+		{field:'address',title:'地址',width:60,align:'center'},
+		{field:'receivePerson',title:'收货人',width:25,align:'center'},
+		{field:'tel',title:'联系电话',width:40,align:'center'},
+		{field:'flag',title:'订单状态',width:20,align:'center', formatter:function(val, row, index){
+			if(val == 0){
+				return "未付款";
+			} else if(val == 1){
+				return "已付款";
+			}else if(val == 2){
+				return "已发货";
+			}else if(val == 3){
+				return "已收货";
+			}
+		}, editor:{type: "combobox", options:{required: true,  valueField:"fno", textField:"fname", data:flagObj}}},
+		{field:'status',title:'状态',width:20,align:'center', formatter:function(val, row, index){
 			if(val == 0){
 				return "已冻结";
 			} else{
@@ -62,6 +74,14 @@ var order_obj = $('#order_data').datagrid({
 				order_obj.datagrid("beginEdit", order_editRow);
 			}
 		},'-',{
+			text:"撤销",
+			iconCls:'icon-undo',
+			handler:function(){
+				row = null;
+				order_obj.datagrid("rejectChanges");
+				order_editRow = undefined;
+			}
+		},'-',{
 			text:"保存",
 			iconCls:  'icon-save',
 			handler: function(){
@@ -80,22 +100,21 @@ var order_obj = $('#order_data').datagrid({
 				var row = order_obj.datagrid("getChanges")[0];
 				
 				var status = row.status;
-				var tid = row.tid;
-				var tname = row.tname;
-				var description = row.description;
+				var oid = row.oid;
+				var flag = row.flag;
 												
 				$.ajax({
-					url:"/zyl/flowerType/update",
+					url:"/zyl/order/updateFlag",
 					type:"post",
-					data:JSON.stringify({status:status,tname:tname,tid:tid}),
+					data:JSON.stringify({status:status,flag:flag,oid:oid}),
 					contentType:"application/json",
 					dataType:"json",
 					success:function(data){
 						if(data.success){
-							$.messager.show({title:'成功提示',msg: '鲜花种类信息修改成功...', timeout:2000, showType:'slide'});
+							$.messager.show({title:'成功提示',msg: '订单信息修改成功...', timeout:2000, showType:'slide'});
 							$('#order_data').datagrid('loadData');
 						}else{
-							$.messager.show('失败提示',  '鲜花种类信息修改失败...', 'error');
+							$.messager.show('失败提示',  '信息修改失败...', 'error');
 							$('#order_data').datagrid('reload');
 						}
 					}
@@ -103,48 +122,33 @@ var order_obj = $('#order_data').datagrid({
 				row = null;
 				order_editRow = undefined;
 			}
+		},'-',{text: '订单状态:<select id="flag"><option value="0">未付款</option><option value="1">已付款</option><option value="2">已发货</option><option value="3">已收货</option></select>'
+        }, 
+		{
+		text: "查找",
+		iconCls: 'icon-search',
+		handler: function(){
+			var flag = $("#flag").val();
+			
+		    if (flag == null || flag == ""){
+				$.messager.show({title:'温馨提示',msg: '请选择订单状态...', timeout:2000, showType:'slide'});
+		    	return;
+		    }
+		 order_obj.datagrid({
+			   loader : function(flower, success, error) {    
+				    $.ajax({
+				    	url:"/zyl/order/findByFlag",
+				    	type:"post",
+				    	data:JSON.stringify({flag:flag}),
+				    	contentType : 'application/json;charset=utf-8',
+				    	success:function(data){
+				    		success(data);
+				    	}
+				    })
+	           }
+
+		})
 		}
-		/*
-		,'-',{
-			text:"删除",
-			iconCls:'icon-remove',
-			handler:function(){
-				if(order_editRow != undefined){
-					return;
-				}
-				
-				var row = order_obj.datagrid("getSelected");
-				if( row == null){
-					$.messager.show({title:'温馨提示',msg: '请选择您要修改的商品类型信息', timeout:2000, showType:'slide'});
-					return
-				}
-				
-				$.messager.confirm("确认提示", "数据一旦删除不能回复，确定要删除吗？", function(rt){
-					if(!rt){
-						return;
-					}
-					
-					$.post("../../types", {op:"delete", tno:row.tno}, data=>{
-						if(data > 0){
-					       $.messager.show({title:'成功提示',msg: order_flag +'商品类型删除成功', timeout:2000, showType:'slide'});	
-					       order_obj.datagrid("reload");
-						} else{
-							$.messager.alert('失败提示', '商品类型删除失败...', 'error');
-						}
-						row = null;
-					})
-				})
-			}
-		}
-		*/
-		,'-',{
-			text:"撤销",
-			iconCls:'icon-undo',
-			handler:function(){
-				row = null;
-				order_obj.datagrid("rejectChanges");
-				order_editRow = undefined;
-			}
-		}]
+	}]
 });
 </script>

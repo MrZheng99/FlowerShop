@@ -14,21 +14,22 @@ public class Order {
 	private Double amount;
 	private String address;
 	private Integer flag;
+	private String status;
 
 	private String tname;
 	private Integer sales;
 	private String fname;
-	
-	private String y; //年
-	private String m; //月
-	private String d; //日
+
+	private String y; // 年
+	private String m; // 月
+	private String d; // 日
 
 	private boolean assignDate;
 	private boolean assignType;
-	
+
 	private Integer tid;
 	private Integer fid;
-	
+
 	class OrderProgress {
 		public final Integer unpaid = 0; // "未付款"
 		public final Integer paid = 1; // "已付款"
@@ -36,12 +37,17 @@ public class Order {
 		public final Integer shiped = 3;// "已收货"
 	}
 
-	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public Integer getFid() {
 		return fid;
 	}
-
-
 
 	public void setFid(Integer fid) {
 		this.fid = fid;
@@ -49,7 +55,8 @@ public class Order {
 
 	public Order(Long oid, Integer uid, String createDate, String payDate, String sendDate, String receiveDate,
 			String receivePerson, String tel, Double amount, String address, Integer flag, String tname, Integer sales,
-			String fname, String y, String m, String d, boolean assignDate, boolean assignType,Integer tid,Integer fid) {
+			String fname, String y, String m, String d, boolean assignDate, boolean assignType, Integer tid,
+			Integer fid, String status) {
 		super();
 		this.oid = oid;
 		this.uid = uid;
@@ -72,105 +79,72 @@ public class Order {
 		this.assignType = assignType;
 		this.tid = tid;
 		this.fid = fid;
+		this.status = status;
 	}
-
-
 
 	public Integer getTid() {
 		return tid;
 	}
 
-
-
 	public void setTid(Integer tid) {
 		this.tid = tid;
 	}
-
-
 
 	public boolean isAssignDate() {
 		return assignDate;
 	}
 
-
-
 	public void setAssignDate(boolean assignDate) {
 		this.assignDate = assignDate;
 	}
-
-
 
 	public boolean isAssignType() {
 		return assignType;
 	}
 
-
-
 	public void setAssignType(boolean assignType) {
 		this.assignType = assignType;
 	}
-
-
 
 	public String getY() {
 		return y;
 	}
 
-
-
 	public void setY(String y) {
 		this.y = y;
 	}
-
-
 
 	public String getM() {
 		return m;
 	}
 
-
-
 	public void setM(String m) {
 		this.m = m;
 	}
-
-
 
 	public String getD() {
 		return d;
 	}
 
-
-
 	public void setD(String d) {
 		this.d = d;
 	}
-
-
 
 	public String getFname() {
 		return fname;
 	}
 
-
-
 	public void setFname(String fname) {
 		this.fname = fname;
 	}
-
-
 
 	public Integer getSales() {
 		return sales;
 	}
 
-
-
 	public void setSales(Integer sales) {
 		this.sales = sales;
 	}
-
-
 
 	public Order() {
 		super();
@@ -302,6 +276,7 @@ public class Order {
 		result = prime * result + ((receivePerson == null) ? 0 : receivePerson.hashCode());
 		result = prime * result + ((sales == null) ? 0 : sales.hashCode());
 		result = prime * result + ((sendDate == null) ? 0 : sendDate.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((tel == null) ? 0 : tel.hashCode());
 		result = prime * result + ((tid == null) ? 0 : tid.hashCode());
 		result = prime * result + ((tname == null) ? 0 : tname.hashCode());
@@ -392,6 +367,11 @@ public class Order {
 			if (other.sendDate != null)
 				return false;
 		} else if (!sendDate.equals(other.sendDate))
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
 			return false;
 		if (tel == null) {
 			if (other.tel != null)
