@@ -21,14 +21,17 @@ file:
     uploadPath: \images\user  
   comments: 
     path: ..\fileUpload\comments\
-    uploadPath: \images\comments    
+    uploadPath: \images\comments   
+  advertisement: 
+    path: ..\fileUpload\advertisement\
+    uploadPath: \images\advertisement    
 spring:
   #数据库连接配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://120.26.184.107:3306/flowershop?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
-    username: 
-    password: 
+    username: root   
+    password: Zheng1125
   mail:
     # 邮件服务地址
     host: smtp.qq.com

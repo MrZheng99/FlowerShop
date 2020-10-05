@@ -2,7 +2,33 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zyl.flowershop.dao.AdvertisementDao">
-	
+<mapper namespace="com.zyl.flowershop.dao.IAdvertisementDao">
+	<insert id="insert" parameterType="Advertisement">
+	    insert into tb_advertisement(`url`, `adImg`, `position`, `status`)
+	    values (#{url}, #{adImg},#{position},1)
+	</insert>
 
+	<select id="findAll" resultType="Advertisement">
+	    select atid,url,position,adImg,status from tb_advertisement
+	    where `status`=1 
+	</select>
+	
+	<update id="update" parameterType="Advertisement" flushCache="true">
+	    update tb_advertisement 
+	    <set>
+	       	<if test="url != null and url !='' ">
+				url=#{url},
+			</if>
+			<if test="position != null and position !='' ">
+				position=#{position},
+			</if>
+			<if test="adImg != null and adImg !='' ">
+				adImg=#{adImg},
+			</if>
+			<if test="status != null and status !='' ">
+				status=#{status},
+			</if>
+	    </set>
+	    where `atid`=#{atid}
+	</update>
 </mapper>

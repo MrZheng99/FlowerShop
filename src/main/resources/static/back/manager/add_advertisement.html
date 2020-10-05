@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+<label>
+广告位置：
+<select id="position">
+<option value="1">顶部广告</option>
+</select>
+</label>
+ <div style="margin-bottom: 20px">
+	<input class="easyui-textbox" id="url" style="width: 80%"
+	data-options="label:'广告链接:',required:true,validType:'account'">
+</div>
+<div>
+	<tr>
+		<td class="td_right">广告图片：</td>
+		<td>
+			<input type="file" id="pic" name="pic" class="input-text lh30" size="40" onchange="setImagePreviews(this,'showPics')">
+		</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td colspan="3" align="center">
+			<div id="showPics">
+			
+			</div>
+		</td>
+	</tr>
+</div>
+</body>
+</html>
